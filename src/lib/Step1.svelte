@@ -93,36 +93,25 @@
 </script>
 
 <div class="flex flex-col gap-5 justify-center items-center">
-  <div class="w-full h-20 px-3 items-center justify-center rounded-lg border border-base-300">
-    <div class="fixed -mt-6 opacity-35 flex gap-2">Sponsors</div>
-    <div class="flex h-full items-center">
-
-      <a target="_blank" class="p-1 rounded-full bg-base-300 transition-all hover:bg-base-200 flex gap-1 items-center w-min" href="https://geyser.fund/project/brrr/rewards/view/5486">
-        <div class="avatar">
-          <div class="w-12 rounded-full">
-            <img src="/i.jpeg"/>
-          </div>
-        </div>
-        <p class="text-nowrap text-sm pr-2">
-          Become a sponsor
-        </p>
-      </a>
-      
-    </div>
-  </div>
-  <p class="text-center font-bold text-lg">Connect to mint</p>
-  <div class="flex flex-col lg:flex-row gap-2 flex-wrap">
+  <p class="text-center font-medium text-lg text-slate-700">Connect to mint</p>
+  <div class="flex flex-col lg:flex-row gap-2 flex-wrap justify-center">
     <button
-      class="btn btn-xs rounded-full btn-primary"
+      class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
+             text-white transition-all duration-200 bg-primary rounded-lg
+             hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20
+             disabled:opacity-50 disabled:hover:bg-primary"
       onclick={discoverMints}
       disabled={isDiscovering}
     >
       Discover more mints
     </button>
+    
     {#if $discoveredMints.length}
       {#each $discoveredMints as m}
         <button
-          class="btn btn-xs rounded-full btn-secondary"
+          class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
+                 text-slate-700 transition-all duration-200 bg-slate-100 rounded-lg
+                 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-200"
           onclick={() => (mintUrl = m.url)}
         >
           {m.url}
@@ -131,7 +120,9 @@
     {:else}
       {#each mints as m}
         <button
-          class="btn btn-xs rounded-full btn-secondary"
+          class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
+                 text-slate-700 transition-all duration-200 bg-slate-100 rounded-lg
+                 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-200"
           onclick={() => (mintUrl = m)}
         >
           {m}
@@ -139,14 +130,16 @@
       {/each}
     {/if}
   </div>
-  <div
-    class="border-dashed border-spacing-2 border-base-100 border-2 flex gap-2 justify-center py-5 w-full"
-  >
+  
+  <div class="flex gap-2 justify-center w-full">
     <input
-      placeholder="type mint url here..."
+      placeholder="Type mint url here..."
       type="text"
       bind:value={mintUrl}
-      class="input input-primary w-full"
+      class="flex-1 h-12 px-4 rounded-lg border border-slate-200 bg-white
+             text-slate-700 placeholder:text-slate-400
+             focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-transparent
+             transition-all duration-200"
       onkeypress={(e) => {
         if (e.key === "Enter") {
           connect();
@@ -155,7 +148,11 @@
     />
     <button
       onclick={connect}
-      class="btn {isConnecting ? 'btn-disabled' : 'btn-primary'} "
+      class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
+             text-white transition-all duration-200 bg-primary rounded-lg
+             hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20
+             disabled:opacity-50 disabled:hover:bg-primary"
+      disabled={isConnecting}
     >
       Connect
     </button>
