@@ -20,8 +20,24 @@
   let units = $derived(getUnits());
 </script>
 
-<select class="select select-bordered w-full" bind:value={unit}>
-  {#each units as unit}
-    <option value={unit}>{unit}</option>
-  {/each}
-</select>
+{#if units.length === 1}
+  <div class="inline-flex items-center justify-center h-10 px-5 font-medium
+              text-primary bg-primary/10 rounded-full">
+    {units[0]}
+  </div>
+{:else}
+  <div class="flex flex-wrap gap-2">
+    {#each units as unitOption}
+      <button
+        class="inline-flex items-center justify-center h-10 px-5 font-medium
+               transition-all duration-200 rounded-full
+               {unit === unitOption ? 
+                 'bg-primary text-white' : 
+                 'bg-slate-100 text-slate-700 hover:bg-slate-200'}"
+        onclick={() => unit = unitOption}
+      >
+        {unitOption}
+      </button>
+    {/each}
+  </div>
+{/if}
