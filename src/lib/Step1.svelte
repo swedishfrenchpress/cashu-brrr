@@ -170,16 +170,10 @@
   </div>
 
   {#if $mint}
-    <p>Select a currency</p>
-    <div class="w-full">
-      <UnitSelector bind:unit></UnitSelector>
+    <p class="text-center text-slate-600 mb-2">Select a currency</p>
+    <div class="flex items-center gap-4 justify-center">
+      <UnitSelector bind:unit />
     </div>
-    <button
-      onclick={confirm}
-      class="btn btn-secondary w-full"
-      disabled={isConnecting}
-      >Confirm
-    </button>
   {/if}
 
   {#if $prints.length}

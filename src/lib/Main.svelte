@@ -4,11 +4,18 @@
   import Step2 from "./Step2.svelte";
   import Step3 from "./Step3.svelte";
   import Step4 from "./Step4.svelte";
-  import { step } from "./stores.svelte";
+  import { step, mint, wallet } from "./stores.svelte";
   import { Bitcoin, Code, Copy, Heart, Zap } from "lucide-svelte";
-  import { copyTextToClipboard } from "./utils";
+  import { copyTextToClipboard, getWalletWithUnit } from "./utils";
   import DonateCashu from "./DonateCashu.svelte";
+  
   let showDonate = $state(false);
+  let unit = $state("sat");
+
+  const confirm = async () => {
+    wallet.set(await getWalletWithUnit($mint, unit));
+    step.set(2);
+  };
 </script>
 
 <Toaster richColors position="top-right" />
@@ -70,52 +77,36 @@
 
       <!-- Main Content with refined spacing -->
       <div class="px-8 py-10">
-        <div class="min-h-[400px] relative">
-          {#if $step === 1}
-            <Step1 />
-          {:else if $step === 2}
-            <Step2 />
-          {:else if $step === 3}
-            <Step3 />
-          {:else}
-            <Step4 />
-          {/if}
+        <div class="min-h-[400px] relative flex flex-col justify-between">
+          <div>
+            {#if $step === 1}
+              <Step1 />
+            {:else if $step === 2}
+              <Step2 />
+            {:else if $step === 3}
+              <Step3 />
+            {:else}
+              <Step4 />
+            {/if}
+          </div>
         </div>
       </div>
 
-      <!-- Enhanced Footer -->
-      <div class="p-8 bg-slate-50/80 border-t border-slate-200/80 
-                  rounded-b-2xl backdrop-blur-sm">
-        <div class="flex justify-between items-center">
-          <div class="text-sm text-slate-600 font-medium">
-            Secure, private digital cash notes
-          </div>
-          <div class="flex gap-4">
-            <button 
+      <!-- Navigation Section -->
+      <div class="p-8 bg-slate-50/80 border-t border-slate-200 rounded-b-2xl">
+        <div class="flex justify-end">
+          {#if $step === 1}
+            <button
+              onclick={confirm}
               class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
-                     transition-all duration-200 rounded-lg
-                     {showDonate ? 
-                       'text-white bg-primary hover:bg-primary/90' : 
-                       'text-slate-700 bg-slate-100 hover:bg-slate-200'}
-                     focus:outline-none focus:ring-2 focus:ring-primary/20"
-              onclick={() => showDonate = !showDonate}
+                     text-white transition-all duration-200 bg-primary rounded-lg
+                     hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20
+                     disabled:opacity-50 disabled:hover:bg-primary"
+              disabled={!$mint}
             >
-              <Heart class="w-4 h-4 mr-2" />
-              {showDonate ? 'Hide' : 'Donate'}
+              Next
             </button>
-            
-            <a 
-              href="https://github.com/gandlafbtc/cashu-brrr" 
-              class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
-                     text-slate-700 transition-all duration-200 bg-slate-100 rounded-lg
-                     hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Code class="w-4 h-4 mr-2" />
-              Code
-            </a>
-          </div>
+          {/if}
         </div>
       </div>
     </div>
