@@ -6,174 +6,91 @@
   import Step4 from "./Step4.svelte";
   import { step } from "./stores.svelte";
   import { Bitcoin, Code, Copy, Heart, Zap } from "lucide-svelte";
-    import { copyTextToClipboard } from "./utils";
-    import DonateCashu from "./DonateCashu.svelte";
-    let showDonate = $state(false)
+  import { copyTextToClipboard } from "./utils";
+  import DonateCashu from "./DonateCashu.svelte";
+  let showDonate = $state(false);
 </script>
 
-<Toaster richColors position="top-right"></Toaster>
-<div
-  class="h-full min-h-screen w-screen bg-gradient-to-br from-primary to-secondary items-center flex justify-center flex-col p-2"
->
-  <div
-    class="flex m-3 mb-3 gap-2 flex-col items-center bg-base-100 w-full max-w-6xl h-full p-5 rounded-lg shadow-md"
-  >
-    <h1 class="w-full text-center font-bold text-2xl">
-      Money printer go brrrrr
-    </h1>
-    <ul class="steps">
-      <li data-content="🏦" class="step step-primary"></li>
-      <li data-content="💵" class="step {$step > 1 ? 'step-primary' : ''}"></li>
-      <li data-content="⚡" class="step {$step > 2 ? 'step-primary' : ''}"></li>
-      <li data-content="🖨️" class="step {$step > 3 ? 'step-primary' : ''}"></li>
-    </ul>
-    <div class="m-auto w-full">
-      {#if $step === 1}
-        <Step1 />
-      {:else if $step === 2}
-        <Step2 />
-      {:else if $step === 3}
-        <Step3 />
-      {:else}
-        <Step4 />
-      {/if}
-    </div>
-    <div class="flex gap-4">
-      <button
-        class="m-4 btn btn-sm btn-error flex"
-      onclick={()=>showDonate = !showDonate}
-        >
-        <Heart>
+<Toaster richColors position="top-right" />
 
-        </Heart>
-        {#if showDonate}
-          Hide
-        {:else}
-          
-        Donate
-        {/if}
-      </button>
-      <a
-        href="https://github.com/gandlafbtc/cashu-brrr"
-        class="m-4 btn btn-sm btn-info "
-      >
-       <Code></Code>
-       Code
-      </a>
+<div class="min-h-screen bg-gradient-to-br from-base-200 to-base-300 px-4 py-8">
+  <div class="mx-auto max-w-4xl">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-neutral mb-2">
+        Money printer go brrrrr
+      </h1>
+      <p class="text-neutral-600">Create and manage your digital cash notes</p>
     </div>
-    {#if showDonate}
-    
-    <div class="flex flex-col gap-2 flex-wrap">
-      <div class="flex flex-col gap-2 w-80">
 
-        <p>
-          Hi anon! If you appreciate the money printer, consider donating some sats. Value4Value!
-        </p>
-        <p>
-          Let's keep the money printer running.
-        </p>
-        <p>
-          Brrrrrrrrrrrrrrrrr...
-        </p>
+    <!-- Main Card -->
+    <div class="rounded-xl bg-base-100 shadow-lg border border-base-200">
+      <!-- Progress Steps -->
+      <div class="p-6 border-b border-base-200">
+        <ul class="steps steps-horizontal w-full">
+          <li class="step step-primary" data-content="1">
+            <span class="hidden sm:inline ml-2">Connect</span>
+          </li>
+          <li class="step {$step > 1 ? 'step-primary' : ''}" data-content="2">
+            <span class="hidden sm:inline ml-2">Configure</span>
+          </li>
+          <li class="step {$step > 2 ? 'step-primary' : ''}" data-content="3">
+            <span class="hidden sm:inline ml-2">Payment</span>
+          </li>
+          <li class="step {$step > 3 ? 'step-primary' : ''}" data-content="4">
+            <span class="hidden sm:inline ml-2">Print</span>
+          </li>
+        </ul>
       </div>
-      <div class="flex gap-2 items-center">
-        <DonateCashu></DonateCashu>
-      </div>
-      <div class="flex gap-2 items-center">
-        <a
-              href="https://geyser.fund/project/brrr"
-              target="_blank"
-              rel="nofollow noopener noreferrer"
-              class="rounded-full w-40 bg-[#2dd4bf] bg-opacity-35 hover:bg-opacity-100 transition-all"
-              >
-              <img src="/geyser.svg" alt="geyser" />
-            </a>
-            <button>
-              <Copy class='w-5 h-5' onclick={()=> copyTextToClipboard('https://geyser.fund/project/brrr')}></Copy>
-            </button>
-            <p class="w-24 overflow-clip text-ellipsis text-xs text-nowrap">
-              https://geyser.fund/project/brrr
-            </p>
-          </div>
-          <div class="flex gap-2 items-center">
-            <a
-            class="p-2 flex items-center gap-1 rounded-full bg-blue-600 w-40 bg-opacity-35 hover:bg-opacity-100 transition-all"
-            href="bitcoin:+glisteningstruggle62"
-            >
-            <Bitcoin></Bitcoin>
-            <p class="text-xs">PayNym</p>
-          </a>
-          <button>
-            <Copy class='w-5 h-5' onclick={()=> copyTextToClipboard('+glisteningstruggle62')}></Copy>
-          </button>
-          <p class="w-24 overflow-clip text-ellipsis text-xs break-all">
-            +glisteningstruggle62
-          </p>
+
+      <!-- Main Content -->
+      <div class="p-6">
+        <div class="min-h-[400px]">
+          {#if $step === 1}
+            <Step1 />
+          {:else if $step === 2}
+            <Step2 />
+          {:else if $step === 3}
+            <Step3 />
+          {:else}
+            <Step4 />
+          {/if}
         </div>
-        <div class="flex gap-2 items-center">
-          <a
-          class="p-2 flex items-center gap-1 rounded-full bg-blue-600 w-40 bg-opacity-35 hover:bg-opacity-100 transition-all"
-          
-          href="bitcoin:PM8TJQQMZMvfVGsJ2bJmbtDnx2BVgcPThnF8XS9ApGvuzYDPWirVuMencyhvK8WBDTgeaLLEoGEYggTMJFwjDkW8HhfqijrYHStMiFhKfA7UYbwXqYB6"
-          >
-          <Bitcoin></Bitcoin>
-          <p class="text-xs">Payment code</p>
-        </a>
-        <button>
-          <Copy class='w-5 h-5' onclick={()=> copyTextToClipboard('PM8TJQQMZMvfVGsJ2bJmbtDnx2BVgcPThnF8XS9ApGvuzYDPWirVuMencyhvK8WBDTgeaLLEoGEYggTMJFwjDkW8HhfqijrYHStMiFhKfA7UYbwXqYB6')}></Copy>
-        </button>
-        <p class="w-24 overflow-clip text-ellipsis text-xs text-nowrap">
-          PM8TJQQMZMvfVGsJ2bJmbtDnx2BVgcPThnF8XS9ApGvuzYDPWirVuMencyhvK8WBDTgeaLLEoGEYggTMJFwjDkW8HhfqijrYHStMiFhKfA7UYbwXqYB6
-        </p>
       </div>
-      <div class="flex gap-2 items-center">
-        <a
-        class="p-2 flex items-center gap-1 rounded-full bg-orange-600 w-40 bg-opacity-35 hover:bg-opacity-100 transition-all"
-        
-        href="bitcoin:bc1q8sy2kd4c907r5y05wwghldpvvnkapkn7yrvs2u"
-        >
-        <Bitcoin></Bitcoin>
-        <p class="text-xs">Onchain address</p>
-      </a>
-      <button>
-        <Copy class='w-5 h-5' onclick={()=> copyTextToClipboard('bc1q8sy2kd4c907r5y05wwghldpvvnkapkn7yrvs2u')}></Copy>
-      </button>
-      <p class="w-24 overflow-clip text-ellipsis text-xs">
-        bc1q8sy2kd4c907r5y05wwghldpvvnkapkn7yrvs2u
-      </p>
+
+      <!-- Footer -->
+      <div class="p-6 bg-base-200/50 border-t border-base-200 rounded-b-xl">
+        <div class="flex justify-between items-center">
+          <div class="text-sm text-neutral-600">
+            Secure, private digital cash notes
+          </div>
+          <div class="flex gap-3">
+            <button 
+              class="btn btn-sm {showDonate ? 'btn-primary' : 'btn-outline'} gap-2" 
+              on:click={() => showDonate = !showDonate}
+            >
+              <Heart class="w-4 h-4" />
+              {showDonate ? 'Hide' : 'Donate'}
+            </button>
+            
+            <a 
+              href="https://github.com/gandlafbtc/cashu-brrr" 
+              class="btn btn-sm btn-outline gap-2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Code class="w-4 h-4" />
+              Code
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="flex gap-2 items-center">
-      <a
-      class="p-2 flex items-center gap-1 rounded-full bg-yellow-600 w-40 bg-opacity-35 hover:bg-opacity-100 transition-all"
-      
-      href="lightning:lno1zrxq8pjw7qjlm68mtp7e3yvxee4y5xrgjhhyf2fxhlphpckrvevh50u0q0pdmt47mvjvq77n7thpvj9m3hcppl4hu95ue953uq46ej46el9rxqsznmjm9j44w9jntmpsq9eec9002pmyjjf6w75v88dn4472zmctcdxqqvewfj3vxyqv54q4gzy7v60u27kgwnurfzpykxnwz0jr4gzg4swld8pglcv7rlulaemm665l4pmftckhj6vwq2e6l4zk8xc53rgt7dyfdd9j86pgfsgmhx67v4a64lfeqggchfm0uqqs6jz4x5lxj3f6qw7vxe4fg8s4z5"
-      >
-      <Zap></Zap>
-      <p class="text-xs">Bolt 12</p>
-    </a>
-    <button>
-      <Copy class='w-5 h-5' onclick={()=> copyTextToClipboard('lno1zrxq8pjw7qjlm68mtp7e3yvxee4y5xrgjhhyf2fxhlphpckrvevh50u0q0pdmt47mvjvq77n7thpvj9m3hcppl4hu95ue953uq46ej46el9rxqsznmjm9j44w9jntmpsq9eec9002pmyjjf6w75v88dn4472zmctcdxqqvewfj3vxyqv54q4gzy7v60u27kgwnurfzpykxnwz0jr4gzg4swld8pglcv7rlulaemm665l4pmftckhj6vwq2e6l4zk8xc53rgt7dyfdd9j86pgfsgmhx67v4a64lfeqggchfm0uqqs6jz4x5lxj3f6qw7vxe4fg8s4z5')}></Copy>
-    </button>
-    <p class="w-24 overflow-clip text-ellipsis text-xs">
-      lno1zrxq8pjw7qjlm68mtp7e3yvxee4y5xrgjhhyf2fxhlphpckrvevh50u0q0pdmt47mvjvq77n7thpvj9m3hcppl4hu95ue953uq46ej46el9rxqsznmjm9j44w9jntmpsq9eec9002pmyjjf6w75v88dn4472zmctcdxqqvewfj3vxyqv54q4gzy7v60u27kgwnurfzpykxnwz0jr4gzg4swld8pglcv7rlulaemm665l4pmftckhj6vwq2e6l4zk8xc53rgt7dyfdd9j86pgfsgmhx67v4a64lfeqggchfm0uqqs6jz4x5lxj3f6qw7vxe4fg8s4z5
-    </p>
+
+    {#if showDonate}
+      <div class="mt-6 rounded-xl bg-base-100 shadow-lg border border-base-200 p-6">
+        <DonateCashu />
+      </div>
+    {/if}
   </div>
-  <div class="flex gap-2 items-center">
-    <a
-    class="p-2 flex items-center gap-1 rounded-full bg-yellow-600 w-40 bg-opacity-35 hover:bg-opacity-100 transition-all"
-    href="lightning:nutstashapp@geyser.fund"
-    >
-    <Zap></Zap>
-    <p class="text-xs">Lightning address</p>
-  </a>
-  <button>
-    <Copy class='w-5 h-5'onclick={()=> copyTextToClipboard('nutstashapp@geyser.fund')}></Copy>
-  </button>
-  <p class="w-24 overflow-clip text-ellipsis text-xs">
-    nutstashapp@geyser.fund
-  </p>
-</div>
-</div>
-{/if}
-</div>
 </div>
