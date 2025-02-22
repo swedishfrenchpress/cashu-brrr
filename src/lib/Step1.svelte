@@ -94,43 +94,8 @@
 
 <div class="flex flex-col gap-5 justify-center items-center">
   <p class="text-center font-medium text-lg text-slate-700">Connect to mint</p>
-  <div class="flex flex-col lg:flex-row gap-2 flex-wrap justify-center">
-    <button
-      class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
-             text-white transition-all duration-200 bg-primary rounded-lg
-             hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20
-             disabled:opacity-50 disabled:hover:bg-primary"
-      onclick={discoverMints}
-      disabled={isDiscovering}
-    >
-      Discover more mints
-    </button>
-    
-    {#if $discoveredMints.length}
-      {#each $discoveredMints as m}
-        <button
-          class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
-                 text-slate-700 transition-all duration-200 bg-slate-100 rounded-lg
-                 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-200"
-          onclick={() => (mintUrl = m.url)}
-        >
-          {m.url}
-        </button>
-      {/each}
-    {:else}
-      {#each mints as m}
-        <button
-          class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
-                 text-slate-700 transition-all duration-200 bg-slate-100 rounded-lg
-                 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-200"
-          onclick={() => (mintUrl = m)}
-        >
-          {m}
-        </button>
-      {/each}
-    {/if}
-  </div>
   
+  <!-- Primary Connection Input -->
   <div class="flex gap-2 justify-center w-full">
     <input
       placeholder="Type mint url here..."
@@ -158,13 +123,49 @@
     </button>
   </div>
 
+  <!-- Mint Options -->
+  <div class="flex flex-wrap gap-2 justify-start w-full">
+    {#if !$mint}
+      {#if $discoveredMints.length}
+        {#each $discoveredMints as m}
+          <button
+            class="inline-flex items-center justify-center px-4 py-2 font-medium
+                   text-slate-600 bg-slate-50/80 rounded-lg
+                   hover:bg-slate-100 transition-all duration-200"
+            onclick={() => (mintUrl = m.url)}
+          >
+            {m.url}
+          </button>
+        {/each}
+      {:else}
+        {#each mints as m}
+          <button
+            class="inline-flex items-center justify-center px-4 py-2 font-medium
+                   text-slate-600 bg-slate-50/80 rounded-lg
+                   hover:bg-slate-100 transition-all duration-200"
+            onclick={() => (mintUrl = m)}
+          >
+            {m}
+          </button>
+        {/each}
+      {/if}
+    {/if}
+    <button
+      class="inline-flex items-center justify-center px-4 py-2 font-medium
+             text-slate-600 bg-slate-50/80 rounded-lg
+             hover:bg-slate-100 transition-all duration-200"
+      onclick={discoverMints}
+      disabled={isDiscovering}
+    >
+      Discover more mints
+    </button>
+  </div>
+
   <div class="h-10">
     {#if $mint}
       <div class="flex gap-1 badge">
         <p>Connected to</p>
-        <p>
-          {$mint.url}
-        </p>
+        <p>{$mint.url}</p>
       </div>
     {/if}
   </div>
@@ -177,32 +178,40 @@
   {/if}
 
   {#if $prints.length}
-    <div class="divider">or</div>
-    <p class="font-bold">Re-print previous print</p>
-    <div class="h-fit">
-      <div
-        class="h-full max-h-52 lg:max-h-96 flex flex-col gap-3 overflow-x-scroll"
-      >
+    <div class="divider text-slate-400">or</div>
+    <button
+      class="inline-flex items-center justify-center h-10 px-5 font-medium
+             text-slate-600 transition-all duration-200 bg-transparent rounded-lg
+             border border-slate-200 hover:bg-slate-50
+             focus:outline-none focus:ring-2 focus:ring-slate-200"
+      onclick={() => document.getElementById('prints-section')?.scrollIntoView({ behavior: 'smooth' })}
+    >
+      Re-print previous print
+    </button>
+    
+    <div id="prints-section" class="h-fit mt-4">
+      <div class="h-full max-h-52 lg:max-h-96 flex flex-col gap-3 overflow-x-scroll">
         {#each $prints as print}
-          <div class="flex gap-2 flex-col bg-base-300 rounded-lg p-2 w-80">
+          <div class="flex gap-2 flex-col bg-slate-50 rounded-lg p-4 w-80 border border-slate-200">
             <button
-              class="btn btn-secondary btn-sm"
-              onclick={() => reprint(print)}>Print</button
+              class="inline-flex items-center justify-center h-8 px-4 font-medium
+                     text-slate-600 transition-all duration-200 bg-white rounded-lg
+                     border border-slate-200 hover:bg-slate-50"
+              onclick={() => reprint(print)}
             >
-            {console.log(print)}
+              Print
+            </button>
             <NotesCalc
-              selectedDenomination={getAmountForTokenSet(
-                print.tokens[0].proofs,
-              )}
+              selectedDenomination={getAmountForTokenSet(print.tokens[0].proofs)}
               selectedNumberOfNotes={print.tokens.length}
               unit={print.tokens[0].unit}
               isDonate={print.donation}
               donationAmount={getAmountForTokenSet(print.donation?.proofs??[])}
-            ></NotesCalc>
-            <p class="break-all">
+            />
+            <p class="break-all text-sm text-slate-600">
               {print.mint}
             </p>
-            <p class="text-sm text-neutral">
+            <p class="text-sm text-slate-400">
               {new Date(print.ts).toLocaleString()}
             </p>
           </div>
