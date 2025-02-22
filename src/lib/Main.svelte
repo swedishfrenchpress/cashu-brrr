@@ -23,16 +23,13 @@
 <!-- Updated background with more subtle gradient -->
 <div class="min-h-screen bg-[#163300] px-4 py-12">
   <div class="mx-auto max-w-4xl">
-    <!-- Enhanced Header Section -->
+    <!-- Updated Header Section -->
     <div class="text-center mb-0">
-      <h1 class="font-['Bank_TM'] text-[#9FE870] transform -rotate-6 flex flex-col gap-[-20px] mb-[-50px]">
-        <span style="font-size: 96px;">Money printer</span>
-        <span style="font-size: 120px; margin-top: -30px;">Go</span>
-        <span style="font-size: 144px; margin-top: -100px;">Brrrrrr</span>
+      <h1 class="font-['Bank_TM'] text-[#9FE870] transform -rotate-6 flex flex-col gap-[-20px] md:gap-[-10px] mb-[20px]">
+        <span class="text-[48px] md:text-[96px] leading-none">Money printer</span>
+        <span class="text-[48px] md:text-[96px] leading-none mt-[5px] md:mt-[10px]">Go</span>
+        <span class="text-[80px] md:text-[200px] leading-none mt-[-10px] md:mt-[-40px]">Brrrrrr</span>
       </h1>
-      <p class="text-[#9FE870] text-lg mt-16 relative z-10">
-        Create and manage your digital cash notes
-      </p>
     </div>
 
     <!-- Main Card with enhanced shadows and borders -->
@@ -169,5 +166,57 @@
   
   :global(.step-primary:after) {
     @apply shadow-md shadow-[#9FE870]/30;
+  }
+
+  .animate-type-1 {
+    animation: typeIn 0.8s steps(12), blink 1s step-end infinite;
+    white-space: nowrap;
+    border-right: 4px solid transparent;
+  }
+
+  .animate-type-2 {
+    opacity: 0;
+    animation: typeIn 0.3s steps(2) 0.8s forwards, blink 1s step-end infinite;
+    white-space: nowrap;
+    border-right: 4px solid transparent;
+  }
+
+  .animate-type-3 {
+    opacity: 0;
+    animation: shakeIn 0.5s ease-out 1.1s forwards;
+  }
+
+  @keyframes typeIn {
+    from { 
+      width: 0;
+      opacity: 0;
+    }
+    to { 
+      width: 100%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes shakeIn {
+    0% {
+      transform: translateX(-100%) rotate(-6deg);
+      opacity: 0;
+    }
+    60% {
+      transform: translateX(2%) rotate(-6deg);
+    }
+    80% {
+      transform: translateX(-1%) rotate(-6deg);
+    }
+    100% {
+      transform: translateX(0) rotate(-6deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      border-right-color: currentColor;
+    }
   }
 </style>
