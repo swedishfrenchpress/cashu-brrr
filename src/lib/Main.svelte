@@ -16,19 +16,64 @@
     wallet.set(await getWalletWithUnit($mint, unit));
     step.set(2);
   };
+
+  // Reduce number of bills and simplify properties
+  const moneyEmojis = ['💵', '💶', '💷', '💴'];
+  
+  const bills = Array(8).fill(null).map((_, i) => ({  // Reduced from 15 to 8 bills
+    id: i,
+    left: Math.random() * 100,
+    delay: Math.random() * 3,
+    duration: 6 + Math.random() * 4,  // Slightly slower falls
+    emoji: moneyEmojis[i % moneyEmojis.length],  // Cycle through emojis instead of random
+    finalLeft: Math.random() * 20 - 10
+  }));
+
+  // Add mouse tracking
+  let mouseX = $state(0);
+  let mouseY = $state(0);
+  
+  function handleMouseMove(event: MouseEvent) {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+  }
 </script>
 
 <Toaster richColors position="top-right" />
 
-<!-- Updated background with more subtle gradient -->
-<div class="min-h-screen bg-[#163300] px-4 py-12">
+<div class="fixed inset-0 bg-[#163300] -z-10" />
+<div class="money-container fixed inset-0 -z-5 overflow-hidden pointer-events-none">
+  {#each bills as bill}
+    <div
+      class="money absolute"
+      style="
+        left: {bill.left}%;
+        top: -50px;
+        animation-delay: {bill.delay}s;
+        animation-duration: {bill.duration}s;"
+    >
+      {bill.emoji}
+    </div>
+  {/each}
+</div>
+
+<div class="min-h-screen px-4 py-12">
   <div class="mx-auto max-w-4xl">
     <!-- Updated Header Section -->
     <div class="text-center mb-0">
-      <h1 class="font-['Bank_TM'] text-[#9FE870] transform -rotate-6 flex flex-col gap-[-20px] md:gap-[-10px] mb-[20px]">
-        <span class="text-[48px] md:text-[96px] leading-none">Money printer</span>
-        <span class="text-[48px] md:text-[96px] leading-none mt-[5px] md:mt-[10px]">Go</span>
-        <span class="text-[80px] md:text-[200px] leading-none mt-[-10px] md:mt-[-40px]">Brrrrrr</span>
+      <h1 class="font-['Bank_TM'] text-[#9FE870] transform -rotate-6 flex flex-col gap-[-20px] md:gap-[-10px] mb-[10px] relative">
+        <span 
+          class="text-[48px] md:text-[96px] leading-none glow-effect mouse-reactive"
+          style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
+        >Money printer</span>
+        <span 
+          class="text-[48px] md:text-[96px] leading-none mt-[5px] md:mt-[10px] glow-effect mouse-reactive"
+          style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
+        >Go</span>
+        <span 
+          class="text-[80px] md:text-[200px] leading-none mt-[-10px] md:mt-[-40px] glow-effect mouse-reactive"
+          style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
+        >Brrrrrr</span>
       </h1>
     </div>
 
@@ -147,7 +192,14 @@
   </div>
 </div>
 
+<svelte:window on:mousemove={handleMouseMove}/>
+
 <style>
+  /* Add this to ensure the background color is also applied to the body */
+  :global(body) {
+    background-color: #163300;
+  }
+  
   /* Enhanced focus states */
   :global(.btn:focus-visible) {
     outline: 2px solid theme(colors.primary);
@@ -168,55 +220,64 @@
     @apply shadow-md shadow-[#9FE870]/30;
   }
 
-  .animate-type-1 {
-    animation: typeIn 0.8s steps(12), blink 1s step-end infinite;
-    white-space: nowrap;
-    border-right: 4px solid transparent;
+  .glow-effect {
+    position: relative;
+    text-shadow: 0 0 10px rgba(159, 232, 112, 0.5);
+    animation: pulse 2s ease-in-out infinite;
   }
 
-  .animate-type-2 {
-    opacity: 0;
-    animation: typeIn 0.3s steps(2) 0.8s forwards, blink 1s step-end infinite;
-    white-space: nowrap;
-    border-right: 4px solid transparent;
-  }
-
-  .animate-type-3 {
-    opacity: 0;
-    animation: shakeIn 0.5s ease-out 1.1s forwards;
-  }
-
-  @keyframes typeIn {
-    from { 
-      width: 0;
-      opacity: 0;
+  @keyframes pulse {
+    0%, 100% {
+      text-shadow: 
+        0 0 15px rgba(159, 232, 112, 0.5),
+        0 0 30px rgba(159, 232, 112, 0.3),
+        0 0 45px rgba(159, 232, 112, 0.1);
     }
-    to { 
-      width: 100%;
-      opacity: 1;
+    50% {
+      text-shadow: 
+        0 0 30px rgba(159, 232, 112, 0.8),
+        0 0 60px rgba(159, 232, 112, 0.5),
+        0 0 90px rgba(159, 232, 112, 0.3);
     }
   }
 
-  @keyframes shakeIn {
+  .mouse-reactive {
+    transition: transform 0.2s ease;
+  }
+
+  .mouse-reactive:hover {
+    transform: perspective(1000px) 
+               rotateX(calc((var(--mouse-y) - var(--y)) * -0.05deg))
+               rotateY(calc((var(--mouse-x) - var(--x)) * 0.05deg));
+  }
+
+  .money-container {
+    perspective: 1000px;
+  }
+
+  .money {
+    opacity: 0.4;
+    animation: fall linear infinite;
+    font-size: 24px;
+    will-change: transform;  /* Optimize for animations */
+  }
+
+  @keyframes fall {
     0% {
-      transform: translateX(-100%) rotate(-6deg);
+      transform: translateY(0) rotate(0deg);
       opacity: 0;
     }
-    60% {
-      transform: translateX(2%) rotate(-6deg);
-    }
-    80% {
-      transform: translateX(-1%) rotate(-6deg);
+    10% {
+      opacity: 0.4;
     }
     100% {
-      transform: translateX(0) rotate(-6deg);
-      opacity: 1;
+      transform: translateY(calc(100vh + 100px)) rotate(360deg);
+      opacity: 0.3;
     }
   }
 
-  @keyframes blink {
-    50% {
-      border-right-color: currentColor;
-    }
+  /* Simplified hover effect */
+  .money:hover {
+    opacity: 0.8;
   }
 </style>
