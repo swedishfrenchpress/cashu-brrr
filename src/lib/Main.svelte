@@ -80,16 +80,16 @@
     <!-- Main Card with enhanced shadows and borders -->
     <div class="rounded-2xl bg-white shadow-[0_0_50px_0_rgba(0,0,0,0.1)] 
                 border border-slate-200/60 backdrop-blur-sm relative z-20">
-      <!-- Progress Steps - Simplified and refined -->
+      <!-- Progress Steps - Enhanced with personality -->
       <div class="px-8 pt-8 pb-6">
         <div class="relative">
           <!-- Progress Bar -->
-          <div class="absolute top-[15px] left-0 w-full h-[2px]">
+          <div class="absolute top-[15px] left-0 w-full h-[3px]"> <!-- Increased height -->
             <!-- Background Line -->
-            <div class="absolute w-full h-full bg-slate-200"></div>
-            <!-- Active Line -->
+            <div class="absolute w-full h-full bg-slate-200 rounded-full"></div>
+            <!-- Active Line with glow effect -->
             <div 
-              class="absolute h-full bg-[#9FE870] transition-all duration-300"
+              class="absolute h-full bg-[#9FE870] rounded-full transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[0_0_10px_rgba(159,232,112,0.5)]"
               style="width: {(($step - 1) / 3) * 100}%"
             ></div>
           </div>
@@ -97,19 +97,34 @@
           <!-- Steps -->
           <div class="relative flex justify-between">
             {#each ['Connect', 'Configure', 'Payment', 'Print'] as stepName, index}
-              <div class="flex flex-col items-center gap-2">
+              <div class="flex flex-col items-center gap-2 group">
                 <div 
-                  class="w-8 h-8 rounded-full border-2 flex items-center justify-center
-                         transition-all duration-300 text-sm
+                  class="w-10 h-10 rounded-full border-3 flex items-center justify-center
+                         transition-all duration-300 text-base font-bold relative
                          {index + 1 <= $step ? 
-                           'border-[#9FE870] bg-[#9FE870] text-[#163300]' : 
-                           'border-slate-200 bg-white text-slate-400'}"
+                           'border-[#9FE870] bg-[#9FE870] text-[#163300] scale-110' : 
+                           'border-slate-200 bg-white text-slate-400'}
+                         hover:scale-110 transform-gpu
+                         {index + 1 < $step ? 'step-completed' : ''}"
                 >
-                  {index + 1}
+                  <!-- Add checkmark for completed steps -->
+                  {#if index + 1 < $step}
+                    <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  {:else}
+                    {index + 1}
+                  {/if}
+                  
+                  <!-- Glow effect for active step -->
+                  {#if index + 1 === $step}
+                    <div class="absolute inset-0 rounded-full animate-pulse-subtle bg-[#9FE870]/20 -z-10"></div>
+                  {/if}
                 </div>
                 <span 
-                  class="text-sm transition-colors duration-300
-                         {index + 1 <= $step ? 'text-[#163300]' : 'text-slate-400'}"
+                  class="text-sm font-medium transition-all duration-300
+                         {index + 1 <= $step ? 'text-[#163300]' : 'text-slate-400'}
+                         group-hover:scale-105"
                 >
                   {stepName}
                 </span>
@@ -279,5 +294,35 @@
   /* Simplified hover effect */
   .money:hover {
     opacity: 0.8;
+  }
+
+  /* Add these new styles */
+  .step-completed {
+    animation: bounce-subtle 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes bounce-subtle {
+    0%, 100% { transform: scale(1.1); }
+    50% { transform: scale(1.2); }
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 0.8; transform: scale(1.2); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s ease-in-out infinite;
+  }
+
+  /* Enhanced progress bar glow effect */
+  .progress-glow {
+    filter: drop-shadow(0 0 8px rgba(159, 232, 112, 0.5));
+  }
+
+  /* Ensure smooth transitions */
+  .transform-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 </style>
