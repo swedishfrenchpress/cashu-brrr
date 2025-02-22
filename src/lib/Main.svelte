@@ -21,21 +21,23 @@
 <Toaster richColors position="top-right" />
 
 <!-- Updated background with more subtle gradient -->
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 px-4 py-12">
+<div class="min-h-screen bg-[#163300] px-4 py-12">
   <div class="mx-auto max-w-4xl">
     <!-- Enhanced Header Section -->
-    <div class="text-center mb-10">
-      <h1 class="text-3xl font-bold text-slate-900 mb-3">
-        Money printer go brrrrr
+    <div class="text-center mb-0">
+      <h1 class="font-['Bank_TM'] text-[#9FE870] transform -rotate-6 flex flex-col gap-[-20px] mb-[-50px]">
+        <span style="font-size: 96px;">Money printer</span>
+        <span style="font-size: 120px; margin-top: -30px;">Go</span>
+        <span style="font-size: 144px; margin-top: -100px;">Brrrrrr</span>
       </h1>
-      <p class="text-slate-600 text-lg">
+      <p class="text-[#9FE870] text-lg mt-16 relative z-10">
         Create and manage your digital cash notes
       </p>
     </div>
 
     <!-- Main Card with enhanced shadows and borders -->
     <div class="rounded-2xl bg-white shadow-[0_0_50px_0_rgba(0,0,0,0.1)] 
-                border border-slate-200/60 backdrop-blur-sm">
+                border border-slate-200/60 backdrop-blur-sm relative z-20">
       <!-- Progress Steps - Simplified and refined -->
       <div class="px-8 pt-8 pb-6">
         <div class="relative">
@@ -45,7 +47,7 @@
             <div class="absolute w-full h-full bg-slate-200"></div>
             <!-- Active Line -->
             <div 
-              class="absolute h-full bg-primary transition-all duration-300"
+              class="absolute h-full bg-[#9FE870] transition-all duration-300"
               style="width: {(($step - 1) / 3) * 100}%"
             ></div>
           </div>
@@ -58,14 +60,14 @@
                   class="w-8 h-8 rounded-full border-2 flex items-center justify-center
                          transition-all duration-300 text-sm
                          {index + 1 <= $step ? 
-                           'border-primary bg-primary text-white' : 
+                           'border-[#9FE870] bg-[#9FE870] text-[#163300]' : 
                            'border-slate-200 bg-white text-slate-400'}"
                 >
                   {index + 1}
                 </div>
                 <span 
                   class="text-sm transition-colors duration-300
-                         {index + 1 <= $step ? 'text-primary' : 'text-slate-400'}"
+                         {index + 1 <= $step ? 'text-[#163300]' : 'text-slate-400'}"
                 >
                   {stepName}
                 </span>
@@ -98,10 +100,11 @@
           {#if $step === 1}
             <button
               onclick={confirm}
-              class="inline-flex items-center justify-center h-10 px-5 font-medium tracking-wide
-                     text-white transition-all duration-200 bg-primary rounded-lg
-                     hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20
-                     disabled:opacity-50 disabled:hover:bg-primary"
+              class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
+                     text-[#163300] transition-all duration-200 bg-[#9FE870] rounded-[10000px]
+                     hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#9FE870]/20
+                     disabled:opacity-50 disabled:hover:bg-[#9FE870]
+                     shadow-[0px_2px_4px_0px_rgba(0,0,0,0.1),0px_8px_8px_0px_rgba(0,0,0,0.05),0px_18px_11px_0px_rgba(0,0,0,0.05),0px_32px_13px_0px_rgba(0,0,0,0.01),inset_0px_4px_14px_0px_rgba(255,255,255,0.45)]"
               disabled={!$mint}
             >
               Next
@@ -165,6 +168,6 @@
   }
   
   :global(.step-primary:after) {
-    @apply shadow-md shadow-primary/30;
+    @apply shadow-md shadow-[#9FE870]/30;
   }
 </style>

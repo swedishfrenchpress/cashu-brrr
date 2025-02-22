@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Bank TM';
+  src: url('/fonts/Bank TM.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
+         text-[#163300] transition-all duration-200 rounded-[10000px] border border-solid border-[1px]
+         bg-[#9FE870] hover:opacity-90
+         shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]
+         disabled:opacity-50 disabled:hover:bg-[#9FE870];
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
+         text-[#454745] transition-all duration-200 rounded-[10000px] border border-solid border-[1px]
+         bg-[#16330014] hover:bg-[#16330028]
+         shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]
+         disabled:opacity-50;
+}

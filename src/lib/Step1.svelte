@@ -93,7 +93,7 @@
 </script>
 
 <div class="flex flex-col gap-5 justify-center items-center">
-  <p class="text-center font-medium text-lg text-slate-700">Connect to mint</p>
+  <p class="text-center font-medium text-lg text-[#0E0F0C]">Connect to mint</p>
   
   <!-- Primary Connection Input -->
   <div class="flex gap-2 justify-center w-full">
@@ -101,9 +101,9 @@
       placeholder="Type mint url here..."
       type="text"
       bind:value={mintUrl}
-      class="flex-1 h-12 px-4 rounded-lg border border-slate-200 bg-white
-             text-slate-700 placeholder:text-slate-400
-             focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-transparent
+      class="flex-1 h-12 px-4 rounded-lg border border-[#868685] bg-white
+             text-[#0E0F0C] placeholder:text-[#6A6C6A]
+             focus:outline-none focus:ring-2 focus:ring-[#9FE870] focus:border-transparent
              transition-all duration-200"
       onkeypress={(e) => {
         if (e.key === "Enter") {
@@ -114,9 +114,10 @@
     <button
       onclick={connect}
       class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
-             text-white transition-all duration-200 bg-primary rounded-lg
-             hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20
-             disabled:opacity-50 disabled:hover:bg-primary"
+             text-[#163300] transition-all duration-200 rounded-[10000px] border border-solid
+             bg-[#9FE870] hover:opacity-90
+             shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]
+             disabled:opacity-50"
       disabled={isConnecting}
     >
       Connect
@@ -131,7 +132,8 @@
           <button
             class="inline-flex items-center justify-center px-4 py-2 font-medium
                    text-slate-600 bg-slate-50/80 rounded-lg
-                   hover:bg-slate-100 transition-all duration-200"
+                   hover:bg-slate-100 transition-all duration-200
+                   shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
             onclick={() => (mintUrl = m.url)}
           >
             {m.url}
@@ -142,7 +144,8 @@
           <button
             class="inline-flex items-center justify-center px-4 py-2 font-medium
                    text-slate-600 bg-slate-50/80 rounded-lg
-                   hover:bg-slate-100 transition-all duration-200"
+                   hover:bg-slate-100 transition-all duration-200
+                   shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
             onclick={() => (mintUrl = m)}
           >
             {m}
@@ -152,8 +155,9 @@
     {/if}
     <button
       class="inline-flex items-center justify-center px-4 py-2 font-medium
-             text-slate-600 bg-slate-50/80 rounded-lg
-             hover:bg-slate-100 transition-all duration-200"
+             text-[#454745] bg-[#16330014] rounded-lg
+             hover:bg-[#16330028] transition-all duration-200
+             shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
       onclick={discoverMints}
       disabled={isDiscovering}
     >
@@ -163,15 +167,15 @@
 
   <div class="h-10">
     {#if $mint}
-      <div class="flex gap-1 badge">
-        <p>Connected to</p>
-        <p>{$mint.url}</p>
+      <div class="flex gap-1 px-3 py-1.5 rounded-lg bg-[#16330014]">
+        <p class="text-[#454745]">Connected to</p>
+        <p class="text-[#163300]">{$mint.url}</p>
       </div>
     {/if}
   </div>
 
   {#if $mint}
-    <p class="text-center text-slate-600 mb-2">Select a currency</p>
+    <p class="text-center text-[#454745] mb-2">Select a currency</p>
     <div class="flex items-center gap-4 justify-center">
       <UnitSelector bind:unit />
     </div>
@@ -183,7 +187,7 @@
       class="inline-flex items-center justify-center h-10 px-5 font-medium
              text-slate-600 transition-all duration-200 bg-transparent rounded-lg
              border border-slate-200 hover:bg-slate-50
-             focus:outline-none focus:ring-2 focus:ring-slate-200"
+             shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
       onclick={() => document.getElementById('prints-section')?.scrollIntoView({ behavior: 'smooth' })}
     >
       Re-print previous print
