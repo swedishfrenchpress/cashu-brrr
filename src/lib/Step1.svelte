@@ -105,24 +105,26 @@
     <div class="relative flex-1">
       <input
         type="text"
+        placeholder=" "
         bind:value={mintUrl}
         class="peer w-full bg-transparent text-[#0E0F0C] text-sm 
                border border-[#868685] rounded-lg px-3 py-3
-               transition-all duration-300 ease-in-out
+               transition-colors duration-150
                hover:border-[#6A6C6A]
                focus:outline-none focus:border-[#9FE870] focus:ring-1 focus:ring-[#9FE870]
                shadow-sm focus:shadow"
       />
       <label 
-        class="absolute cursor-text bg-white px-1 left-2.5 top-3
-               text-[#6A6C6A] text-sm transition-all transform origin-left
-               peer-focus:-top-2 peer-focus:left-2.5 peer-focus:text-xs 
-               peer-focus:text-[#454745] peer-focus:scale-90
-               peer-[:not(:placeholder-shown)]:-top-2 
-               peer-[:not(:placeholder-shown)]:left-2.5
-               peer-[:not(:placeholder-shown)]:text-xs
-               peer-[:not(:placeholder-shown)]:text-[#454745]
-               peer-[:not(:placeholder-shown)]:scale-90"
+        class="absolute text-sm text-[#6A6C6A] duration-150 transform 
+               -translate-y-4 scale-75 top-2 z-10 origin-[0] 
+               bg-white px-2 
+               peer-placeholder-shown:scale-100 
+               peer-placeholder-shown:-translate-y-1/2 
+               peer-placeholder-shown:top-1/2 
+               peer-focus:top-2 peer-focus:scale-75 
+               peer-focus:-translate-y-4 
+               peer-focus:text-[#454745]
+               left-1 pointer-events-none"
       >
         Enter mint url here...
       </label>
