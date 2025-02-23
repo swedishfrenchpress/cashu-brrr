@@ -103,12 +103,12 @@
   </div>
   
   <!-- Primary Connection Input -->
-  <div class="flex gap-2 justify-center w-full">
+  <div class="flex flex-col sm:flex-row gap-2 justify-center w-full">
     <div class="flex-1">
       <div class="flex">
         <span class="inline-flex items-center px-3 text-sm text-[#6A6C6A] 
                      bg-[#F3F4F6] border border-[#868685] border-e-0 
-                     rounded-s-lg">
+                     rounded-s-lg min-w-[85px] justify-center">
           https://
         </span>
         <input
@@ -129,7 +129,8 @@
       class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
              text-[#163300] transition-all duration-200 rounded-[10000px]
              bg-[#9FE870] hover:opacity-90 disabled:opacity-50
-             shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]"
+             shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]
+             w-full sm:w-auto"
       disabled={isConnecting}
     >
       {#if isConnecting}
