@@ -41,7 +41,7 @@
 
 <Toaster richColors position="top-right" />
 
-<div class="fixed inset-0 bg-[#163300] -z-10" />
+<div class="fixed inset-0 -z-10 modern-money-bg"></div>
 <div class="money-container fixed inset-0 -z-5 overflow-hidden pointer-events-none">
   {#each bills as bill}
     <div
@@ -212,7 +212,7 @@
 <style>
   /* Add this to ensure the background color is also applied to the body */
   :global(body) {
-    background-color: #163300;
+    background-color: transparent;
   }
   
   /* Enhanced focus states */
@@ -324,5 +324,43 @@
   .transform-gpu {
     transform: translateZ(0);
     backface-visibility: hidden;
+  }
+
+  .modern-money-bg {
+    background: 
+      /* Subtle metallic texture */
+      linear-gradient(
+        120deg,
+        rgba(159, 232, 112, 0.08) 0%,
+        transparent 50%,
+        rgba(159, 232, 112, 0.08) 100%
+      ),
+      /* Rich depth gradient */
+      radial-gradient(
+        circle at 50% 30%,
+        #1a3d00 0%,
+        #163300 100%
+      );
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -10;
+    animation: subtle-shimmer 8s ease-in-out infinite;
+    backdrop-filter: contrast(1.1);
+  }
+
+  @keyframes subtle-shimmer {
+    0%, 100% {
+      background-position: 
+        0% 0%,
+        center center;
+    }
+    50% {
+      background-position: 
+        100% 100%,
+        center center;
+    }
   }
 </style>
