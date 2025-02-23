@@ -328,14 +328,23 @@
 
   .modern-money-bg {
     background: 
-      /* Subtle metallic texture */
-      linear-gradient(
-        120deg,
-        rgba(159, 232, 112, 0.08) 0%,
-        transparent 50%,
-        rgba(159, 232, 112, 0.08) 100%
+      /* Fine geometric pattern overlay - reduced opacity and increased spacing */
+      repeating-linear-gradient(
+        45deg,
+        rgba(159, 232, 112, 0.03) 0px,
+        rgba(159, 232, 112, 0.03) 1px,
+        transparent 1px,
+        transparent 6px
       ),
-      /* Rich depth gradient */
+      /* Ornate guilloche-inspired pattern - reduced opacity and increased spacing */
+      repeating-radial-gradient(
+        circle at 50% 50%,
+        rgba(159, 232, 112, 0.02) 0px,
+        rgba(159, 232, 112, 0.02) 1px,
+        transparent 2px,
+        transparent 20px
+      ),
+      /* Original rich depth gradient */
       radial-gradient(
         circle at 50% 30%,
         #1a3d00 0%,
@@ -347,19 +356,21 @@
     right: 0;
     bottom: 0;
     z-index: -10;
-    animation: subtle-shimmer 8s ease-in-out infinite;
-    backdrop-filter: contrast(1.1);
+    animation: subtle-shimmer 12s ease-in-out infinite; /* Slowed down animation */
+    backdrop-filter: contrast(1.05); /* Reduced contrast */
   }
 
   @keyframes subtle-shimmer {
     0%, 100% {
       background-position: 
-        0% 0%,
+        0 0,
+        0 0,
         center center;
     }
     50% {
       background-position: 
-        100% 100%,
+        5px 5px, /* Reduced movement */
+        3px 3px,
         center center;
     }
   }
