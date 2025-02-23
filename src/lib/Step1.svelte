@@ -230,8 +230,9 @@
       
       <div class="grid gap-4 mt-4">
         {#each $prints as print}
-          <div class="flex flex-col gap-3 bg-white rounded-xl p-6 border border-[#868685] hover:border-[#6A6C6A] transition-all duration-200">
-            <div class="flex items-center justify-between">
+          <div class="flex flex-col gap-3 bg-white rounded-xl p-4 sm:p-6 border border-[#868685] hover:border-[#6A6C6A] transition-all duration-200">
+            <!-- Header section -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div class="flex flex-col">
                 <span class="text-sm font-medium text-[#0E0F0C]">
                   {print.tokens.length} {print.tokens[0].unit === 'sat' ? 'Bitcoin' : print.tokens[0].unit} {print.tokens.length === 1 ? 'note' : 'notes'}
@@ -244,7 +245,8 @@
                 class="inline-flex items-center justify-center h-10 px-5 font-medium
                        text-[#454745] bg-[#16330014] rounded-[10000px]
                        hover:bg-[#16330028] transition-all duration-200
-                       shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
+                       shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]
+                       w-full sm:w-auto"
                 onclick={() => reprint(print)}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -254,20 +256,34 @@
               </button>
             </div>
 
-            <NotesCalc
-              selectedDenomination={getAmountForTokenSet(print.tokens[0].proofs)}
-              selectedNumberOfNotes={print.tokens.length}
-              unit={print.tokens[0].unit}
-              isDonate={print.donation}
-              donationAmount={getAmountForTokenSet(print.donation?.proofs??[])}
-            />
+            <!-- Notes calculation section -->
+            <div class="flex flex-wrap items-center gap-2 text-sm">
+              <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-[#9FE870] text-[#163300]">
+                1 <svg class="w-4 h-4 ml-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </span>
+              <span class="text-[#454745]">×</span>
+              <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-[#16330014] text-[#454745]">
+                ₿ 1 sat
+              </span>
+              <span class="text-[#454745]">=</span>
+              <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-[#16330014] text-[#454745]">
+                ₿ 1 sat
+              </span>
+              <span class="text-[#454745]">+</span>
+              <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-[#16330014] text-[#454745]">
+                ₿ 1 sat
+              </span>
+            </div>
             
+            <!-- Mint URL section -->
             <div class="flex flex-col gap-1 pt-2 border-t border-[#E5E7EB]">
-              <div class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#454745]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <div class="flex items-center gap-2 overflow-hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-[#454745]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                 </svg>
-                <span class="text-sm text-[#454745] break-all">
+                <span class="text-sm text-[#454745] truncate">
                   {print.mint}
                 </span>
               </div>
