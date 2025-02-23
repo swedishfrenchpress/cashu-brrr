@@ -374,4 +374,36 @@
         center center;
     }
   }
+
+  .discover-mints-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: #4a5568;
+    background: white;
+    border: 1px dashed #CBD5E0;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .discover-mints-btn:hover {
+    background: #F7FAFC;
+    border-style: solid;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .discover-mints-btn:active {
+    transform: translateY(0px);
+  }
+
+  /* Optional: Add a subtle icon */
+  .discover-mints-btn::before {
+    content: "✨";
+    font-size: 0.875rem;
+    margin-right: 0.25rem;
+  }
 </style>
