@@ -181,46 +181,79 @@
     </button>
   </div>
 
-  <div class="h-10">
+  <div class="w-full">
     {#if $mint}
-      <div class="flex gap-1 px-3 py-1.5 rounded-lg bg-[#16330014]">
-        <p class="text-[#454745]">Connected to</p>
-        <p class="text-[#163300]">{$mint.url}</p>
+      <div class="flex flex-col gap-4 w-full">
+        <div class="w-full p-6 rounded-xl bg-gradient-to-r from-[#9FE87015] to-[#9FE87033] border border-[#9FE870]">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="bg-[#9FE870] rounded-full p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#163300]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-[#163300]">Successfully Connected!</h3>
+          </div>
+          
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-[#454745]">Mint URL:</span>
+              <span class="font-medium text-[#163300] break-all">{$mint.url}</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-[#454745]">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>You can now select your preferred currency and proceed to the next step</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full">
+          <p class="text-left font-medium text-lg text-[#0E0F0C]">Select Your Currency</p>
+          <p class="text-left text-sm text-[#454745] mt-1">
+            Choose your preferred currency (sats will be auto-selected if it's the only option)
+          </p>
+          <div class="flex items-center gap-4 mt-4">
+            <UnitSelector bind:unit />
+          </div>
+        </div>
       </div>
     {/if}
   </div>
 
-  {#if $mint}
-    <p class="text-center text-[#454745] mb-2">Select a currency</p>
-    <div class="flex items-center gap-4 justify-center">
-      <UnitSelector bind:unit />
-    </div>
-  {/if}
-
   {#if $prints.length}
-    <div class="divider text-slate-400">or</div>
-    <button
-      class="inline-flex items-center justify-center h-10 px-5 font-medium
-             text-slate-600 transition-all duration-200 bg-transparent rounded-lg
-             border border-slate-200 hover:bg-slate-50
-             shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
-      onclick={() => document.getElementById('prints-section')?.scrollIntoView({ behavior: 'smooth' })}
-    >
-      Re-print previous print
-    </button>
-    
-    <div id="prints-section" class="h-fit mt-4">
-      <div class="h-full max-h-52 lg:max-h-96 flex flex-col gap-3 overflow-x-scroll">
+    <div class="w-full mt-8 border-t border-[#E5E7EB] pt-8">
+      <p class="text-left font-medium text-lg text-[#0E0F0C]">Previous Prints</p>
+      <p class="text-left text-sm text-[#454745] mt-1">
+        Select a previous print to quickly recreate it
+      </p>
+      
+      <div class="grid gap-4 mt-4">
         {#each $prints as print}
-          <div class="flex gap-2 flex-col bg-slate-50 rounded-lg p-4 w-80 border border-slate-200">
-            <button
-              class="inline-flex items-center justify-center h-8 px-4 font-medium
-                     text-slate-600 transition-all duration-200 bg-white rounded-lg
-                     border border-slate-200 hover:bg-slate-50"
-              onclick={() => reprint(print)}
-            >
-              Print
-            </button>
+          <div class="flex flex-col gap-3 bg-white rounded-xl p-6 border border-[#868685] hover:border-[#6A6C6A] transition-all duration-200">
+            <div class="flex items-center justify-between">
+              <div class="flex flex-col">
+                <span class="text-sm font-medium text-[#0E0F0C]">
+                  {print.tokens.length} {print.tokens[0].unit === 'sat' ? 'Bitcoin' : print.tokens[0].unit} {print.tokens.length === 1 ? 'note' : 'notes'}
+                </span>
+                <span class="text-sm text-[#454745]">
+                  {new Date(print.ts).toLocaleString()}
+                </span>
+              </div>
+              <button
+                class="inline-flex items-center justify-center h-10 px-5 font-medium
+                       text-[#454745] bg-[#16330014] rounded-[10000px]
+                       hover:bg-[#16330028] transition-all duration-200
+                       shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
+                onclick={() => reprint(print)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Print again
+              </button>
+            </div>
+
             <NotesCalc
               selectedDenomination={getAmountForTokenSet(print.tokens[0].proofs)}
               selectedNumberOfNotes={print.tokens.length}
@@ -228,12 +261,17 @@
               isDonate={print.donation}
               donationAmount={getAmountForTokenSet(print.donation?.proofs??[])}
             />
-            <p class="break-all text-sm text-slate-600">
-              {print.mint}
-            </p>
-            <p class="text-sm text-slate-400">
-              {new Date(print.ts).toLocaleString()}
-            </p>
+            
+            <div class="flex flex-col gap-1 pt-2 border-t border-[#E5E7EB]">
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#454745]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+                <span class="text-sm text-[#454745] break-all">
+                  {print.mint}
+                </span>
+              </div>
+            </div>
           </div>
         {/each}
       </div>

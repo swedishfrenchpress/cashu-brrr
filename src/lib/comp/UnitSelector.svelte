@@ -23,8 +23,8 @@
 {#if units.length === 1}
   <div class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
               text-[#163300] transition-all duration-200 rounded-[10000px] border border-solid border-[1px]
-              bg-[#9FE870] 
-              shadow-[0px_2px_4px_0px_rgba(0,0,0,0.1),0px_8px_8px_0px_rgba(0,0,0,0.05),0px_18px_11px_0px_rgba(0,0,0,0.05),0px_32px_13px_0px_rgba(0,0,0,0.01),inset_0px_4px_14px_0px_rgba(255,255,255,0.45)]">
+              bg-[#9FE870] hover:opacity-90
+              shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]">
     {units[0]}
   </div>
 {:else}
@@ -34,7 +34,7 @@
         class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
                transition-all duration-200 rounded-[10000px] border border-solid border-[1px]
                {unit === unitOption ? 
-                 'text-[#163300] bg-[#9FE870] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.1),0px_8px_8px_0px_rgba(0,0,0,0.05),0px_18px_11px_0px_rgba(0,0,0,0.05),0px_32px_13px_0px_rgba(0,0,0,0.01),inset_0px_4px_14px_0px_rgba(255,255,255,0.45)] hover:opacity-90' : 
+                 'text-[#163300] bg-[#9FE870] shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] hover:opacity-90' : 
                  'bg-[#16330014] text-[#454745] hover:bg-[#16330028]'}"
         onclick={() => unit = unitOption}
       >
