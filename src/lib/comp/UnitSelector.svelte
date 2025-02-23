@@ -21,24 +21,24 @@
 </script>
 
 {#if units.length === 1}
-  <div class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
-              text-[#163300] transition-all duration-200 rounded-[10000px] border border-solid border-[1px]
+  <div class="inline-flex items-center justify-center h-10 px-5 font-medium
+              text-[#163300] transition-all duration-200 rounded-lg
               bg-[#9FE870] hover:opacity-90
               shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]">
-    {units[0]}
+    {units[0].toUpperCase()}
   </div>
 {:else}
   <div class="flex flex-wrap gap-2">
     {#each units as unitOption}
       <button
-        class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide
-               transition-all duration-200 rounded-[10000px] border border-solid border-[1px]
+        class="inline-flex items-center justify-center h-10 px-5 font-medium
+               transition-all duration-200 rounded-lg
                {unit === unitOption ? 
                  'text-[#163300] bg-[#9FE870] shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] hover:opacity-90' : 
                  'bg-[#16330014] text-[#454745] hover:bg-[#16330028]'}"
         onclick={() => unit = unitOption}
       >
-        {unitOption}
+        {unitOption.toUpperCase()}
       </button>
     {/each}
   </div>

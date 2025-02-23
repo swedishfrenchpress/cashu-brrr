@@ -92,9 +92,9 @@
   };
 </script>
 
-<div class="flex flex-col gap-5 justify-center items-center w-full">
+<div class="flex flex-col gap-8 justify-center items-center w-full">
   <div class="w-full">
-    <p class="text-left font-medium text-lg text-[#0E0F0C]">Connect to mint</p>
+    <p class="text-left font-semibold text-2xl text-[#0E0F0C] mb-2">Connect to mint</p>
     <p class="text-left text-sm text-[#454745] mt-1">
       Enter a Cashu mint URL to connect your wallet. You can choose from our suggested mints below.
     </p>
@@ -184,7 +184,8 @@
   <div class="w-full">
     {#if $mint}
       <div class="flex flex-col gap-4 w-full">
-        <div class="w-full p-6 rounded-xl bg-gradient-to-r from-[#9FE87015] to-[#9FE87033] border border-[#9FE870]">
+        <div class="w-full p-6 rounded-xl bg-gradient-to-r from-[#9FE87015] to-[#9FE87033] 
+                    border border-[#9FE870] shadow-sm">
           <div class="flex items-center gap-3 mb-3">
             <div class="bg-[#9FE870] rounded-full p-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#163300]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -208,11 +209,8 @@
           </div>
         </div>
 
-        <div class="w-full">
-          <p class="text-left font-medium text-lg text-[#0E0F0C]">Select Your Currency</p>
-          <p class="text-left text-sm text-[#454745] mt-1">
-            Choose your preferred currency (sats will be auto-selected if it's the only option)
-          </p>
+        <div class="w-full bg-white rounded-xl p-6 border border-[#E5E7EB]">
+          <p class="text-left font-semibold text-xl text-[#0E0F0C]">Select Your Currency</p>
           <div class="flex items-center gap-4 mt-4">
             <UnitSelector bind:unit />
           </div>
@@ -222,8 +220,8 @@
   </div>
 
   {#if $prints.length}
-    <div class="w-full mt-8 border-t border-[#E5E7EB] pt-8">
-      <p class="text-left font-medium text-lg text-[#0E0F0C]">Previous Prints</p>
+    <div class="w-full mt-8">
+      <p class="text-left font-semibold text-xl text-[#0E0F0C] mb-2">Previous Prints</p>
       <p class="text-left text-sm text-[#454745] mt-1">
         Select a previous print to quickly recreate it
       </p>
