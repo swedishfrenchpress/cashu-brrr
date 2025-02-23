@@ -171,7 +171,7 @@
     {/if}
     <button
       class="inline-flex items-center justify-center px-4 py-2 font-medium
-             text-[#454745] bg-[#16330014] rounded-lg
+             text-[#454745] bg-[#16330014] rounded-[10000px]
              hover:bg-[#16330028] transition-all duration-200
              shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
       onclick={discoverMints}

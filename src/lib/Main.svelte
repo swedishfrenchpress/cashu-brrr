@@ -161,7 +161,7 @@
                      text-[#163300] transition-all duration-200 bg-[#9FE870] rounded-[10000px]
                      hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#9FE870]/20
                      disabled:opacity-50 disabled:hover:bg-[#9FE870]
-                     shadow-[0px_2px_4px_0px_rgba(0,0,0,0.1),0px_8px_8px_0px_rgba(0,0,0,0.05),0px_18px_11px_0px_rgba(0,0,0,0.05),0px_32px_13px_0px_rgba(0,0,0,0.01),inset_0px_4px_14px_0px_rgba(255,255,255,0.45)]"
+                     shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]"
               disabled={!$mint}
             >
               Next
