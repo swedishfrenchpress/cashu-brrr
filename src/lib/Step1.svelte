@@ -92,25 +92,41 @@
   };
 </script>
 
-<div class="flex flex-col gap-5 justify-center items-center">
-  <p class="text-center font-medium text-lg text-[#0E0F0C]">Connect to mint</p>
+<div class="flex flex-col gap-5 justify-center items-center w-full">
+  <div class="w-full">
+    <p class="text-left font-medium text-lg text-[#0E0F0C]">Connect to mint</p>
+    <p class="text-left text-sm text-[#454745] mt-1">
+      Enter a Cashu mint URL to connect your wallet. You can choose from our suggested mints below.
+    </p>
+  </div>
   
   <!-- Primary Connection Input -->
   <div class="flex gap-2 justify-center w-full">
-    <input
-      placeholder="Type mint url here..."
-      type="text"
-      bind:value={mintUrl}
-      class="flex-1 h-12 px-4 rounded-lg border border-[#868685] bg-white
-             text-[#0E0F0C] placeholder:text-[#6A6C6A]
-             focus:outline-none focus:ring-2 focus:ring-[#9FE870] focus:border-transparent
-             transition-all duration-200"
-      onkeypress={(e) => {
-        if (e.key === "Enter") {
-          connect();
-        }
-      }}
-    />
+    <div class="relative flex-1">
+      <input
+        type="text"
+        bind:value={mintUrl}
+        class="peer w-full bg-transparent text-[#0E0F0C] text-sm 
+               border border-[#868685] rounded-lg px-3 py-3
+               transition-all duration-300 ease-in-out
+               hover:border-[#6A6C6A]
+               focus:outline-none focus:border-[#9FE870] focus:ring-1 focus:ring-[#9FE870]
+               shadow-sm focus:shadow"
+      />
+      <label 
+        class="absolute cursor-text bg-white px-1 left-2.5 top-3
+               text-[#6A6C6A] text-sm transition-all transform origin-left
+               peer-focus:-top-2 peer-focus:left-2.5 peer-focus:text-xs 
+               peer-focus:text-[#454745] peer-focus:scale-90
+               peer-[:not(:placeholder-shown)]:-top-2 
+               peer-[:not(:placeholder-shown)]:left-2.5
+               peer-[:not(:placeholder-shown)]:text-xs
+               peer-[:not(:placeholder-shown)]:text-[#454745]
+               peer-[:not(:placeholder-shown)]:scale-90"
+      >
+        Enter mint url here...
+      </label>
+    </div>
     <button
       onclick={connect}
       class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide

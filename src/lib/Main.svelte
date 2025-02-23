@@ -60,8 +60,8 @@
 <div class="min-h-screen px-4 py-12">
   <div class="mx-auto max-w-4xl">
     <!-- Updated Header Section -->
-    <div class="text-center mb-0">
-      <h1 class="font-['Bank_TM'] text-[#9FE870] transform -rotate-6 flex flex-col gap-[-20px] md:gap-[-10px] mb-[10px] relative">
+    <div class="text-center mb-0 relative flex flex-col items-center">
+      <h1 class="font-['Bank_TM'] text-[#9FE870] flex flex-col gap-[-20px] md:gap-[-10px] relative">
         <span 
           class="text-[48px] md:text-[96px] leading-none glow-effect mouse-reactive"
           style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
@@ -71,7 +71,7 @@
           style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
         >Go</span>
         <span 
-          class="text-[80px] md:text-[200px] leading-none mt-[-10px] md:mt-[-40px] glow-effect mouse-reactive"
+          class="text-[80px] md:text-[200px] leading-none mt-[-10px] md:mt-[-40px] glow-effect mouse-reactive transform -rotate-6"
           style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
         >Brrrrrr</span>
       </h1>
