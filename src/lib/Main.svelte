@@ -8,7 +8,10 @@
 
 <div class="min-h-screen w-full bg-yellow-300 px-32">
   <div class="w-full py-8 mb-6">
-    <h1 class="text-center font-ojuju font-bold text-4xl text-gray-900">
+    <p class="text-center font-sedgwick text-green-800 text-3xl mb-2">
+      Brrr is a tool.to.println(“Ecash”)
+    </p>
+    <h1 class="text-center font-ojuju font-bold text-9xl text-gray-900">
       Print your own Ecash notes
     </h1>
   </div>

@@ -22,6 +22,7 @@ export default {
       fontFamily: {
         manrope: ['Manrope', 'sans-serif'],
         ojuju: ['Ojuju', 'sans-serif'],
+        sedgwick: ['"Sedgwick Ave"', 'cursive'],
       },
     },
   },
