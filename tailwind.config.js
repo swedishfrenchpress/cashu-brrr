@@ -18,7 +18,12 @@ export default {
   },
   content: ["./src/**/*.{html,js,svelte,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        manrope: ['Manrope', 'sans-serif'],
+        ojuju: ['Ojuju', 'sans-serif'],
+      },
+    },
   },
   plugins: [require("daisyui")],
 };
