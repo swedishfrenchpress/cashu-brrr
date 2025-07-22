@@ -18,22 +18,23 @@
     </h1>
 
     <!-- Add margin-top to push the printer/notes down -->
-    <div class="relative flex justify-center items-center w-full mt-32" style="height: 600px;">
-      <!-- Notes and printer here, with top values adjusted as needed -->
-      <!-- Left notes -->
-      <img src="/Ecash_Note_template.svg" class="absolute left-8 top-24 w-40 rotate-[-15deg] z-10" alt="ecash note" />
-      <img src="/Ecash_Note_template.svg" class="absolute left-24 top-48 w-40 rotate-[10deg] z-10" alt="ecash note" />
-      <img src="/Ecash_Note_template.svg" class="absolute left-36 top-80 w-40 rotate-[-8deg] z-10" alt="ecash note" />
-      <img src="/Ecash_Note_template.svg" class="absolute left-48 top-96 w-40 rotate-[5deg] z-10" alt="ecash note" />
+    <div class="flex justify-center w-full mt-32">
+      <div class="relative" style="width: 36rem; height: 600px;">
+        <!-- Left notes (move further left with negative left values) -->
+        <img src="/Ecash_Note_template.svg" class="absolute left-[-6rem] top-24 w-40 rotate-[-15deg]" />
+        <img src="/Ecash_Note_template.svg" class="absolute left-[-8rem] top-48 w-40 rotate-[10deg]" />
+        <img src="/Ecash_Note_template.svg" class="absolute left-[-5rem] top-80 w-40 rotate-[-8deg]" />
+        <img src="/Ecash_Note_template.svg" class="absolute left-0 top-96 w-40 rotate-[5deg]" />
 
-      <!-- Printer -->
-      <img src="/printer.png" class="relative z-20 w-[36rem]" alt="Printer illustration" />
+        <!-- Printer -->
+        <img src="/printer.png" class="absolute left-1/2 top-1/2 z-20 w-[36rem] -translate-x-1/2 -translate-y-1/2" />
 
-      <!-- Right notes -->
-      <img src="/Ecash_Note_template.svg" class="absolute right-8 top-24 w-40 rotate-[12deg] z-10" alt="ecash note" />
-      <img src="/Ecash_Note_template.svg" class="absolute right-24 top-48 w-40 rotate-[-10deg] z-10" alt="ecash note" />
-      <img src="/Ecash_Note_template.svg" class="absolute right-36 top-80 w-40 rotate-[7deg] z-10" alt="ecash note" />
-      <img src="/Ecash_Note_template.svg" class="absolute right-48 top-96 w-40 rotate-[-6deg] z-10" alt="ecash note" />
+        <!-- Right notes (move further right with negative right values) -->
+        <img src="/Ecash_Note_template.svg" class="absolute right-[-6rem] top-24 w-40 rotate-[12deg]" />
+        <img src="/Ecash_Note_template.svg" class="absolute right-[-8rem] top-48 w-40 rotate-[-10deg]" />
+        <img src="/Ecash_Note_template.svg" class="absolute right-[-5rem] top-80 w-40 rotate-[7deg]" />
+        <img src="/Ecash_Note_template.svg" class="absolute right-0 top-96 w-40 rotate-[-6deg]" />
+      </div>
     </div>
     <h2 class="text-center font-manrope font-bold text-4xl text-gray-900 mt-12 mb-4">
       Some frequently asked questions
