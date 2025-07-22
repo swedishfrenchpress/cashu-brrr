@@ -12,10 +12,29 @@
     <p class="text-center font-sedgwick text-green-800 text-3xl mb-2">
       Brrr is a tool.to.println(“Ecash”)
     </p>
-    <h1 class="text-center font-ojuju font-bold text-9xl text-gray-900">
+    <!-- Headline -->
+    <h1 class="text-center font-ojuju font-bold text-9xl text-gray-900 z-30 relative">
       Print your own Ecash notes
     </h1>
-    <img src="/printer.png" alt="Printer illustration" class="mx-auto my-6 w-[36rem] h-auto" />
+
+    <!-- Add margin-top to push the printer/notes down -->
+    <div class="relative flex justify-center items-center w-full mt-32" style="height: 600px;">
+      <!-- Notes and printer here, with top values adjusted as needed -->
+      <!-- Left notes -->
+      <img src="/Ecash_Note_template.svg" class="absolute left-8 top-24 w-40 rotate-[-15deg] z-10" alt="ecash note" />
+      <img src="/Ecash_Note_template.svg" class="absolute left-24 top-48 w-40 rotate-[10deg] z-10" alt="ecash note" />
+      <img src="/Ecash_Note_template.svg" class="absolute left-36 top-80 w-40 rotate-[-8deg] z-10" alt="ecash note" />
+      <img src="/Ecash_Note_template.svg" class="absolute left-48 top-96 w-40 rotate-[5deg] z-10" alt="ecash note" />
+
+      <!-- Printer -->
+      <img src="/printer.png" class="relative z-20 w-[36rem]" alt="Printer illustration" />
+
+      <!-- Right notes -->
+      <img src="/Ecash_Note_template.svg" class="absolute right-8 top-24 w-40 rotate-[12deg] z-10" alt="ecash note" />
+      <img src="/Ecash_Note_template.svg" class="absolute right-24 top-48 w-40 rotate-[-10deg] z-10" alt="ecash note" />
+      <img src="/Ecash_Note_template.svg" class="absolute right-36 top-80 w-40 rotate-[7deg] z-10" alt="ecash note" />
+      <img src="/Ecash_Note_template.svg" class="absolute right-48 top-96 w-40 rotate-[-6deg] z-10" alt="ecash note" />
+    </div>
     <h2 class="text-center font-manrope font-bold text-4xl text-gray-900 mt-12 mb-4">
       Some frequently asked questions
     </h2>
