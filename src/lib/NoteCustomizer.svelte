@@ -113,7 +113,7 @@
         >
           <div class="aspect-[3/2] bg-gray-50 rounded flex items-center justify-center overflow-hidden">
             {#if style.type === 'comic' && style.design}
-              <div class="scale-75 transform pointer-events-none">
+              <div class="scale-50 transform pointer-events-none">
                 <ComicNote
                   design={style.design}
                   denomination={100}
@@ -123,7 +123,7 @@
                 />
               </div>
             {:else if style.type === 'custom' && style.colorCode}
-              <div class="scale-75 transform pointer-events-none">
+              <div class="scale-50 transform pointer-events-none">
                 <CustomNote
                   denomination={100}
                   mintUrl="example.mint.com"
@@ -143,29 +143,36 @@
 
   <!-- Right Section - Preview -->
   <div class="flex-1 p-6 flex flex-col">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Customize your note</h2>
+    <h2 class="text-2xl font-bold text-gray-900 mb-3">Customize your note</h2>
     
     <!-- Large Preview -->
     <div class="flex-1 flex justify-center items-center">
       <div class="w-full max-w-3xl">
-        {#if currentStyle?.type === 'comic' && currentStyle?.design}
-          <ComicNote
-            design={currentStyle.design}
-            denomination={100}
-            mintUrl="example.mint.com"
-            token="example-token"
-            unit="sat"
-          />
-        {:else if currentStyle?.type === 'custom' && currentStyle?.colorCode}
-          <CustomNote
-            denomination={100}
-            mintUrl="example.mint.com"
-            token="example-token"
-            colorCode={currentStyle.colorCode}
-            cornerBrandLogoURL=""
-            brandLogoURL=""
-            unit="sat"
-          />
+        {#if currentStyle}
+          {#if currentStyle.type === 'comic' && currentStyle.design}
+            <ComicNote
+              design={currentStyle.design}
+              denomination={100}
+              mintUrl="example.mint.com"
+              token="example-token"
+              unit="sat"
+            />
+          {:else if currentStyle.type === 'custom' && currentStyle.colorCode}
+            <CustomNote
+              denomination={100}
+              mintUrl="example.mint.com"
+              token="example-token"
+              colorCode={currentStyle.colorCode}
+              cornerBrandLogoURL=""
+              brandLogoURL=""
+              unit="sat"
+            />
+          {:else}
+            <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
+              <p class="text-lg font-semibold mb-2">Style type not supported</p>
+              <p>Style: {JSON.stringify(currentStyle)}</p>
+            </div>
+          {/if}
         {:else}
           <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
             <p class="text-lg font-semibold mb-2">No style selected</p>
