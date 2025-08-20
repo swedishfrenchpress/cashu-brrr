@@ -226,7 +226,8 @@
                 bind:this={brandInput}
               />
               <button
-                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                class="w-full px-4 py-2 text-sm transition-all duration-200 hover:scale-105"
+                style="background-color: #B0791C; color: white; border: 2px solid #CD8A18;"
                 onclick={() => brandInput?.click()}
               >
                 {brandLogoURL ? 'Change Brand Image' : 'Choose Brand Image'}
@@ -246,7 +247,8 @@
                 bind:this={cornerInput}
               />
               <button
-                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                class="w-full px-4 py-2 text-sm transition-all duration-200 hover:scale-105"
+                style="background-color: #B0791C; color: white; border: 2px solid #CD8A18;"
                 onclick={() => cornerInput?.click()}
               >
                 {cornerBrandLogoURL ? 'Change Corner Image' : 'Choose Corner Image'}
@@ -279,11 +281,7 @@
                     unit="sat"
                   />
                 {/key}
-                <!-- Debug info for custom note -->
-                <div class="mt-2 text-xs text-gray-400">
-                  Brand URL: {brandLogoURL ? 'Set' : 'Not set'}<br>
-                  Corner URL: {cornerBrandLogoURL ? 'Set' : 'Not set'}
-                </div>
+
               {:else}
                 <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
                   <p class="text-lg font-semibold mb-2">Style type not supported</p>
@@ -303,26 +301,26 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Navigation -->
-  <div class="flex justify-between items-center mt-8 px-6 pb-6">
-    <!-- Back button -->
-    <button 
-      class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
-      style="color: #CD8A18; background: transparent; border: none;"
-      onclick={goBack}
-    >
-      ← Back
-    </button>
-    
-    <!-- Next button -->
-    <button 
-      class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
-      style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
-      onclick={proceedToNext}
-    >
-      Next →
-    </button>
+    <!-- Navigation -->
+    <div class="flex justify-between items-center mt-8 px-6 pb-6">
+      <!-- Back button -->
+      <button 
+        class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+        style="color: #CD8A18; background: transparent; border: none;"
+        onclick={goBack}
+      >
+        ← Back
+      </button>
+      
+      <!-- Next button -->
+      <button 
+        class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+        style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
+        onclick={proceedToNext}
+      >
+        Next →
+      </button>
+    </div>
   </div>
 </div>

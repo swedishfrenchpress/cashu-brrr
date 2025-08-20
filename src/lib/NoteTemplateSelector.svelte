@@ -41,67 +41,65 @@
   </div>
 
   <!-- Main Content -->
-  <div class="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full">
+  <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
     <!-- Note Selection Section -->
-    <div class="bg-transparent rounded-xl border-0 p-8 mb-8">
-      <div class="flex justify-center gap-12">
-        {#each noteTemplates as template}
-          <button
-            class="group relative bg-white rounded-lg transition-all duration-200 p-4 border-2 {selectedTemplateId === template.id ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'}"
-            onclick={() => selectTemplate(template)}
-          >
-            <!-- Note Preview -->
-            <div class="mb-4 h-48 flex items-center justify-center">
-              {#if template.type === 'comic' && template.design}
-                <div class="scale-75 transform pointer-events-none">
-                  <ComicNote
-                    design={template.design}
-                    denomination={100}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'custom'}
-                <div class="scale-75 transform pointer-events-none">
-                  <CustomNote
-                    denomination={100}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    colorCode="#E4690A"
-                    cornerBrandLogoURL=""
-                    brandLogoURL=""
-                    unit="sat"
-                  />
-                </div>
-              {:else}
-                <!-- Fallback placeholder -->
-                <div class="w-full h-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center pointer-events-none">
-                  <span class="text-amber-600 font-semibold">Custom</span>
-                </div>
-              {/if}
-            </div>
-            
-            <!-- Template Name -->
-            <h3 class="text-base font-normal transition-colors" style="color: #4E4318;">
-              {template.name}
-            </h3>
-          </button>
-        {/each}
-      </div>
+    <div class="flex justify-center gap-8 mb-8">
+      {#each noteTemplates as template}
+        <button
+          class="group relative bg-transparent rounded-lg transition-all duration-200 p-4 border-2 {selectedTemplateId === template.id ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'}"
+          onclick={() => selectTemplate(template)}
+        >
+          <!-- Note Preview -->
+          <div class="mb-4 h-48 flex items-center justify-center">
+            {#if template.type === 'comic' && template.design}
+              <div class="scale-75 transform pointer-events-none">
+                <ComicNote
+                  design={template.design}
+                  denomination={100}
+                  mintUrl="example.mint.com"
+                  token="example-token"
+                  unit="sat"
+                />
+              </div>
+            {:else if template.type === 'custom'}
+              <div class="scale-75 transform pointer-events-none">
+                <CustomNote
+                  denomination={100}
+                  mintUrl="example.mint.com"
+                  token="example-token"
+                  colorCode="#E4690A"
+                  cornerBrandLogoURL=""
+                  brandLogoURL=""
+                  unit="sat"
+                />
+              </div>
+            {:else}
+              <!-- Fallback placeholder -->
+              <div class="w-full h-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center pointer-events-none">
+                <span class="text-amber-600 font-semibold">Custom</span>
+              </div>
+            {/if}
+          </div>
+          
+          <!-- Template Name -->
+          <h3 class="text-base font-normal transition-colors" style="color: #4E4318;">
+            {template.name}
+          </h3>
+        </button>
+      {/each}
     </div>
-  </div>
 
-  <!-- Navigation -->
-  <div class="flex justify-end items-center mt-8 px-6 pb-6">
-    <!-- Next button -->
-    <button 
-      class="btn px-6 py-2 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-      style="background-color: {selectedTemplateId ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplateId ? '#A94705' : '#6B7280'};"
-      onclick={proceedToNextStep}
-      disabled={!selectedTemplateId}
-    >
-      Next →
-    </button>
+    <!-- Navigation -->
+    <div class="flex justify-between items-center mt-8 px-6 pb-6">
+      <div></div> <!-- Empty div for spacing -->
+      <button 
+        class="btn px-6 py-2 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+        style="background-color: {selectedTemplateId ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplateId ? '#A94705' : '#6B7280'};"
+        onclick={proceedToNextStep}
+        disabled={!selectedTemplateId}
+      >
+        Next →
+      </button>
+    </div>
   </div>
 </div>

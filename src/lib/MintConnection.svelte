@@ -89,25 +89,36 @@
       const activeRelays = DEFAULT_RELAYS;
       const filter: Filter = { kinds: [38000], limit: 2000 };
       
+      console.log('Starting mint discovery with relays:', activeRelays);
+      
       pool.subscribeMany(activeRelays, [filter], {
         onevent: (event: Event) => {
+          console.log('Received Nostr event:', event);
           const uTag = event.tags.find((t) => t[0] === "u");
           const kTag = event.tags.find((t) => t[0] === "k");
           if (!kTag || !uTag) {
+            console.log('Missing required tags:', { uTag, kTag });
             return;
           }
 
           if (kTag[1] != "38172") {
+            console.log('Wrong k tag value:', kTag[1]);
             return;
           }
           const mintUrl = uTag[1];
+          console.log('Adding discovered mint:', mintUrl);
           discoveredMints.add(mintUrl);
         },
       });
       await delay(2000);
+      
+      // If no mints were discovered, show a helpful message
+      if ($discoveredMints.length === 0) {
+        toast.info("No mints discovered from Nostr network. You can still manually enter a mint URL.");
+      }
     } catch (error: any) {
-      console.error(error);
-      toast.error(error.message);
+      console.error('Mint discovery error:', error);
+      toast.error("Failed to discover mints: " + error.message);
     } finally {
       isDiscovering = false;
     }
@@ -190,12 +201,13 @@
 
       <!-- Suggested Mints -->
       <div class="mb-6">
-        <p class="text-sm font-medium text-gray-700 mb-4">Most relevant:</p>
+        <p class="text-sm font-medium text-gray-700 mb-4">Popular mints:</p>
         <div class="flex gap-3">
           {#each suggestedMints as suggestedMint}
             <button
               onclick={() => selectMint(suggestedMint)}
-              class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-100 transition-colors text-center flex-1"
+              class="px-4 py-2 transition-all duration-200 hover:scale-105 text-center flex-1"
+              style="color: #CD8A18; background: transparent !important; border: none !important; box-shadow: none !important;"
             >
               {suggestedMint}
             </button>
@@ -211,6 +223,24 @@
       >
         {isDiscovering ? 'Discovering...' : 'Discover more mints'}
       </button>
+
+      <!-- Discovered Mints -->
+      {#if $discoveredMints.length > 0}
+        <div class="mt-6">
+          <p class="text-sm font-medium text-gray-700 mb-3">Discovered mints:</p>
+          <div class="flex flex-wrap gap-2">
+            {#each $discoveredMints as discoveredMint}
+              <button
+                onclick={() => selectMint(discoveredMint.url)}
+                class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                style="color: #CD8A18;"
+              >
+                {discoveredMint.url}
+              </button>
+            {/each}
+          </div>
+        </div>
+      {/if}
     </div>
 
     <!-- Connection Status -->
