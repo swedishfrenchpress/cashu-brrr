@@ -58,7 +58,10 @@
         { id: 'comic-25', name: 'Design 25', type: 'comic' as const, design: 25, preview: '/Ecash_Note_template.svg' },
       ];
       styleOptions = comicOptions;
-      selectedStyleId = comicOptions[0]?.id || null;
+      // Only set selectedStyleId if it's not already set
+      if (!selectedStyleId) {
+        selectedStyleId = comicOptions[0]?.id || null;
+      }
       console.log('Set comic options, selected:', selectedStyleId);
     } else if (selectedTemplate.type === 'custom') {
       // Custom notes have different color options
@@ -70,7 +73,10 @@
         { id: 'custom-red', name: 'Ruby Red', type: 'custom' as const, colorCode: '#EF4444', preview: '/Ecash_Note_template.svg' },
       ];
       styleOptions = customOptions;
-      selectedStyleId = customOptions[0]?.id || null;
+      // Only set selectedStyleId if it's not already set
+      if (!selectedStyleId) {
+        selectedStyleId = customOptions[0]?.id || null;
+      }
       console.log('Set custom options, selected:', selectedStyleId);
     }
   });
@@ -98,6 +104,13 @@
 
   // Get the currently selected style object
   let currentStyle = $derived(styleOptions.find(style => style.id === selectedStyleId));
+  
+  // Debug: Log when currentStyle changes
+  $effect(() => {
+    console.log('currentStyle changed:', currentStyle);
+    console.log('selectedStyleId:', selectedStyleId);
+    console.log('styleOptions length:', styleOptions.length);
+  });
 </script>
 
 <div class="w-full h-full flex">
