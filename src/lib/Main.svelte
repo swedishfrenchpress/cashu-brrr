@@ -78,4 +78,7 @@
       {/if}
     </div>
   </div>
+  
+  <!-- Bottom spacing -->
+  <div class="h-16"></div>
 </div>

@@ -13,14 +13,14 @@
 
   // Available note templates - based on the comic designs (3-25) and custom notes
   const noteTemplates: NoteTemplate[] = [
-    { id: 'sovereign-1', name: 'Sovereign note', type: 'comic', design: 3, preview: '/Ecash_Note_template.svg' },
-    { id: 'sovereign-2', name: 'Sovereign note', type: 'comic', design: 5, preview: '/Ecash_Note_template.svg' },
+    { id: 'custom-1', name: 'Custom Note', type: 'custom', preview: '/Ecash_Note_template.svg' },
+    { id: 'sovereign-1', name: 'Sovereign note', type: 'comic', design: 5, preview: '/Ecash_Note_template.svg' },
     { id: 'bitpopart-1', name: 'Bitpopart', type: 'comic', design: 7, preview: '/Ecash_Note_template.svg' },
-    { id: 'bitpopart-2', name: 'Bitpopart', type: 'comic', design: 8, preview: '/Ecash_Note_template.svg' },
-    { id: 'custom-1', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
     { id: 'custom-2', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
     { id: 'custom-3', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
     { id: 'custom-4', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
+    { id: 'custom-5', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
+    { id: 'custom-6', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
   ];
 
   let selectedTemplate = $state<string | null>(null);
@@ -51,7 +51,7 @@
         <!-- Note Preview -->
         <div class="aspect-[3/2] mb-4 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
           {#if template.type === 'comic' && template.design}
-            <div class="scale-50 transform">
+            <div class="scale-50 transform pointer-events-none">
               <ComicNote
                 design={template.design}
                 denomination={100}
@@ -60,9 +60,21 @@
                 unit="sat"
               />
             </div>
+          {:else if template.type === 'custom'}
+            <div class="scale-50 transform pointer-events-none">
+              <CustomNote
+                denomination={100}
+                mintUrl="example.mint.com"
+                token="example-token"
+                colorCode="#10B981"
+                cornerBrandLogoURL=""
+                brandLogoURL=""
+                unit="sat"
+              />
+            </div>
           {:else}
-            <!-- Placeholder for custom notes -->
-            <div class="w-full h-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center">
+            <!-- Fallback placeholder -->
+            <div class="w-full h-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center pointer-events-none">
               <span class="text-amber-600 font-semibold">Custom</span>
             </div>
           {/if}
@@ -85,14 +97,18 @@
     {/each}
   </div>
 
-  {#if selectedTemplate}
-    <div class="flex justify-center mt-8">
-      <button 
-        class="btn btn-primary btn-lg px-8"
-        onclick={proceedToNextStep}
-      >
-        Go Brrrrrrrrrrrr →
-      </button>
-    </div>
-  {/if}
+  <div class="flex justify-between items-center mt-8">
+    <!-- Left side - empty for now, will be back button in future steps -->
+    <div></div>
+    
+    <!-- Right side - next button -->
+    <button 
+      class="btn btn-lg px-8 transition-all duration-200 {selectedTemplate ? 'hover:scale-105' : ''}"
+      style="background-color: {selectedTemplate ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplate ? '#A94705' : '#6B7280'};"
+      onclick={proceedToNextStep}
+      disabled={!selectedTemplate}
+    >
+      Go Brrrrrrrrrrrr →
+    </button>
+  </div>
 </div>
