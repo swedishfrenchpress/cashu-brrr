@@ -1,10 +1,11 @@
 <script lang="ts">
-  import Step1 from "./Step1.svelte";
-  import Step2 from "./Step2.svelte";
-  import Step3 from "./Step3.svelte";
-  import Step4 from "./Step4.svelte";
-  import { step } from "./stores.svelte";
+  import PrintTab from "./PrintTab.svelte";
+  import HistoryTab from "./HistoryTab.svelte";
+  import NoteTemplateSelector from "./NoteTemplateSelector.svelte";
   import PostItCard from "./PostItCard.svelte";
+  import { step } from "./stores.svelte";
+
+  let activeTab = $state<'print' | 'history'>('print');
 </script>
 
 <div class="min-h-screen w-full px-32" style="background-color: #FDEB91;">
@@ -46,19 +47,35 @@
     </div>
   </div>
 
-  <div class="m-auto w-full">
-    {#if $step === 1}
-      <Step1 />
-    {:else if $step === 2}
-      <Step2 />
-    {:else if $step === 3}
-      <Step3 />
-    {:else}
-      <Step4 />
-    {/if}
-  </div>
+  <!-- Tabbed Navigation -->
+  <div class="w-full max-w-4xl mx-auto">
+    <!-- Tab Headers -->
+    <div class="flex bg-white rounded-t-lg overflow-hidden shadow-sm">
+      <button
+        class="flex-1 py-4 px-6 text-lg font-semibold transition-all duration-200 {activeTab === 'print' ? 'bg-yellow-400 text-gray-900' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+        onclick={() => activeTab = 'print'}
+      >
+        Print
+      </button>
+      <button
+        class="flex-1 py-4 px-6 text-lg font-semibold transition-all duration-200 {activeTab === 'history' ? 'bg-yellow-400 text-gray-900' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+        onclick={() => activeTab = 'history'}
+      >
+        History
+      </button>
+    </div>
 
-  <div class="flex gap-4 justify-center mt-8">
-    <!-- Action buttons or other controls can go here -->
+    <!-- Tab Content -->
+    <div class="bg-white rounded-b-lg shadow-lg min-h-[500px]">
+      {#if activeTab === 'print'}
+        {#if $step === 1}
+          <NoteTemplateSelector />
+        {:else}
+          <PrintTab />
+        {/if}
+      {:else}
+        <HistoryTab />
+      {/if}
+    </div>
   </div>
 </div>
