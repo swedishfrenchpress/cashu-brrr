@@ -157,15 +157,15 @@
   });
 </script>
 
-<div class="w-full h-full flex">
+<div class="w-full h-full flex" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Left Sidebar - Styles -->
-  <div class="w-64 bg-gray-50 p-4 border-r border-gray-200 flex flex-col h-[600px]">
+  <div class="w-64 bg-gray-50 p-4 border-r border-gray-200 flex flex-col">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">Styles</h3>
     
     <div class="flex-1 overflow-y-auto space-y-2 pr-2">
       {#each styleOptions as style}
         <button
-          class="w-full p-2 bg-white rounded-lg border-2 transition-all duration-200 hover:shadow-md {selectedStyleId === style.id ? 'border-blue-500 shadow-md' : 'border-gray-200 hover:border-gray-300'}"
+          class="w-full p-2 bg-white rounded-lg border-2 transition-all duration-200 {selectedStyleId === style.id ? 'border-blue-500' : 'border-gray-200 hover:border-gray-300'}"
           onclick={() => selectStyle(style.id)}
         >
           <div class="aspect-[3/2] bg-gray-50 rounded flex items-center justify-center overflow-hidden">
@@ -299,7 +299,7 @@
 </div>
 
 <!-- Bottom Navigation -->
-<div class="flex justify-between items-center mt-8 px-6 pb-6">
+<div class="flex justify-between items-center mt-8 px-6 pb-6" style="background-color: #FFFCF6;">
   <!-- Back button -->
   <button 
     class="btn px-6 py-2 transition-all duration-200 hover:scale-105"

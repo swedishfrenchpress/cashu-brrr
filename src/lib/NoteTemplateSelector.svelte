@@ -40,7 +40,7 @@
   }
 </script>
 
-<div class="w-full max-w-6xl mx-auto p-6">
+<div class="w-full max-w-6xl mx-auto p-6" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <h2 class="text-3xl font-bold text-center mb-8">Pick one</h2>
   
   <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
