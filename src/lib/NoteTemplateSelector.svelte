@@ -14,13 +14,7 @@
   // Available note templates - based on the comic designs (3-25) and custom notes
   const noteTemplates: NoteTemplate[] = [
     { id: 'custom-1', name: 'Custom Note', type: 'custom', preview: '/Ecash_Note_template.svg' },
-    { id: 'sovereign-1', name: 'Sovereign note', type: 'comic', design: 5, preview: '/Ecash_Note_template.svg' },
     { id: 'bitpopart-1', name: 'Bitpopart', type: 'comic', design: 7, preview: '/Ecash_Note_template.svg' },
-    { id: 'custom-2', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
-    { id: 'custom-3', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
-    { id: 'custom-4', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
-    { id: 'custom-5', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
-    { id: 'custom-6', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
   ];
 
   let selectedTemplateId = $state<string | null>(null);
@@ -40,13 +34,18 @@
   }
 </script>
 
-<div class="w-full max-w-6xl mx-auto p-6" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
-  <h2 class="text-3xl font-bold text-center mb-8">Pick one</h2>
-  
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Pick one</h2>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full">
+    <div class="grid grid-cols-2 gap-6">
     {#each noteTemplates as template}
               <button
-          class="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-4 border-2 {selectedTemplateId === template.id ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}"
+          class="group relative bg-white rounded-lg transition-all duration-200 p-4 border-2 {selectedTemplateId === template.id ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}"
           onclick={() => selectTemplate(template)}
         >
         <!-- Note Preview -->
@@ -82,7 +81,7 @@
         </div>
         
         <!-- Template Name -->
-        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-primary transition-colors">
+        <h3 class="text-base font-normal transition-colors" style="color: #4E4318;">
           {template.name}
         </h3>
         
@@ -96,6 +95,7 @@
         {/if}
       </button>
     {/each}
+    </div>
   </div>
 
   <!-- Bottom Navigation -->
