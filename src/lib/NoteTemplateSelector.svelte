@@ -1,7 +1,7 @@
 <script lang="ts">
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
-  import { step } from "./stores.svelte";
+  import { step, selectedTemplate } from "./stores.svelte";
   
   interface NoteTemplate {
     id: string;
@@ -23,18 +23,19 @@
     { id: 'custom-6', name: 'Custom notes', type: 'custom', preview: '/Ecash_Note_template.svg' },
   ];
 
-  let selectedTemplate = $state<string | null>(null);
+  let selectedTemplateId = $state<string | null>(null);
 
   function selectTemplate(template: NoteTemplate) {
-    selectedTemplate = template.id;
-    // TODO: Store the selected template in a store for later use
+    selectedTemplateId = template.id;
+    // Store the selected template in the store
+    selectedTemplate.set(template);
     console.log('Selected template:', template);
   }
 
   function proceedToNextStep() {
     if (selectedTemplate) {
-      // Proceed to step 2 (mint connection)
-      step.set(2);
+      // Proceed to customization step (still step 1, but different view)
+      step.set(1.5); // Use 1.5 to indicate customization phase
     }
   }
 </script>
@@ -44,10 +45,10 @@
   
   <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
     {#each noteTemplates as template}
-      <button
-        class="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-4 border-2 {selectedTemplate === template.id ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}"
-        onclick={() => selectTemplate(template)}
-      >
+              <button
+          class="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-4 border-2 {selectedTemplateId === template.id ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}"
+          onclick={() => selectTemplate(template)}
+        >
         <!-- Note Preview -->
         <div class="aspect-[3/2] mb-4 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
           {#if template.type === 'comic' && template.design}
@@ -86,7 +87,7 @@
         </h3>
         
         <!-- Selected indicator -->
-        {#if selectedTemplate === template.id}
+        {#if selectedTemplateId === template.id}
           <div class="absolute top-2 right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -103,10 +104,10 @@
     
     <!-- Right side - next button -->
     <button 
-      class="btn btn-lg px-8 transition-all duration-200 {selectedTemplate ? 'hover:scale-105' : ''}"
-      style="background-color: {selectedTemplate ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplate ? '#A94705' : '#6B7280'};"
+      class="btn btn-lg px-8 transition-all duration-200 {selectedTemplateId ? 'hover:scale-105' : ''}"
+      style="background-color: {selectedTemplateId ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplateId ? '#A94705' : '#6B7280'};"
       onclick={proceedToNextStep}
-      disabled={!selectedTemplate}
+      disabled={!selectedTemplateId}
     >
       Go Brrrrrrrrrrrr →
     </button>

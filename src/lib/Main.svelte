@@ -2,8 +2,9 @@
   import PrintTab from "./PrintTab.svelte";
   import HistoryTab from "./HistoryTab.svelte";
   import NoteTemplateSelector from "./NoteTemplateSelector.svelte";
+  import NoteCustomizer from "./NoteCustomizer.svelte";
   import PostItCard from "./PostItCard.svelte";
-  import { step } from "./stores.svelte";
+  import { step, selectedTemplate } from "./stores.svelte";
 
   let activeTab = $state<'print' | 'history'>('print');
 </script>
@@ -66,10 +67,12 @@
     </div>
 
     <!-- Tab Content -->
-    <div class="bg-white rounded-b-lg shadow-lg min-h-[500px]">
+    <div class="bg-white rounded-b-lg shadow-lg min-h-[600px] max-h-[80vh] overflow-y-auto">
       {#if activeTab === 'print'}
         {#if $step === 1}
           <NoteTemplateSelector />
+        {:else if $step === 1.5 && $selectedTemplate}
+          <NoteCustomizer selectedTemplate={$selectedTemplate} />
         {:else}
           <PrintTab />
         {/if}

@@ -60,6 +60,22 @@ export const selectedNumberOfNotes = writable<number>(1);
 export const donation = writable<number>(1);
 export const preparedTokens = writable<Token[]>([]);
 
+// Template and style selection stores
+export const selectedTemplate = writable<{
+  id: string;
+  name: string;
+  type: 'comic' | 'custom';
+  design?: number;
+} | null>(null);
+
+export const selectedStyle = writable<{
+  id: string;
+  name: string;
+  type: 'comic' | 'custom';
+  design?: number;
+  colorCode?: string;
+} | null>(null);
+
 export const currentQuote = writable<MintQuoteResponse>();
 
 export type DiscoveredMint = {
