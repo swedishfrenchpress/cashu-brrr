@@ -98,13 +98,14 @@
     {/each}
   </div>
 
-  <div class="flex justify-between items-center mt-8">
+  <!-- Bottom Navigation -->
+  <div class="flex justify-between items-center mt-8 px-6 pb-6">
     <!-- Left side - empty for now, will be back button in future steps -->
     <div></div>
     
     <!-- Right side - next button -->
     <button 
-      class="btn btn-lg px-8 transition-all duration-200 {selectedTemplateId ? 'hover:scale-105' : ''}"
+      class="btn px-6 py-2 transition-all duration-200 {selectedTemplateId ? 'hover:scale-105' : ''}"
       style="background-color: {selectedTemplateId ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplateId ? '#A94705' : '#6B7280'};"
       onclick={proceedToNextStep}
       disabled={!selectedTemplateId}

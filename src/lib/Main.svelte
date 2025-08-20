@@ -3,6 +3,7 @@
   import HistoryTab from "./HistoryTab.svelte";
   import NoteTemplateSelector from "./NoteTemplateSelector.svelte";
   import NoteCustomizer from "./NoteCustomizer.svelte";
+  import MintConnection from "./MintConnection.svelte";
   import PostItCard from "./PostItCard.svelte";
   import { step, selectedTemplate } from "./stores.svelte";
 
@@ -73,6 +74,8 @@
           <NoteTemplateSelector />
         {:else if $step === 1.5 && $selectedTemplate}
           <NoteCustomizer selectedTemplate={$selectedTemplate} />
+        {:else if $step === 2}
+          <MintConnection />
         {:else}
           <PrintTab />
         {/if}

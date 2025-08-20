@@ -302,7 +302,8 @@
 <div class="flex justify-between items-center mt-8 px-6 pb-6">
   <!-- Back button -->
   <button 
-    class="btn btn-secondary px-6 py-2"
+    class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+    style="color: #CD8A18; background: transparent; border: none;"
     onclick={goBack}
   >
     ← Back
