@@ -10,7 +10,7 @@
   let activeTab = $state<'print' | 'history'>('print');
 </script>
 
-<div class="min-h-screen w-full px-32" style="background-color: #FDEB91;">
+<div class="min-h-screen w-full px-32">
   <div class="w-full py-8 mb-6">
     <p class="text-center font-sedgwick text-green-800 text-3xl mb-2">
       Brrr is a tool.to.println(“Ecash”)

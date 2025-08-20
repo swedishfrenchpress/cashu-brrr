@@ -3,3 +3,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Animated Gradient Background */
+body {
+  background-image: linear-gradient(to right, #ffefba, #ffffff);
+  background-size: 200% 100%;
+  animation: gradientShift 20s ease infinite;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Ensure the gradient covers the entire viewport */
+html {
+  min-height: 100vh;
+  background: inherit;
+}
