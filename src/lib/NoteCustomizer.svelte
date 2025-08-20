@@ -27,6 +27,13 @@
   // Generate style options based on the selected template type
   let styleOptions: StyleOption[] = $state([]);
   let selectedStyleId = $state<string | null>(null);
+  
+  // Custom note image upload states
+  let brandLogoURL = $state("");
+  let cornerBrandLogoURL = $state("");
+  let brandInput: HTMLInputElement;
+  let cornerInput: HTMLInputElement;
+  let customNoteKey = $state(0); // Force re-render key
 
   // Initialize style options based on template type
   $effect(() => {
@@ -102,6 +109,37 @@
     }
   }
 
+  // File upload functions for custom notes
+  function getBrandURL(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+      const file = target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const timestamp = Date.now();
+        brandLogoURL = `${e.target?.result as string}#t=${timestamp}`;
+        console.log('Brand image uploaded:', brandLogoURL.substring(0, 50) + '...');
+        customNoteKey++; // Force re-render
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function getCornerURL(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+      const file = target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const timestamp = Date.now();
+        cornerBrandLogoURL = `${e.target?.result as string}#t=${timestamp}`;
+        console.log('Corner image uploaded:', cornerBrandLogoURL.substring(0, 50) + '...');
+        customNoteKey++; // Force re-render
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   // Get the currently selected style object
   let currentStyle = $derived(styleOptions.find(style => style.id === selectedStyleId));
   
@@ -110,6 +148,12 @@
     console.log('currentStyle changed:', currentStyle);
     console.log('selectedStyleId:', selectedStyleId);
     console.log('styleOptions length:', styleOptions.length);
+  });
+
+  // Force re-render when image URLs change
+  $effect(() => {
+    console.log('Image URLs changed - brandLogoURL:', brandLogoURL ? 'set' : 'not set');
+    console.log('Image URLs changed - cornerBrandLogoURL:', cornerBrandLogoURL ? 'set' : 'not set');
   });
 </script>
 
@@ -137,15 +181,17 @@
               </div>
             {:else if style.type === 'custom' && style.colorCode}
               <div class="scale-50 transform pointer-events-none">
-                <CustomNote
-                  denomination={100}
-                  mintUrl="example.mint.com"
-                  token="example-token"
-                  colorCode={style.colorCode}
-                  cornerBrandLogoURL=""
-                  brandLogoURL=""
-                  unit="sat"
-                />
+                {#key customNoteKey}
+                  <CustomNote
+                    denomination={100}
+                    mintUrl="example.mint.com"
+                    token="example-token"
+                    colorCode={style.colorCode}
+                    cornerBrandLogoURL={cornerBrandLogoURL}
+                    brandLogoURL={brandLogoURL}
+                    unit="sat"
+                  />
+                {/key}
               </div>
             {/if}
           </div>
@@ -157,6 +203,51 @@
   <!-- Right Section - Preview -->
   <div class="flex-1 p-6 flex flex-col">
     <h2 class="text-2xl font-bold text-gray-900 mb-3">Customize your note</h2>
+    
+    <!-- File Upload Buttons for Custom Notes -->
+    {#if currentStyle?.type === 'custom'}
+      <div class="mb-4 flex gap-3">
+        <div class="flex-1">
+          <label for="brand-input" class="block text-sm font-medium text-gray-700 mb-1">
+            Brand Image
+          </label>
+          <input
+            id="brand-input"
+            type="file"
+            accept="image/*"
+            class="hidden"
+            onchange={getBrandURL}
+            bind:this={brandInput}
+          />
+          <button
+            class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            onclick={() => brandInput?.click()}
+          >
+            {brandLogoURL ? 'Change Brand Image' : 'Choose Brand Image'}
+          </button>
+        </div>
+        
+        <div class="flex-1">
+          <label for="corner-input" class="block text-sm font-medium text-gray-700 mb-1">
+            Corner Image
+          </label>
+          <input
+            id="corner-input"
+            type="file"
+            accept="image/*"
+            class="hidden"
+            onchange={getCornerURL}
+            bind:this={cornerInput}
+          />
+          <button
+            class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            onclick={() => cornerInput?.click()}
+          >
+            {cornerBrandLogoURL ? 'Change Corner Image' : 'Choose Corner Image'}
+          </button>
+        </div>
+      </div>
+    {/if}
     
     <!-- Large Preview -->
     <div class="flex-1 flex justify-center items-center">
@@ -171,15 +262,22 @@
               unit="sat"
             />
           {:else if currentStyle.type === 'custom' && currentStyle.colorCode}
-            <CustomNote
-              denomination={100}
-              mintUrl="example.mint.com"
-              token="example-token"
-              colorCode={currentStyle.colorCode}
-              cornerBrandLogoURL=""
-              brandLogoURL=""
-              unit="sat"
-            />
+            {#key customNoteKey}
+              <CustomNote
+                denomination={100}
+                mintUrl="example.mint.com"
+                token="example-token"
+                colorCode={currentStyle.colorCode}
+                cornerBrandLogoURL={cornerBrandLogoURL}
+                brandLogoURL={brandLogoURL}
+                unit="sat"
+              />
+            {/key}
+            <!-- Debug info for custom note -->
+            <div class="mt-2 text-xs text-gray-400">
+              Brand URL: {brandLogoURL ? 'Set' : 'Not set'}<br>
+              Corner URL: {cornerBrandLogoURL ? 'Set' : 'Not set'}
+            </div>
           {:else}
             <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
               <p class="text-lg font-semibold mb-2">Style type not supported</p>
