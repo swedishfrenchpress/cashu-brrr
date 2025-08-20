@@ -98,7 +98,7 @@
     </div>
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Navigation -->
   <div class="flex justify-between items-center mt-8 px-6 pb-6">
     <!-- Left side - empty for now, will be back button in future steps -->
     <div></div>

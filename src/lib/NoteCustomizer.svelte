@@ -157,164 +157,172 @@
   });
 </script>
 
-<div class="w-full h-full flex" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
-  <!-- Left Sidebar - Styles -->
-  <div class="w-64 bg-gray-50 p-4 border-r border-gray-200 flex flex-col h-full">
-    <h3 class="text-lg font-semibold text-gray-800 mb-4">Styles</h3>
-    
-    <div class="flex-1 overflow-y-auto space-y-2 pr-2 max-h-96">
-      {#each styleOptions as style}
-        <button
-          class="w-full p-2 bg-white rounded-lg border-2 transition-all duration-200 {selectedStyleId === style.id ? 'border-blue-500' : 'border-gray-200 hover:border-gray-300'}"
-          onclick={() => selectStyle(style.id)}
-        >
-          <div class="aspect-[3/2] bg-gray-50 rounded flex items-center justify-center overflow-hidden">
-            {#if style.type === 'comic' && style.design}
-              <div class="scale-50 transform pointer-events-none">
+<div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+    <div class="flex">
+      <!-- Left Sidebar - Styles -->
+      <div class="w-64 bg-gray-50 p-4 border-r border-gray-200 flex flex-col h-full">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Styles</h3>
+        
+        <div class="flex-1 overflow-y-auto space-y-2 pr-2 max-h-96">
+          {#each styleOptions as style}
+            <button
+              class="w-full p-2 bg-white rounded-lg border-2 transition-all duration-200 {selectedStyleId === style.id ? 'border-blue-500' : 'border-gray-200 hover:border-gray-300'}"
+              onclick={() => selectStyle(style.id)}
+            >
+                             <div class="aspect-[3/2] bg-gray-50 rounded flex items-center justify-center overflow-hidden">
+                 {#if style.type === 'comic' && style.design}
+                   <div class="scale-50 transform pointer-events-none">
+                     <ComicNote
+                       design={style.design}
+                       denomination={100}
+                       mintUrl="example.mint.com"
+                       token="example-token"
+                       unit="sat"
+                     />
+                   </div>
+                 {:else if style.type === 'custom' && style.colorCode}
+                   <div class="scale-50 transform pointer-events-none">
+                     <CustomNote
+                       denomination={100}
+                       mintUrl="example.mint.com"
+                       token="example-token"
+                       colorCode={style.colorCode}
+                       cornerBrandLogoURL={cornerBrandLogoURL}
+                       brandLogoURL={brandLogoURL}
+                       unit="sat"
+                     />
+                   </div>
+                 {:else}
+                   <div class="text-center text-gray-500">
+                     <p class="text-sm font-semibold">{style.name}</p>
+                     <p class="text-xs">Style type not supported</p>
+                   </div>
+                 {/if}
+               </div>
+            </button>
+          {/each}
+        </div>
+      </div>
+
+      <!-- Right Section - Preview -->
+      <div class="flex-1 p-6 flex flex-col">
+        <h2 class="text-2xl font-bold text-gray-900 mb-3">Customize your note</h2>
+        
+        <!-- File Upload Buttons for Custom Notes -->
+        {#if currentStyle?.type === 'custom'}
+          <div class="mb-4 flex gap-3">
+            <div class="flex-1">
+              <label for="brand-input" class="block text-sm font-medium text-gray-700 mb-1">
+                Brand Image
+              </label>
+              <input
+                id="brand-input"
+                type="file"
+                accept="image/*"
+                class="hidden"
+                onchange={getBrandURL}
+                bind:this={brandInput}
+              />
+              <button
+                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                onclick={() => brandInput?.click()}
+              >
+                {brandLogoURL ? 'Change Brand Image' : 'Choose Brand Image'}
+              </button>
+            </div>
+            
+            <div class="flex-1">
+              <label for="corner-input" class="block text-sm font-medium text-gray-700 mb-1">
+                Corner Image
+              </label>
+              <input
+                id="corner-input"
+                type="file"
+                accept="image/*"
+                class="hidden"
+                onchange={getCornerURL}
+                bind:this={cornerInput}
+              />
+              <button
+                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                onclick={() => cornerInput?.click()}
+              >
+                {cornerBrandLogoURL ? 'Change Corner Image' : 'Choose Corner Image'}
+              </button>
+            </div>
+          </div>
+        {/if}
+        
+        <!-- Large Preview -->
+        <div class="flex-1 flex justify-center items-center overflow-hidden">
+          <div class="w-full max-w-2xl">
+            {#if currentStyle}
+              {#if currentStyle.type === 'comic' && currentStyle.design}
                 <ComicNote
-                  design={style.design}
+                  design={currentStyle.design}
                   denomination={100}
                   mintUrl="example.mint.com"
                   token="example-token"
                   unit="sat"
                 />
-              </div>
-            {:else if style.type === 'custom' && style.colorCode}
-              <div class="scale-50 transform pointer-events-none">
+              {:else if currentStyle.type === 'custom' && currentStyle.colorCode}
                 {#key customNoteKey}
                   <CustomNote
                     denomination={100}
                     mintUrl="example.mint.com"
                     token="example-token"
-                    colorCode={style.colorCode}
+                    colorCode={currentStyle.colorCode}
                     cornerBrandLogoURL={cornerBrandLogoURL}
                     brandLogoURL={brandLogoURL}
                     unit="sat"
                   />
                 {/key}
+                <!-- Debug info for custom note -->
+                <div class="mt-2 text-xs text-gray-400">
+                  Brand URL: {brandLogoURL ? 'Set' : 'Not set'}<br>
+                  Corner URL: {cornerBrandLogoURL ? 'Set' : 'Not set'}
+                </div>
+              {:else}
+                <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
+                  <p class="text-lg font-semibold mb-2">Style type not supported</p>
+                  <p>Style: {JSON.stringify(currentStyle)}</p>
+                </div>
+              {/if}
+            {:else}
+              <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
+                <p class="text-lg font-semibold mb-2">No style selected</p>
+                <p>Available styles: {styleOptions.length}</p>
+                <p>Selected ID: {selectedStyleId || 'none'}</p>
+                <p>Current Style: {currentStyle ? 'Found' : 'Not found'}</p>
+                <p>Template Type: {selectedTemplate.type}</p>
               </div>
             {/if}
           </div>
-        </button>
-      {/each}
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Right Section - Preview -->
-  <div class="flex-1 p-6 flex flex-col">
-    <h2 class="text-2xl font-bold text-gray-900 mb-3">Customize your note</h2>
+  <!-- Navigation -->
+  <div class="flex justify-between items-center mt-8 px-6 pb-6">
+    <!-- Back button -->
+    <button 
+      class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+      style="color: #CD8A18; background: transparent; border: none;"
+      onclick={goBack}
+    >
+      ← Back
+    </button>
     
-    <!-- File Upload Buttons for Custom Notes -->
-    {#if currentStyle?.type === 'custom'}
-      <div class="mb-4 flex gap-3">
-        <div class="flex-1">
-          <label for="brand-input" class="block text-sm font-medium text-gray-700 mb-1">
-            Brand Image
-          </label>
-          <input
-            id="brand-input"
-            type="file"
-            accept="image/*"
-            class="hidden"
-            onchange={getBrandURL}
-            bind:this={brandInput}
-          />
-          <button
-            class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-            onclick={() => brandInput?.click()}
-          >
-            {brandLogoURL ? 'Change Brand Image' : 'Choose Brand Image'}
-          </button>
-        </div>
-        
-        <div class="flex-1">
-          <label for="corner-input" class="block text-sm font-medium text-gray-700 mb-1">
-            Corner Image
-          </label>
-          <input
-            id="corner-input"
-            type="file"
-            accept="image/*"
-            class="hidden"
-            onchange={getCornerURL}
-            bind:this={cornerInput}
-          />
-          <button
-            class="w-full px-4 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-            onclick={() => cornerInput?.click()}
-          >
-            {cornerBrandLogoURL ? 'Change Corner Image' : 'Choose Corner Image'}
-          </button>
-        </div>
-      </div>
-    {/if}
-    
-    <!-- Large Preview -->
-    <div class="flex-1 flex justify-center items-center overflow-hidden">
-      <div class="w-full max-w-2xl">
-        {#if currentStyle}
-          {#if currentStyle.type === 'comic' && currentStyle.design}
-            <ComicNote
-              design={currentStyle.design}
-              denomination={100}
-              mintUrl="example.mint.com"
-              token="example-token"
-              unit="sat"
-            />
-          {:else if currentStyle.type === 'custom' && currentStyle.colorCode}
-            {#key customNoteKey}
-              <CustomNote
-                denomination={100}
-                mintUrl="example.mint.com"
-                token="example-token"
-                colorCode={currentStyle.colorCode}
-                cornerBrandLogoURL={cornerBrandLogoURL}
-                brandLogoURL={brandLogoURL}
-                unit="sat"
-              />
-            {/key}
-            <!-- Debug info for custom note -->
-            <div class="mt-2 text-xs text-gray-400">
-              Brand URL: {brandLogoURL ? 'Set' : 'Not set'}<br>
-              Corner URL: {cornerBrandLogoURL ? 'Set' : 'Not set'}
-            </div>
-          {:else}
-            <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
-              <p class="text-lg font-semibold mb-2">Style type not supported</p>
-              <p>Style: {JSON.stringify(currentStyle)}</p>
-            </div>
-          {/if}
-        {:else}
-          <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
-            <p class="text-lg font-semibold mb-2">No style selected</p>
-            <p>Available styles: {styleOptions.length}</p>
-            <p>Selected ID: {selectedStyleId || 'none'}</p>
-            <p>Current Style: {currentStyle ? 'Found' : 'Not found'}</p>
-            <p>Template Type: {selectedTemplate.type}</p>
-          </div>
-        {/if}
-      </div>
-    </div>
+    <!-- Next button -->
+    <button 
+      class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+      style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
+      onclick={proceedToNext}
+    >
+      Next →
+    </button>
   </div>
-</div>
-
-<!-- Bottom Navigation -->
-<div class="flex justify-between items-center mt-8 px-6 pb-6">
-  <!-- Back button -->
-  <button 
-    class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
-    style="color: #CD8A18; background: transparent; border: none;"
-    onclick={goBack}
-  >
-    ← Back
-  </button>
-  
-  <!-- Next button -->
-  <button 
-    class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
-    style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
-    onclick={proceedToNext}
-  >
-    Next →
-  </button>
 </div>
