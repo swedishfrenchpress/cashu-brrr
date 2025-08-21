@@ -43,7 +43,7 @@
   <!-- Main Content -->
   <div class="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full">
     <!-- Note Selection Section -->
-    <div class="bg-white rounded-xl border border-gray-200 p-8 mb-8 shadow-sm">
+    <div class="bg-transparent rounded-xl border-0 p-8 mb-8">
       <div class="flex justify-center gap-8">
         {#each noteTemplates as template}
           <button
