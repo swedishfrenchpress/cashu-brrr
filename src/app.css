@@ -108,3 +108,45 @@ input::placeholder {
 .print-steps {
   font-family: 'Cabinet Grotesk', sans-serif;
 }
+
+/* Prevent horizontal overflow and ensure proper SVG scaling */
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure SVG notes scale properly within containers */
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent horizontal scrollbars */
+.overflow-y-auto {
+  overflow-x: hidden !important;
+}
+
+/* Ensure note containers don't overflow */
+.note-container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Custom scrollbar styling */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #F0E0B0;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #CD8A18;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #B0791C;
+}

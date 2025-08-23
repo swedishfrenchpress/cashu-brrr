@@ -198,7 +198,7 @@
     <p class="font-bold">Re-print previous print</p>
     <div class="h-fit">
       <div
-        class="h-full max-h-52 lg:max-h-96 flex flex-col gap-3 overflow-x-scroll"
+        class="h-full max-h-52 lg:max-h-96 flex flex-col gap-3 overflow-y-auto"
       >
         {#each $prints as print}
           <div class="flex gap-2 flex-col bg-base-300 rounded-lg p-2 w-80">

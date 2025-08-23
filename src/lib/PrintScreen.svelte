@@ -12,31 +12,8 @@
   let numberOfNotes = $derived($selectedNumberOfNotes);
   let denomination = $derived($selectedDenomination);
   
-  // Use the same token source as PrintPage - get from most recent print job
-  let currentPrint = $derived($prints[$prints.length - 1]);
-  let currentTokens = $derived(currentPrint?.tokens || []);
-  
-  // Pagination for notes preview - use actual number of tokens
-  let currentPage = $state(1);
-  let notesPerPage = 3;
-  let totalPages = $derived(Math.ceil(currentTokens.length / notesPerPage));
-  
-  // Calculate which notes to show on current page
-  let startIndex = $derived((currentPage - 1) * notesPerPage);
-  let endIndex = $derived(Math.min(startIndex + notesPerPage, currentTokens.length));
-  let currentNotes = $derived(Array.from({ length: endIndex - startIndex }, (_, i) => startIndex + i));
-
-  function nextPage() {
-    if (currentPage < totalPages) {
-      currentPage++;
-    }
-  }
-
-  function prevPage() {
-    if (currentPage > 1) {
-      currentPage--;
-    }
-  }
+  // Use preparedTokens if available (from history reprint), otherwise use most recent print job
+  let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
 
   // Print functionality - simple approach
   function printNotes() {
@@ -119,102 +96,57 @@
   <div class="flex-1 flex gap-8">
     <!-- Left Side - Preview Area -->
     <div class="flex-1 max-w-md">
-      <div class="overflow-y-auto pr-2 max-h-96">
+      <div class="overflow-y-auto" style="max-height: 400px; padding-right: 16px; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
         {#if $selectedTemplate?.type === 'comic'}
           <!-- Comic Design Selection -->
-          <div class="space-y-0">
-            {#each currentNotes as noteIndex}
-              <div class="cursor-pointer -mb-2">
-                <div class="scale-[0.8] transform pointer-events-none">
-                  {#if currentTokens[noteIndex]}
-                    <ComicNote
-                      design={$selectedStyle?.design || 7}
-                      denomination={denomination}
-                      mintUrl={$mint?.url || "example.mint.com"}
-                      token={getEncodedTokenV4(currentTokens[noteIndex])}
-                      unit="sat"
-                    />
-                  {:else}
-                    <div class="w-64 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <span class="text-gray-500 font-semibold">Loading token...</span>
-                    </div>
-                  {/if}
+          <div class="space-y-6">
+            {#each currentTokens as token, index}
+              <div class="flex justify-center">
+                <div style="width: 100%; max-width: 280px;">
+                  <ComicNote
+                    design={$selectedStyle?.design || 7}
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token={getEncodedTokenV4(token)}
+                    unit="sat"
+                  />
                 </div>
               </div>
             {/each}
           </div>
         {:else if $selectedTemplate?.type === 'custom'}
           <!-- Custom Color Selection -->
-          <div class="space-y-0">
-            {#each currentNotes as noteIndex}
-              <div class="cursor-pointer -mb-2">
-                <div class="scale-[0.8] transform pointer-events-none">
-                  {#if currentTokens[noteIndex]}
-                    <CustomNote
-                      denomination={denomination}
-                      mintUrl={$mint?.url || "example.mint.com"}
-                      token={getEncodedTokenV4(currentTokens[noteIndex])}
-                      colorCode={$selectedStyle?.colorCode || '#E4690A'}
-                      cornerBrandLogoURL=""
-                      brandLogoURL=""
-                      unit="sat"
-                    />
-                  {:else}
-                    <div class="w-64 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <span class="text-gray-500 font-semibold">Loading token...</span>
-                    </div>
-                  {/if}
+          <div class="space-y-6">
+            {#each currentTokens as token, index}
+              <div class="flex justify-center">
+                <div style="width: 100%; max-width: 360px;">
+                  <CustomNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token={getEncodedTokenV4(token)}
+                    colorCode={$selectedStyle?.colorCode || '#E4690A'}
+                    cornerBrandLogoURL=""
+                    brandLogoURL=""
+                    unit="sat"
+                  />
                 </div>
               </div>
             {/each}
           </div>
         {:else}
           <!-- Fallback -->
-          <div class="space-y-0">
-            {#each currentNotes as noteIndex}
-              <div class="cursor-pointer -mb-2">
-                <div class="scale-[0.8] transform pointer-events-none">
-                  <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
-                    <span class="text-amber-600 font-semibold">Note {noteIndex + 1}</span>
-                  </div>
+          <div class="space-y-6">
+            {#each currentTokens as token, index}
+              <div class="flex justify-center">
+                <div class="w-full max-w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
+                  <span class="text-amber-600 font-semibold">Note {index + 1}</span>
                 </div>
               </div>
             {/each}
           </div>
         {/if}
       </div>
-
-        <!-- Pagination -->
-        {#if totalPages > 1}
-          <div class="flex justify-center items-center space-x-4 mt-6">
-            <!-- Page Numbers -->
-            <div class="flex items-center space-x-2">
-              {#each Array.from({ length: totalPages }, (_, i) => i + 1) as page}
-                <button
-                  class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-200"
-                  style="background-color: {page === currentPage ? '#E4690A' : 'transparent'}; color: {page === currentPage ? 'white' : '#CD8A18'}"
-                  onclick={() => currentPage = page}
-                >
-                  {page}
-                </button>
-              {/each}
-              
-              <!-- Next Arrow -->
-              {#if currentPage < totalPages}
-                <button
-                  onclick={nextPage}
-                  class="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
-                  style="color: #CD8A18"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                  </svg>
-                </button>
-              {/if}
-            </div>
-          </div>
-        {/if}
-      </div>
+    </div>
 
     <!-- Right Side - Print Actions -->
     <div class="w-80 space-y-4">

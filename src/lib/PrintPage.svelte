@@ -10,9 +10,9 @@
   let numberOfNotes = $derived($selectedNumberOfNotes);
   let denomination = $derived($selectedDenomination);
   
-  // Get the most recent print job data
-  let currentPrint = $derived($prints[$prints.length - 1]);
-  let currentTokens = $derived(currentPrint?.tokens || []);
+  // Use preparedTokens if available (from history reprint), otherwise use most recent print job
+  let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
+  let currentPrint = $derived($preparedTokens.length > 0 ? null : $prints[$prints.length - 1]);
   let currentDenomination = $derived(currentPrint ? getAmountForTokenSet(currentPrint.tokens[0]?.proofs || []) : denomination);
   let currentNumberOfNotes = $derived(currentPrint?.tokens?.length || numberOfNotes);
   let currentMintUrl = $derived(currentPrint?.mint || ($mint?.url || 'Unknown'));
