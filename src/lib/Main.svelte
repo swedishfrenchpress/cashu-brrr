@@ -6,6 +6,7 @@
   import NoteCustomizer from "./NoteCustomizer.svelte";
   import ChooseAmounts from "./ChooseAmounts.svelte";
   import PaymentStep from "./PaymentStep.svelte";
+  import PrintScreen from "./PrintScreen.svelte";
   import PostItCard from "./PostItCard.svelte";
   import { step, selectedTemplate } from "./stores.svelte";
 
@@ -54,15 +55,15 @@
   <!-- Tabbed Navigation -->
   <div class="w-full max-w-4xl mx-auto">
     <!-- Tab Headers -->
-    <div class="flex bg-white rounded-t-lg overflow-hidden shadow-sm">
+    <div class="flex bg-white rounded-t-lg overflow-hidden shadow-sm print-steps">
       <button
-        class="flex-1 py-4 px-6 text-lg font-semibold transition-all duration-200 {activeTab === 'print' ? 'bg-yellow-400 text-gray-900' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+        class="flex-1 py-4 px-6 text-2xl font-bold transition-all duration-200 {activeTab === 'print' ? 'bg-yellow-400 text-black' : 'bg-gray-100 text-black hover:bg-gray-200'}"
         onclick={() => activeTab = 'print'}
       >
         Print
       </button>
       <button
-        class="flex-1 py-4 px-6 text-lg font-semibold transition-all duration-200 {activeTab === 'history' ? 'bg-yellow-400 text-gray-900' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+        class="flex-1 py-4 px-6 text-2xl font-bold transition-all duration-200 {activeTab === 'history' ? 'bg-yellow-400 text-black' : 'bg-gray-100 text-black hover:bg-gray-200'}"
         onclick={() => activeTab = 'history'}
       >
         History
@@ -70,7 +71,7 @@
     </div>
 
     <!-- Tab Content -->
-    <div class="bg-white rounded-b-lg shadow-lg min-h-[600px] overflow-y-auto">
+    <div class="bg-white rounded-b-lg shadow-lg min-h-[600px] overflow-y-auto print-steps">
       {#if activeTab === 'print'}
         {#if $step === 1}
           <NoteTemplateSelector />
@@ -82,6 +83,8 @@
           <ChooseAmounts />
         {:else if $step === 5}
           <PaymentStep />
+        {:else if $step === 6}
+          <PrintScreen />
         {:else}
           <PrintTab />
         {/if}

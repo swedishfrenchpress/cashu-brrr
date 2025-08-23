@@ -23,6 +23,7 @@ export default {
         manrope: ['Manrope', 'sans-serif'],
         ojuju: ['Ojuju', 'sans-serif'],
         sedgwick: ['"Sedgwick Ave"', 'cursive'],
+        cabinet: ['"Cabinet Grotesk"', 'sans-serif'],
       },
     },
   },

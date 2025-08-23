@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { step, selectedTemplate, selectedStyle, mint, wallet, selectedDenomination, selectedNumberOfNotes, donation } from "./stores.svelte";
+  import { step, selectedTemplate, selectedStyle, mint, wallet, selectedDenomination, selectedNumberOfNotes, donation, prints } from "./stores.svelte";
+  import { MintQuoteState } from "@cashu/cashu-ts";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import { toast } from "svelte-sonner";
@@ -27,6 +28,7 @@
         const quote = await $wallet.createMintQuote(totalAmount);
         console.log('Quote created:', quote);
         lightningInvoice = quote.request;
+        currentQuote = quote; // Store the quote for payment monitoring
         
         // Generate QR code
         QRCode.toDataURL(lightningInvoice, {
@@ -60,8 +62,120 @@
   }
 
   function proceedToNext() {
-    // Handle payment completion
-    step.set(5);
+    // Handle payment completion - go to print screen
+    step.set(6);
+  }
+
+  // Real payment monitoring
+  let paymentComplete = $state(false);
+  let generatedTokens = $state<any[]>([]);
+  
+  // Monitor payment status
+  let paymentCheckInterval: any;
+  let currentQuote: any = null;
+  
+  onMount(() => {
+    // Start monitoring payment status
+    paymentCheckInterval = setInterval(async () => {
+      if ($wallet && lightningInvoice && !paymentComplete) {
+        try {
+          // Check payment status using the quote ID
+          if (currentQuote) {
+            const updatedQuote = await $wallet.checkMintQuote(currentQuote.quote);
+            console.log('Checking payment status:', updatedQuote);
+            
+            if (updatedQuote.state === MintQuoteState.PAID) {
+              console.log('Payment confirmed!');
+              paymentComplete = true;
+              
+              // Generate ecash tokens
+              await generateEcashTokens();
+              
+              // Clear interval
+              clearInterval(paymentCheckInterval);
+            }
+          }
+        } catch (error) {
+          console.log('Payment not yet confirmed...', error);
+        }
+      }
+    }, 2000); // Check every 2 seconds
+    
+    // Cleanup on unmount
+    return () => {
+      if (paymentCheckInterval) {
+        clearInterval(paymentCheckInterval);
+      }
+    };
+  });
+  
+  // Auto-redirect when payment is detected
+  $effect(() => {
+    console.log('Payment effect triggered:', { paymentComplete, tokenCount: generatedTokens.length });
+    if (paymentComplete && generatedTokens.length > 0) {
+      console.log('Proceeding to print screen...');
+      setTimeout(() => {
+        step.set(6); // Go to print screen
+      }, 1000);
+    }
+  });
+
+  // Generate actual ecash tokens after payment
+  async function generateEcashTokens() {
+    try {
+      if (!$wallet || !currentQuote) {
+        throw new Error('No wallet or quote available');
+      }
+      
+      console.log('Generating ecash tokens...');
+      
+      // Create output amounts for the tokens
+      const outputAmounts = [];
+      for (let i = 0; i < numberOfNotes; i++) {
+        outputAmounts.push(denomination);
+      }
+      
+      // Mint proofs using the paid quote
+      const proofs = await $wallet.mintProofs(
+        totalAmount,
+        currentQuote.quote,
+        { outputAmounts }
+      );
+      
+      console.log('Minted proofs:', proofs);
+      
+      // Create tokens from proofs
+      const tokens = [];
+      for (let i = 0; i < numberOfNotes; i++) {
+        const token = {
+          mint: $mint?.url || 'unknown',
+          proofs: [proofs[i]],
+          unit: 'sat',
+          amount: denomination
+        };
+        tokens.push(token);
+      }
+      
+      generatedTokens = tokens;
+      console.log('Generated tokens:', tokens);
+      console.log('Generated tokens length:', tokens.length);
+      
+      // Save to prints store
+      const newPrint = {
+        tokens: tokens,
+        mint: $mint?.url || 'unknown',
+        ts: Date.now()
+      };
+      
+      prints.update(currentPrints => [...currentPrints, newPrint]);
+      
+      toast.success(`Generated ${numberOfNotes} ecash notes!`);
+      console.log('Token generation complete, should trigger redirect...');
+      
+    } catch (error: any) {
+      console.error('Error generating tokens:', error);
+      toast.error('Failed to generate tokens: ' + error.message);
+    }
   }
 
   function copyInvoice() {
@@ -244,12 +358,34 @@
       ← Back
     </button>
     
-    <button 
-      class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
-      style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
-      onclick={proceedToNext}
-    >
-      Finish
-    </button>
+    <!-- Payment Status -->
+    {#if paymentComplete}
+      <div class="text-green-600 font-semibold">
+        Payment received! Generating notes...
+      </div>
+    {:else}
+      <div class="flex items-center space-x-4">
+        <div class="text-gray-600 font-medium">
+          Waiting for payment...
+        </div>
+        <button 
+          class="px-4 py-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          onclick={async () => {
+            if (currentQuote) {
+              const updatedQuote = await $wallet.checkMintQuote(currentQuote.quote);
+              console.log('Manual payment check:', updatedQuote);
+              if (updatedQuote.state === MintQuoteState.PAID) {
+                paymentComplete = true;
+                await generateEcashTokens();
+              } else {
+                toast.info('Payment not yet received. Please try again.');
+              }
+            }
+          }}
+        >
+          Check Payment
+        </button>
+      </div>
+    {/if}
   </div>
 </div>

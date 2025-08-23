@@ -3,7 +3,12 @@
   import "./app.css";
     import ComicNote from "./lib/ComicNote.svelte";
   import Main from "./lib/Main.svelte";
+  import PrintPage from "./lib/PrintPage.svelte";
     import { getAmountForTokenSet } from "./lib/utils";
+  
+  // Check if we're in print mode
+  const isPrintMode = $derived(window.location.search.includes('print=true'));
+  
   const urlParams = window.location.hash.slice(1).split('/');
   const token = $derived.by(()=>{
     const tokenString = urlParams[0];
@@ -23,7 +28,9 @@
 </script>
 
 
-{#if token}
+{#if isPrintMode}
+  <PrintPage />
+{:else if token}
 <div>
 <ComicNote
   design={template}
