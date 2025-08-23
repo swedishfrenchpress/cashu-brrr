@@ -202,14 +202,15 @@
   <!-- Main Content -->
   <div class="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full">
     <!-- Mint Input Section -->
-    <div class="bg-white rounded-xl border border-gray-200 p-8 mb-8 shadow-sm">
+    <div class="mb-8">
       <div class="flex gap-4 mb-6">
         <input
           type="text"
-          placeholder="Add a mint name"
+          placeholder="Add mint URL..."
           bind:value={mintUrl}
           onkeypress={handleKeyPress}
-          class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+          class="flex-1 px-4 py-3 rounded-lg text-lg"
+          style="background-color: #FFF9EF; border: 1px solid #EFAF42; color: #5C4214;"
         />
         {#if $mint}
           <button
@@ -233,7 +234,7 @@
 
       <!-- Suggested Mints -->
       <div class="mb-6">
-        <p class="text-sm font-medium text-gray-700 mb-4">Popular mints:</p>
+        <p class="text-sm font-medium mb-4" style="color: #4E4318;">Popular mints:</p>
         <div class="flex gap-3">
           {#each suggestedMints as suggestedMint}
             <button
@@ -261,7 +262,7 @@
       <!-- Discovered Mints -->
       {#if $discoveredMints.length > 0}
         <div class="mt-6">
-          <p class="text-sm font-medium text-gray-700 mb-3">Discovered mints:</p>
+          <p class="text-sm font-medium mb-3" style="color: #4E4318;">Discovered mints:</p>
           <div class="flex flex-wrap gap-2">
             {#each $discoveredMints as discoveredMint}
               <button

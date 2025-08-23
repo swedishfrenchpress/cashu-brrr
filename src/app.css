@@ -31,3 +31,10 @@ html {
   min-height: 100vh;
   background: inherit;
 }
+
+/* Input placeholder styling */
+input::placeholder {
+  color: #4E4318;
+  opacity: 0.5;
+  font-weight: 400;
+}
