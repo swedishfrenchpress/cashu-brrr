@@ -10,19 +10,52 @@
   let numberOfNotes = $derived($selectedNumberOfNotes);
   let denomination = $derived($selectedDenomination);
   
-  // Use preparedTokens if available (from history reprint), otherwise use most recent print job
-  let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
-  let currentPrint = $derived($preparedTokens.length > 0 ? null : $prints[$prints.length - 1]);
-  let currentDenomination = $derived(currentPrint ? getAmountForTokenSet(currentPrint.tokens[0]?.proofs || []) : denomination);
-  let currentNumberOfNotes = $derived(currentPrint?.tokens?.length || numberOfNotes);
-  let currentMintUrl = $derived(currentPrint?.mint || ($mint?.url || 'Unknown'));
-  let currentTemplate = $derived(currentPrint?.template || $selectedTemplate);
-  let currentStyle = $derived(currentPrint?.style || $selectedStyle);
+  // Get print data from localStorage (for new tab) or use preparedTokens (for history reprint) or most recent print job
+  let printDataFromStorage = $state<{
+    tokens: any[];
+    denomination: number;
+    numberOfNotes: number;
+    template: any;
+    style: any;
+    mintUrl: string;
+    timestamp: number;
+  } | null>(null);
+  
+  // Use localStorage data if available (new tab), otherwise use preparedTokens (history reprint), otherwise use most recent print job
+  let currentTokens = $derived(printDataFromStorage?.tokens || ($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || [])));
+  let currentPrint = $derived(printDataFromStorage ? null : ($preparedTokens.length > 0 ? null : $prints[$prints.length - 1]));
+  
+  // When using localStorage data (new tab), use that data
+  // When using preparedTokens (from history), use the store values that were set by reprint function
+  // Otherwise, use values from the currentPrint
+  let currentDenomination = $derived(printDataFromStorage?.denomination || ($preparedTokens.length > 0 ? denomination : (currentPrint ? getAmountForTokenSet(currentPrint.tokens[0]?.proofs || []) : denomination)));
+  let currentNumberOfNotes = $derived(printDataFromStorage?.numberOfNotes || ($preparedTokens.length > 0 ? numberOfNotes : (currentPrint?.tokens?.length || numberOfNotes)));
+  let currentMintUrl = $derived(printDataFromStorage?.mintUrl || ($preparedTokens.length > 0 ? ($mint?.url || 'Unknown') : (currentPrint?.mint || ($mint?.url || 'Unknown'))));
+  let currentTemplate = $derived(printDataFromStorage?.template || ($preparedTokens.length > 0 ? $selectedTemplate : (currentPrint?.template || $selectedTemplate)));
+  let currentStyle = $derived(printDataFromStorage?.style || ($preparedTokens.length > 0 ? $selectedStyle : (currentPrint?.style || $selectedStyle)));
 
   // Auto-print when component loads
   onMount(() => {
+    // Try to get print data from localStorage (for new tab scenario)
+    try {
+      const storedData = localStorage.getItem('currentPrintData');
+      if (storedData) {
+        const parsed = JSON.parse(storedData);
+        // Check if the data is recent (within last 5 minutes)
+        if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
+          printDataFromStorage = parsed;
+          console.log('Using print data from localStorage:', parsed);
+        } else {
+          // Data is too old, remove it
+          localStorage.removeItem('currentPrintData');
+        }
+      }
+    } catch (error) {
+      console.error('Error reading print data from localStorage:', error);
+    }
+    
     console.log('PrintPage loaded with data:', {
-      currentPrint,
+      printDataFromStorage,
       currentTokens: currentTokens.length,
       currentTemplate,
       currentStyle,

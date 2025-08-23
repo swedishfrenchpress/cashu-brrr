@@ -15,8 +15,21 @@
   // Use preparedTokens if available (from history reprint), otherwise use most recent print job
   let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
 
-  // Print functionality - simple approach
+  // Print functionality - store current print data and open new tab
   function printNotes() {
+    // Store the current print data in localStorage so the new tab can access it
+    const printData = {
+      tokens: currentTokens,
+      denomination: denomination,
+      numberOfNotes: numberOfNotes,
+      template: $selectedTemplate,
+      style: $selectedStyle,
+      mintUrl: $mint?.url || 'Unknown',
+      timestamp: Date.now()
+    };
+    
+    localStorage.setItem('currentPrintData', JSON.stringify(printData));
+    
     // Open current page in new tab with print parameter
     window.open(window.location.href + '?print=true', '_blank');
   }
