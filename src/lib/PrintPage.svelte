@@ -4,16 +4,33 @@
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import { onMount } from "svelte";
+  import { getAmountForTokenSet } from "./utils";
 
   // Get values from stores
   let numberOfNotes = $derived($selectedNumberOfNotes);
   let denomination = $derived($selectedDenomination);
   
-  // Use preparedTokens for reprint functionality, fallback to most recent print
-  let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
+  // Get the most recent print job data
+  let currentPrint = $derived($prints[$prints.length - 1]);
+  let currentTokens = $derived(currentPrint?.tokens || []);
+  let currentDenomination = $derived(currentPrint ? getAmountForTokenSet(currentPrint.tokens[0]?.proofs || []) : denomination);
+  let currentNumberOfNotes = $derived(currentPrint?.tokens?.length || numberOfNotes);
+  let currentMintUrl = $derived(currentPrint?.mint || ($mint?.url || 'Unknown'));
+  let currentTemplate = $derived(currentPrint?.template || $selectedTemplate);
+  let currentStyle = $derived(currentPrint?.style || $selectedStyle);
 
   // Auto-print when component loads
   onMount(() => {
+    console.log('PrintPage loaded with data:', {
+      currentPrint,
+      currentTokens: currentTokens.length,
+      currentTemplate,
+      currentStyle,
+      currentDenomination,
+      currentNumberOfNotes,
+      currentMintUrl
+    });
+    
     setTimeout(() => {
       window.print();
     }, 1000);
@@ -29,12 +46,11 @@
       background: white;
     }
     .note-container {
-      page-break-after: always;
-      margin: 20px;
+      margin: 2px 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      page-break-inside: avoid;
     }
     .note-container:last-child {
       page-break-after: avoid;
@@ -57,11 +73,10 @@
   }
   
   .note-container {
-    margin: 20px;
+    margin: 2px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
   }
   
   /* Ensure notes are properly sized for screen preview */
@@ -74,7 +89,7 @@
   
   .print-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     color: #4E4318;
   }
   
@@ -96,37 +111,45 @@
   <!-- Header for print page -->
   <div class="print-header">
     <h1>Ecash Notes</h1>
-    <p>{numberOfNotes} notes × {denomination} sats = {numberOfNotes * denomination} sats total</p>
-    <p>Mint: {$mint?.url || 'Unknown'}</p>
+    <p>{currentNumberOfNotes} notes × {currentDenomination} sats = {currentNumberOfNotes * currentDenomination} sats total</p>
+    <p>Mint: {currentMintUrl}</p>
   </div>
 
   <!-- Individual notes for printing -->
-  {#each Array.from({ length: numberOfNotes }, (_, i) => i) as noteIndex}
+  {#each Array.from({ length: currentNumberOfNotes }, (_, i) => i) as noteIndex}
     <div class="note-container">
-      <div class="scale-100 transform">
+      <div class="scale-[0.8] transform">
         {#if currentTokens[noteIndex]}
-          {#if $selectedTemplate?.type === 'comic'}
+          <!-- Try to determine template type from available data -->
+          {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
             <ComicNote
-              design={$selectedStyle?.design || 7}
-              denomination={denomination}
-              mintUrl={$mint?.url || "example.mint.com"}
+              design={currentStyle?.design || 7}
+              denomination={currentDenomination}
+              mintUrl={currentMintUrl}
               token={getEncodedTokenV4(currentTokens[noteIndex])}
               unit="sat"
             />
-          {:else if $selectedTemplate?.type === 'custom'}
+          {:else if currentTemplate?.type === 'custom' || currentStyle?.type === 'custom'}
             <CustomNote
-              denomination={denomination}
-              mintUrl={$mint?.url || "example.mint.com"}
+              denomination={currentDenomination}
+              mintUrl={currentMintUrl}
               token={getEncodedTokenV4(currentTokens[noteIndex])}
-              colorCode={$selectedStyle?.colorCode || '#E4690A'}
+              colorCode={currentStyle?.colorCode || '#E4690A'}
               cornerBrandLogoURL=""
               brandLogoURL=""
               unit="sat"
             />
           {:else}
-            <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
-              <span class="text-amber-600 font-semibold">Note {noteIndex + 1}</span>
-            </div>
+            <!-- Default to CustomNote if we can't determine the type -->
+            <CustomNote
+              denomination={currentDenomination}
+              mintUrl={currentMintUrl}
+              token={getEncodedTokenV4(currentTokens[noteIndex])}
+              colorCode="#E4690A"
+              cornerBrandLogoURL=""
+              brandLogoURL=""
+              unit="sat"
+            />
           {/if}
         {:else}
           <div class="w-64 h-40 bg-gray-200 rounded-lg flex items-center justify-center">

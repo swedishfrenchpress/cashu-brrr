@@ -111,7 +111,7 @@
 <div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); min-height: 600px;">
   <!-- Header -->
   <div class="text-left mb-8">
-    <h2 class="text-3xl font-bold mb-2" style="color: #4E4318;">A4 sheets</h2>
+    <h2 class="text-3xl font-bold mb-2" style="color: #4E4318;">Print</h2>
   </div>
 
   <!-- Main Content -->
@@ -121,10 +121,10 @@
       <div class="overflow-y-auto pr-2 max-h-96">
         {#if $selectedTemplate?.type === 'comic'}
           <!-- Comic Design Selection -->
-          <div class="space-y-2">
+          <div class="space-y-0">
             {#each currentNotes as noteIndex}
-              <div class="cursor-pointer">
-                <div class="scale-[0.12] transform pointer-events-none">
+              <div class="cursor-pointer -mb-2">
+                <div class="scale-[0.8] transform pointer-events-none">
                   {#if currentTokens[noteIndex]}
                     <ComicNote
                       design={$selectedStyle?.design || 7}
@@ -144,10 +144,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'custom'}
           <!-- Custom Color Selection -->
-          <div class="space-y-2">
+          <div class="space-y-0">
             {#each currentNotes as noteIndex}
-              <div class="cursor-pointer">
-                <div class="scale-[0.12] transform pointer-events-none">
+              <div class="cursor-pointer -mb-2">
+                <div class="scale-[0.8] transform pointer-events-none">
                   {#if currentTokens[noteIndex]}
                     <CustomNote
                       denomination={denomination}
@@ -169,10 +169,10 @@
           </div>
         {:else}
           <!-- Fallback -->
-          <div class="space-y-2">
+          <div class="space-y-0">
             {#each currentNotes as noteIndex}
-              <div class="cursor-pointer">
-                <div class="scale-[0.12] transform pointer-events-none">
+              <div class="cursor-pointer -mb-2">
+                <div class="scale-[0.8] transform pointer-events-none">
                   <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
                     <span class="text-amber-600 font-semibold">Note {noteIndex + 1}</span>
                   </div>

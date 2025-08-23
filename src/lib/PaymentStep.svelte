@@ -176,7 +176,9 @@
         tokens: tokens.tokens,
         donation: tokens.donation,
         mint: $mint?.url || 'unknown',
-        ts: Date.now()
+        ts: Date.now(),
+        template: $selectedTemplate,
+        style: $selectedStyle
       };
       
       prints.update(currentPrints => [...currentPrints, newPrint]);

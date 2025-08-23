@@ -14,6 +14,19 @@ export type Print = {
   donation?: Token
   mint: string;
   ts: number;
+  template?: {
+    id: string;
+    name: string;
+    type: 'comic' | 'custom';
+    design?: number;
+  } | null;
+  style?: {
+    id: string;
+    name: string;
+    type: 'comic' | 'custom';
+    design?: number;
+    colorCode?: string;
+  } | null;
 };
 
 const initialValueSting: string = window.localStorage.getItem("prints") ?? "[]";
@@ -21,18 +34,20 @@ const initialValueSting: string = window.localStorage.getItem("prints") ?? "[]";
 let initialValue: Array<Print> = JSON.parse(initialValueSting);
 
 //migrate old prints
-if (initialValue[0]?.tokens[0]?.token) {
-  const newPrints: Print[] = [];
-  for (const print of initialValue) {
-    const newPrint: Print = {
-      mint: print.mint,
-      ts: print.ts,
-      tokens: print.tokens.map((t) => t.token[0]),
-    };
-    newPrints.push(newPrint);
-  }
-  initialValue = newPrints;
-}
+// if (initialValue[0]?.tokens[0]?.token) {
+//   const newPrints: Print[] = [];
+//   for (const print of initialValue) {
+//     const newPrint: Print = {
+//       mint: print.mint,
+//       ts: print.ts,
+//       tokens: print.tokens.map((t: any) => (t as any).token[0]),
+//       template: null,
+//       style: null
+//     };
+//     newPrints.push(newPrint);
+//   }
+//   initialValue = newPrints;
+// }
 
 export const prints = writable<Array<Print>>(initialValue);
 
