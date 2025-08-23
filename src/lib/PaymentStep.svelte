@@ -66,7 +66,7 @@
 
   function copyInvoice() {
     navigator.clipboard.writeText(lightningInvoice).then(() => {
-      toast.success("Lightning invoice copied to clipboard!");
+      toast.success("Invoice copied to clipboard");
     }).catch(() => {
       toast.error("Failed to copy invoice");
     });
@@ -89,19 +89,19 @@
           <div class="space-y-3">
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium" style="color: #4E4318;">Mint:</span>
-              <div class="px-3 py-1 bg-gray-100 rounded-full text-sm font-medium text-gray-900">
-                //{$mint?.url || "mint.lnvoltz.com"}
+              <div class="px-3 py-1 rounded-full text-sm font-medium" style="background: transparent; border: 1px solid #736F6F; color: #736F6F;">
+                {$mint?.url || "mint.lnvoltz.com"}
               </div>
             </div>
             
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium" style="color: #4E4318;">Number of notes:</span>
-              <span class="text-sm font-semibold text-gray-900">{numberOfNotes.toString().padStart(2, '0')}</span>
+              <span class="text-sm font-semibold text-gray-900">{numberOfNotes}</span>
             </div>
             
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium" style="color: #4E4318;">Denomination:</span>
-              <span class="text-sm font-semibold text-gray-900">{denomination.toString().padStart(2, '0')}</span>
+              <span class="text-sm font-semibold text-gray-900">{denomination}</span>
             </div>
             
             <div class="flex justify-between items-center">

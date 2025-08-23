@@ -137,7 +137,7 @@
 
   // Go back to previous step
   const goBack = () => {
-    step.set(1.5);
+    step.set(1);
   };
 
   // Proceed to next step (amount selection)
@@ -237,8 +237,8 @@
             {#each $discoveredMints as discoveredMint}
               <button
                 onclick={() => selectMint(discoveredMint.url)}
-                class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-                style="color: #CD8A18;"
+                class="px-3 py-1 text-xs rounded-full transition-colors"
+                style="background: transparent; border: 1px solid #736F6F; color: #736F6F;"
               >
                 {discoveredMint.url}
               </button>
