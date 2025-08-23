@@ -1,326 +1,182 @@
 <script lang="ts">
+  import { step, selectedTemplate, mint } from "./stores.svelte";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
-  import { step, selectedStyle } from "./stores.svelte";
+  import { toast } from "svelte-sonner";
 
-  interface StyleOption {
-    id: string;
-    name: string;
-    type: 'comic' | 'custom';
-    design?: number;
-    colorCode?: string;
-    preview: string;
-  }
-
-  // Props to receive the selected template from previous step
-  interface Props {
-    selectedTemplate: {
-      id: string;
-      name: string;
-      type: 'comic' | 'custom';
-      design?: number;
-    };
-  }
-
-  let { selectedTemplate }: Props = $props();
-
-  // Generate style options based on the selected template type
-  let styleOptions: StyleOption[] = $state([]);
-  let selectedStyleId = $state<string | null>(null);
-  
-  // Custom note image upload states
-  let brandLogoURL = $state("");
-  let cornerBrandLogoURL = $state("");
-  let brandInput: HTMLInputElement;
-  let cornerInput: HTMLInputElement;
-  let customNoteKey = $state(0); // Force re-render key
-
-  // Initialize style options based on template type
-  $effect(() => {
-    console.log('Template type:', selectedTemplate.type);
-    
-    if (selectedTemplate.type === 'comic') {
-      // Comic note has different design numbers (3-25)
-      const comicOptions = [
-        { id: 'comic-3', name: 'Design 3', type: 'comic' as const, design: 3, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-5', name: 'Design 5', type: 'comic' as const, design: 5, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-7', name: 'Design 7', type: 'comic' as const, design: 7, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-8', name: 'Design 8', type: 'comic' as const, design: 8, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-9', name: 'Design 9', type: 'comic' as const, design: 9, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-10', name: 'Design 10', type: 'comic' as const, design: 10, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-11', name: 'Design 11', type: 'comic' as const, design: 11, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-12', name: 'Design 12', type: 'comic' as const, design: 12, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-13', name: 'Design 13', type: 'comic' as const, design: 13, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-14', name: 'Design 14', type: 'comic' as const, design: 14, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-15', name: 'Design 15', type: 'comic' as const, design: 15, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-16', name: 'Design 16', type: 'comic' as const, design: 16, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-17', name: 'Design 17', type: 'comic' as const, design: 17, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-18', name: 'Design 18', type: 'comic' as const, design: 18, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-19', name: 'Design 19', type: 'comic' as const, design: 19, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-20', name: 'Design 20', type: 'comic' as const, design: 20, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-21', name: 'Design 21', type: 'comic' as const, design: 21, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-22', name: 'Design 22', type: 'comic' as const, design: 22, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-23', name: 'Design 23', type: 'comic' as const, design: 23, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-24', name: 'Design 24', type: 'comic' as const, design: 24, preview: '/Ecash_Note_template.svg' },
-        { id: 'comic-25', name: 'Design 25', type: 'comic' as const, design: 25, preview: '/Ecash_Note_template.svg' },
-      ];
-      styleOptions = comicOptions;
-      // Only set selectedStyleId if it's not already set
-      if (!selectedStyleId) {
-        selectedStyleId = comicOptions[0]?.id || null;
-      }
-      console.log('Set comic options, selected:', selectedStyleId);
-    } else if (selectedTemplate.type === 'custom') {
-      // Custom notes have different color options
-      const customOptions = [
-        { id: 'custom-green', name: 'Emerald Green', type: 'custom' as const, colorCode: '#10B981', preview: '/Ecash_Note_template.svg' },
-        { id: 'custom-blue', name: 'Ocean Blue', type: 'custom' as const, colorCode: '#3B82F6', preview: '/Ecash_Note_template.svg' },
-        { id: 'custom-purple', name: 'Royal Purple', type: 'custom' as const, colorCode: '#8B5CF6', preview: '/Ecash_Note_template.svg' },
-        { id: 'custom-orange', name: 'Sunset Orange', type: 'custom' as const, colorCode: '#F59E0B', preview: '/Ecash_Note_template.svg' },
-        { id: 'custom-red', name: 'Ruby Red', type: 'custom' as const, colorCode: '#EF4444', preview: '/Ecash_Note_template.svg' },
-      ];
-      styleOptions = customOptions;
-      // Only set selectedStyleId if it's not already set
-      if (!selectedStyleId) {
-        selectedStyleId = customOptions[0]?.id || null;
-      }
-      console.log('Set custom options, selected:', selectedStyleId);
-    }
-  });
-
-  function selectStyle(styleId: string) {
-    console.log('Selecting style:', styleId);
-    selectedStyleId = styleId;
-    console.log('Selected style ID is now:', selectedStyleId);
-  }
+  let amountPerNote = $state(10);
+  let numberOfNotes = $state(1);
+  let totalAmount = $derived(amountPerNote * numberOfNotes);
 
   function goBack() {
-    console.log('Going back to step 1');
-    step.set(1);
+    step.set(2);
   }
 
   function proceedToNext() {
-    // Store the selected style and proceed to step 2 (mint connection)
-    const currentStyleObj = styleOptions.find(style => style.id === selectedStyleId);
-    if (currentStyleObj) {
-      selectedStyle.set(currentStyleObj);
-      console.log('Selected style:', currentStyleObj);
-      step.set(2);
+    if (amountPerNote <= 0) {
+      toast.error("Amount per note must be greater than 0");
+      return;
     }
+    if (numberOfNotes <= 0) {
+      toast.error("Number of notes must be greater than 0");
+      return;
+    }
+    if (numberOfNotes > 100) {
+      toast.error("Maximum 100 notes allowed");
+      return;
+    }
+    step.set(3);
   }
 
-  // File upload functions for custom notes
-  function getBrandURL(event: Event) {
+  function handleAmountChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    if (target.files && target.files[0]) {
-      const file = target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const timestamp = Date.now();
-        brandLogoURL = `${e.target?.result as string}#t=${timestamp}`;
-        console.log('Brand image uploaded:', brandLogoURL.substring(0, 50) + '...');
-        customNoteKey++; // Force re-render
-      };
-      reader.readAsDataURL(file);
+    const value = parseInt(target.value);
+    if (!isNaN(value) && value >= 0) {
+      amountPerNote = value;
+    } else if (target.value === '') {
+      amountPerNote = 0;
     }
   }
 
-  function getCornerURL(event: Event) {
+  function handleNotesChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    if (target.files && target.files[0]) {
-      const file = target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const timestamp = Date.now();
-        cornerBrandLogoURL = `${e.target?.result as string}#t=${timestamp}`;
-        console.log('Corner image uploaded:', cornerBrandLogoURL.substring(0, 50) + '...');
-        customNoteKey++; // Force re-render
-      };
-      reader.readAsDataURL(file);
+    const value = parseInt(target.value);
+    if (!isNaN(value) && value >= 0) {
+      numberOfNotes = value;
     }
   }
-
-  // Get the currently selected style object
-  let currentStyle = $derived(styleOptions.find(style => style.id === selectedStyleId));
-  
-  // Debug: Log when currentStyle changes
-  $effect(() => {
-    console.log('currentStyle changed:', currentStyle);
-    console.log('selectedStyleId:', selectedStyleId);
-    console.log('styleOptions length:', styleOptions.length);
-  });
-
-  // Force re-render when image URLs change
-  $effect(() => {
-    console.log('Image URLs changed - brandLogoURL:', brandLogoURL ? 'set' : 'not set');
-    console.log('Image URLs changed - cornerBrandLogoURL:', cornerBrandLogoURL ? 'set' : 'not set');
-  });
 </script>
 
-<div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
-  <!-- Main Content -->
+<div class="w-full h-full flex flex-col p-8 overflow-hidden" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Step 2: Choose amounts</h2>
+  </div>
+
+    <!-- Main Content -->
   <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
-    <div class="flex">
-      <!-- Left Sidebar - Styles -->
-      <div class="w-64 bg-gray-50 p-4 border-r border-gray-200 flex flex-col h-full">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Styles</h3>
-        
-        <div class="flex-1 overflow-y-auto space-y-2 pr-2 max-h-96">
-          {#each styleOptions as style}
-            <button
-              class="w-full p-2 bg-white rounded-lg border-2 transition-all duration-200 {selectedStyleId === style.id ? 'border-blue-500' : 'border-gray-200 hover:border-gray-300'}"
-              onclick={() => selectStyle(style.id)}
-            >
-                             <div class="aspect-[3/2] bg-gray-50 rounded flex items-center justify-center overflow-hidden">
-                 {#if style.type === 'comic' && style.design}
-                   <div class="scale-50 transform pointer-events-none">
-                     <ComicNote
-                       design={style.design}
-                       denomination={100}
-                       mintUrl="example.mint.com"
-                       token="example-token"
-                       unit="sat"
-                     />
-                   </div>
-                 {:else if style.type === 'custom' && style.colorCode}
-                   <div class="scale-50 transform pointer-events-none">
-                     <CustomNote
-                       denomination={100}
-                       mintUrl="example.mint.com"
-                       token="example-token"
-                       colorCode={style.colorCode}
-                       cornerBrandLogoURL={cornerBrandLogoURL}
-                       brandLogoURL={brandLogoURL}
-                       unit="sat"
-                     />
-                   </div>
-                 {:else}
-                   <div class="text-center text-gray-500">
-                     <p class="text-sm font-semibold">{style.name}</p>
-                     <p class="text-xs">Style type not supported</p>
-                   </div>
-                 {/if}
-               </div>
-            </button>
-          {/each}
+    <div class="p-6 mb-6">
+      <!-- Input Fields Section -->
+      <div class="grid grid-cols-2 gap-8 mb-8">
+        <!-- Amount per Note -->
+        <div class="relative">
+          <label for="amountPerNote" class="block text-sm font-medium mb-2" style="color: #4E4318;">
+            Amount per note
+          </label>
+          <input
+            id="amountPerNote"
+            type="text"
+            value={amountPerNote}
+            oninput={handleAmountChange}
+            class="w-full px-4 py-3 pr-12 rounded-lg transition-colors text-left"
+            style="background-color: #FFF9EF; border: 1px solid #EFAF42; color: #5C4214;"
+            placeholder="Enter amount"
+          />
+          <span class="absolute right-3 bottom-2 text-sm" style="color: #5C4214;">sats</span>
+        </div>
+
+        <!-- Number of Notes -->
+        <div class="relative">
+          <label for="numberOfNotes" class="block text-sm font-medium mb-2" style="color: #4E4318;">
+            Number of notes to be printed
+          </label>
+          <input
+            id="numberOfNotes"
+            type="number"
+            min="1"
+            max="100"
+            value={numberOfNotes}
+            oninput={handleNotesChange}
+            class="w-full px-4 py-3 pr-12 rounded-lg transition-colors text-left"
+            style="background-color: #FFF9EF; border: 1px solid #EFAF42; color: #5C4214;"
+            placeholder="Enter number of notes"
+          />
+          <span class="absolute right-3 bottom-2 text-sm" style="color: #5C4214;">notes</span>
         </div>
       </div>
 
-      <!-- Right Section - Preview -->
-      <div class="flex-1 p-6 flex flex-col">
-        <h2 class="text-2xl font-bold text-gray-900 mb-3">Customize your note</h2>
-        
-        <!-- File Upload Buttons for Custom Notes -->
-        {#if currentStyle?.type === 'custom'}
-          <div class="mb-4 flex gap-3">
-            <div class="flex-1">
-              <label for="brand-input" class="block text-sm font-medium text-gray-700 mb-1">
-                Brand Image
-              </label>
-              <input
-                id="brand-input"
-                type="file"
-                accept="image/*"
-                class="hidden"
-                onchange={getBrandURL}
-                bind:this={brandInput}
-              />
-              <button
-                class="w-full px-4 py-2 text-sm transition-all duration-200 hover:scale-105"
-                style="background-color: #B0791C; color: white; border: 2px solid #CD8A18;"
-                onclick={() => brandInput?.click()}
-              >
-                {brandLogoURL ? 'Change Brand Image' : 'Choose Brand Image'}
-              </button>
-            </div>
-            
-            <div class="flex-1">
-              <label for="corner-input" class="block text-sm font-medium text-gray-700 mb-1">
-                Corner Image
-              </label>
-              <input
-                id="corner-input"
-                type="file"
-                accept="image/*"
-                class="hidden"
-                onchange={getCornerURL}
-                bind:this={cornerInput}
-              />
-              <button
-                class="w-full px-4 py-2 text-sm transition-all duration-200 hover:scale-105"
-                style="background-color: #B0791C; color: white; border: 2px solid #CD8A18;"
-                onclick={() => cornerInput?.click()}
-              >
-                {cornerBrandLogoURL ? 'Change Corner Image' : 'Choose Corner Image'}
-              </button>
-            </div>
-          </div>
-        {/if}
-        
-        <!-- Large Preview -->
-        <div class="flex-1 flex justify-center items-center overflow-hidden">
-          <div class="w-full max-w-2xl">
-            {#if currentStyle}
-              {#if currentStyle.type === 'comic' && currentStyle.design}
-                <ComicNote
-                  design={currentStyle.design}
-                  denomination={100}
-                  mintUrl="example.mint.com"
-                  token="example-token"
-                  unit="sat"
-                />
-              {:else if currentStyle.type === 'custom' && currentStyle.colorCode}
-                {#key customNoteKey}
-                  <CustomNote
-                    denomination={100}
-                    mintUrl="example.mint.com"
+      <!-- Total Calculation -->
+      <div class="mb-8">
+        <p class="text-lg" style="color: #4E4318;">
+          Total: {amountPerNote} sats x {numberOfNotes} note{numberOfNotes !== 1 ? 's' : ''} = {totalAmount} sats
+        </p>
+      </div>
+
+      <!-- Note Preview Section -->
+      <div class="flex flex-col items-center w-full">
+        <div class="relative bg-gray-200 rounded-lg p-8 w-full" style="background-color: #EFEDEA;">
+          <span class="absolute top-4 left-4 text-sm font-medium" style="color: #4E4318;">Preview</span>
+          <div class="scale-105 transform mt-6 grid place-items-center w-full">
+              {#if $selectedTemplate}
+                {#if $selectedTemplate.type === 'comic' && $selectedTemplate.design}
+                  <ComicNote
+                    design={$selectedTemplate.design}
+                    denomination={amountPerNote}
+                    mintUrl={$mint?.url || "example.mint.com"}
                     token="example-token"
-                    colorCode={currentStyle.colorCode}
-                    cornerBrandLogoURL={cornerBrandLogoURL}
-                    brandLogoURL={brandLogoURL}
                     unit="sat"
                   />
-                {/key}
-
+                {:else if $selectedTemplate.type === 'custom'}
+                  <CustomNote
+                    denomination={amountPerNote}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token="example-token"
+                    colorCode="#E4690A"
+                    cornerBrandLogoURL=""
+                    brandLogoURL=""
+                    unit="sat"
+                  />
+                {/if}
               {:else}
-                <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
-                  <p class="text-lg font-semibold mb-2">Style type not supported</p>
-                  <p>Style: {JSON.stringify(currentStyle)}</p>
+                <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
+                  <span class="text-amber-600 font-semibold">No template selected</span>
                 </div>
               {/if}
-            {:else}
-              <div class="text-center text-gray-500 p-8 border-2 border-dashed border-gray-300 rounded-lg">
-                <p class="text-lg font-semibold mb-2">No style selected</p>
-                <p>Available styles: {styleOptions.length}</p>
-                <p>Selected ID: {selectedStyleId || 'none'}</p>
-                <p>Current Style: {currentStyle ? 'Found' : 'Not found'}</p>
-                <p>Template Type: {selectedTemplate.type}</p>
-              </div>
-            {/if}
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Navigation -->
-    <div class="flex justify-between items-center mt-8 px-6 pb-6">
-      <!-- Back button -->
-      <button 
-        class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
-        style="color: #CD8A18; background: transparent; border: none;"
-        onclick={goBack}
-      >
-        ← Back
-      </button>
+  <!-- Progress Indicator -->
+  <div class="flex justify-center mb-6">
+    <div class="flex items-center gap-4">
+      <!-- Step 1: Connect Mint (Completed) -->
+      <div class="w-6 h-6 rounded-full" style="background-color: #2B9707;"></div>
       
-      <!-- Next button -->
-      <button 
-        class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
-        style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
-        onclick={proceedToNext}
-      >
-        Next →
-      </button>
+      <!-- Connector Line -->
+      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
+      
+      <!-- Step 2: Customize (Active/Current) -->
+      <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background-color: #5C4F21;">
+        <div class="w-4 h-4 rounded-full" style="background-color: #8B7B2F;"></div>
+      </div>
+      
+      <!-- Connector Line -->
+      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
+      
+      <!-- Step 3: Generate (Inactive) -->
+      <div class="w-6 h-6 rounded-full" style="background-color: #F0E0B0;"></div>
     </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="flex justify-between items-center mt-8 px-6 pb-6">
+    <button 
+      class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+      style="color: #CD8A18; background: transparent; border: none;"
+      onclick={goBack}
+    >
+      ← Back
+    </button>
+    
+    <button 
+      class="btn px-6 py-2 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: {amountPerNote > 0 && numberOfNotes > 0 && numberOfNotes <= 100 ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {amountPerNote > 0 && numberOfNotes > 0 && numberOfNotes <= 100 ? '#A94705' : '#6B7280'};"
+      onclick={proceedToNext}
+      disabled={amountPerNote <= 0 || numberOfNotes <= 0 || numberOfNotes > 100}
+    >
+      Next →
+    </button>
   </div>
 </div>

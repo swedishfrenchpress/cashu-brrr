@@ -28,8 +28,8 @@
 
   function proceedToNextStep() {
     if (selectedTemplate) {
-      // Proceed to customization step (still step 1, but different view)
-      step.set(1.5); // Use 1.5 to indicate customization phase
+      // Proceed to mint connection step
+      step.set(2);
     }
   }
 </script>
@@ -92,14 +92,7 @@
     </div>
   </div>
 
-  <!-- Progress Indicator -->
-  <div class="flex justify-center mb-8">
-    <div class="flex items-center gap-4">
-      <div class="w-4 h-4 bg-orange-600 rounded-full"></div>
-      <div class="w-4 h-4 bg-gray-300 rounded-full border border-gray-400"></div>
-      <div class="w-4 h-4 bg-gray-300 rounded-full border border-gray-400"></div>
-    </div>
-  </div>
+
 
   <!-- Navigation -->
   <div class="flex justify-between items-center mt-8 px-6 pb-6">

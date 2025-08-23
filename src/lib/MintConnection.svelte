@@ -262,9 +262,22 @@
   <!-- Progress Indicator -->
   <div class="flex justify-center mb-8">
     <div class="flex items-center gap-4">
-      <div class="w-4 h-4 bg-orange-600 rounded-full"></div>
-      <div class="w-4 h-4 bg-gray-300 rounded-full border border-gray-400"></div>
-      <div class="w-4 h-4 bg-gray-300 rounded-full border border-gray-400"></div>
+      <!-- Step 1: Connect Mint (Active/Current) -->
+      <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background-color: #5C4F21;">
+        <div class="w-4 h-4 rounded-full" style="background-color: #8B7B2F;"></div>
+      </div>
+      
+      <!-- Connector Line -->
+      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
+      
+      <!-- Step 2: Customize (Inactive) -->
+      <div class="w-6 h-6 rounded-full" style="background-color: #F0E0B0;"></div>
+      
+      <!-- Connector Line -->
+      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
+      
+      <!-- Step 3: Generate (Inactive) -->
+      <div class="w-6 h-6 rounded-full" style="background-color: #F0E0B0;"></div>
     </div>
   </div>
 

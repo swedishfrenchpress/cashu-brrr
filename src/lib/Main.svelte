@@ -72,10 +72,10 @@
       {#if activeTab === 'print'}
         {#if $step === 1}
           <NoteTemplateSelector />
-        {:else if $step === 1.5 && $selectedTemplate}
-          <NoteCustomizer selectedTemplate={$selectedTemplate} />
         {:else if $step === 2}
           <MintConnection />
+        {:else if $step === 3}
+          <NoteCustomizer />
         {:else}
           <PrintTab />
         {/if}
