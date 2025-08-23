@@ -28,7 +28,7 @@
 
   function proceedToNextStep() {
     if (selectedTemplate) {
-      // Proceed to mint connection step
+      // Proceed to style selection step
       step.set(2);
     }
   }

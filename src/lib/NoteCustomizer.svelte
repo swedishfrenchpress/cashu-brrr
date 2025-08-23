@@ -1,164 +1,164 @@
 <script lang="ts">
-  import { step, selectedTemplate, mint, selectedDenomination, selectedNumberOfNotes, donation } from "./stores.svelte";
+  import { step, selectedTemplate, selectedStyle } from "./stores.svelte";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import { toast } from "svelte-sonner";
 
-  let amountPerNote = $derived($selectedDenomination);
-  let numberOfNotes = $derived($selectedNumberOfNotes);
-  let totalAmount = $derived(amountPerNote * numberOfNotes);
+  // Available comic designs (3-25 as mentioned in the user's memory)
+  const comicDesigns = [
+    { id: 3, name: 'Design 3', preview: 'Comic design 3' },
+    { id: 4, name: 'Design 4', preview: 'Comic design 4' },
+    { id: 5, name: 'Design 5', preview: 'Comic design 5' },
+    { id: 6, name: 'Design 6', preview: 'Comic design 6' },
+    { id: 7, name: 'Design 7', preview: 'Comic design 7' },
+    { id: 8, name: 'Design 8', preview: 'Comic design 8' },
+    { id: 9, name: 'Design 9', preview: 'Comic design 9' },
+    { id: 10, name: 'Design 10', preview: 'Comic design 10' },
+    { id: 11, name: 'Design 11', preview: 'Comic design 11' },
+    { id: 12, name: 'Design 12', preview: 'Comic design 12' },
+    { id: 13, name: 'Design 13', preview: 'Comic design 13' },
+    { id: 14, name: 'Design 14', preview: 'Comic design 14' },
+    { id: 15, name: 'Design 15', preview: 'Comic design 15' },
+    { id: 16, name: 'Design 16', preview: 'Comic design 16' },
+    { id: 17, name: 'Design 17', preview: 'Comic design 17' },
+    { id: 18, name: 'Design 18', preview: 'Comic design 18' },
+    { id: 19, name: 'Design 19', preview: 'Comic design 19' },
+    { id: 20, name: 'Design 20', preview: 'Comic design 20' },
+    { id: 21, name: 'Design 21', preview: 'Comic design 21' },
+    { id: 22, name: 'Design 22', preview: 'Comic design 22' },
+    { id: 23, name: 'Design 23', preview: 'Comic design 23' },
+    { id: 24, name: 'Design 24', preview: 'Comic design 24' },
+    { id: 25, name: 'Design 25', preview: 'Comic design 25' },
+  ];
+
+  // Available colors for custom notes
+  const colorOptions = [
+    { id: 'orange', name: 'Orange', code: '#E4690A' },
+    { id: 'blue', name: 'Blue', code: '#3B82F6' },
+    { id: 'green', name: 'Green', code: '#10B981' },
+    { id: 'purple', name: 'Purple', code: '#8B5CF6' },
+    { id: 'red', name: 'Red', code: '#EF4444' },
+    { id: 'pink', name: 'Pink', code: '#EC4899' },
+  ];
+
+  let selectedDesign = $state(7); // Default to design 7
+  let selectedColor = $state('#E4690A'); // Default orange color
 
   function goBack() {
-    step.set(2);
+    step.set(1);
   }
 
   function proceedToNext() {
-    if (amountPerNote <= 0) {
-      toast.error("Amount per note must be greater than 0");
-      return;
-    }
-    if (numberOfNotes <= 0) {
-      toast.error("Number of notes must be greater than 0");
-      return;
-    }
-    if (numberOfNotes > 100) {
-      toast.error("Maximum 100 notes allowed");
-      return;
-    }
-    step.set(4);
+    // Store the selected style in the store
+    selectedStyle.set({
+      id: selectedDesign.toString(),
+      name: `Design ${selectedDesign}`,
+      type: $selectedTemplate?.type || 'comic',
+      design: selectedDesign,
+      colorCode: selectedColor
+    });
+    
+    step.set(3); // Move to mint connection step
   }
 
-  function handleAmountChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const value = parseInt(target.value);
-    if (!isNaN(value) && value >= 0) {
-      selectedDenomination.set(value);
-    } else if (target.value === '') {
-      selectedDenomination.set(0);
-    }
+  function selectDesign(designId: number) {
+    selectedDesign = designId;
   }
 
-  function handleNotesChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const value = parseInt(target.value);
-    if (!isNaN(value) && value >= 0) {
-      selectedNumberOfNotes.set(value);
-    }
+  function selectColor(colorCode: string) {
+    selectedColor = colorCode;
   }
 </script>
 
 <div class="w-full h-full flex flex-col p-8 overflow-hidden" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
   <div class="text-left mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318; text-decoration: underline;">Step 2: Choose amounts</h2>
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Customize your note</h2>
   </div>
 
-    <!-- Main Content -->
-  <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
-    <div class="p-6 mb-6">
-      <!-- Input Fields Section -->
-      <div class="grid grid-cols-2 gap-8 mb-8">
-        <!-- Amount per Note -->
-        <div class="relative">
-          <label for="amountPerNote" class="block text-sm font-medium mb-2" style="color: #4E4318;">
-            Amount per note
-          </label>
-          <input
-            id="amountPerNote"
-            type="text"
-            value={amountPerNote}
-            oninput={handleAmountChange}
-            class="w-full px-4 py-3 pr-12 rounded-lg transition-colors text-left"
-            style="background-color: #FFF9EF; border: 1px solid #EFAF42; color: #5C4214;"
-            placeholder="Enter amount"
-          />
-          <span class="absolute right-3 bottom-2 text-sm" style="color: #5C4214;">sats</span>
-        </div>
-
-        <!-- Number of Notes -->
-        <div class="relative">
-          <label for="numberOfNotes" class="block text-sm font-medium mb-2" style="color: #4E4318;">
-            Number of notes to be printed
-          </label>
-          <input
-            id="numberOfNotes"
-            type="number"
-            min="1"
-            max="100"
-            value={numberOfNotes}
-            oninput={handleNotesChange}
-            class="w-full px-4 py-3 pr-12 rounded-lg transition-colors text-left"
-            style="background-color: #FFF9EF; border: 1px solid #EFAF42; color: #5C4214;"
-            placeholder="Enter number of notes"
-          />
-          <span class="absolute right-3 bottom-2 text-sm" style="color: #5C4214;">notes</span>
-        </div>
-      </div>
-
-      <!-- Total Calculation -->
-      <div class="mb-8">
-        <p class="text-lg" style="color: #4E4318;">
-          Total: {amountPerNote} sats x {numberOfNotes} note{numberOfNotes !== 1 ? 's' : ''} = {totalAmount} sats
-        </p>
-      </div>
-
-      <!-- Note Preview Section -->
-      <div class="flex flex-col items-center w-full">
-        <div class="relative bg-gray-200 rounded-lg p-8 w-full" style="background-color: #EFEDEA;">
-          <span class="absolute top-4 left-4 text-sm font-medium" style="color: #4E4318;">Preview</span>
-          <div class="scale-105 transform mt-6 grid place-items-center w-full">
-              {#if $selectedTemplate}
-                {#if $selectedTemplate.type === 'comic' && $selectedTemplate.design}
+  <!-- Main Content -->
+  <div class="flex-1 flex gap-8">
+    <!-- Left Side - Styles Section -->
+    <div class="w-1/3">
+      <h3 class="text-lg font-semibold mb-4" style="color: #4E4318;">Styles</h3>
+      <div class="overflow-y-auto pr-2 max-h-96">
+        {#if $selectedTemplate?.type === 'comic'}
+          <!-- Comic Design Selection -->
+          <div class="space-y-2">
+            {#each comicDesigns as design}
+              <div
+                onclick={() => selectDesign(design.id)}
+                class="cursor-pointer {selectedDesign === design.id ? 'ring-2 ring-orange-500' : ''}"
+              >
+                <div class="scale-10 transform pointer-events-none">
                   <ComicNote
-                    design={$selectedTemplate.design}
-                    denomination={amountPerNote}
-                    mintUrl={$mint?.url || "example.mint.com"}
+                    design={design.id}
+                    denomination={100}
+                    mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"
                   />
-                {:else if $selectedTemplate.type === 'custom'}
+                </div>
+              </div>
+            {/each}
+          </div>
+        {:else if $selectedTemplate?.type === 'custom'}
+          <!-- Custom Color Selection -->
+          <div class="space-y-2">
+            {#each colorOptions as color}
+              <div
+                onclick={() => selectColor(color.code)}
+                class="cursor-pointer {selectedColor === color.code ? 'ring-2 ring-orange-500' : ''}"
+              >
+                <div class="scale-10 transform pointer-events-none">
                   <CustomNote
-                    denomination={amountPerNote}
-                    mintUrl={$mint?.url || "example.mint.com"}
+                    denomination={100}
+                    mintUrl="example.mint.com"
                     token="example-token"
-                    colorCode="#E4690A"
+                    colorCode={color.code}
                     cornerBrandLogoURL=""
                     brandLogoURL=""
                     unit="sat"
                   />
-                {/if}
-              {:else}
-                <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
-                  <span class="text-amber-600 font-semibold">No template selected</span>
                 </div>
-              {/if}
+              </div>
+            {/each}
           </div>
-        </div>
+        {/if}
+      </div>
+    </div>
+
+    <!-- Right Side - Large Preview -->
+    <div class="flex-1 flex items-center justify-center">
+      <div class="scale-150 transform">
+        {#if $selectedTemplate?.type === 'comic'}
+          <ComicNote
+            design={selectedDesign}
+            denomination={100}
+            mintUrl="example.mint.com"
+            token="example-token"
+            unit="sat"
+          />
+        {:else if $selectedTemplate?.type === 'custom'}
+          <CustomNote
+            denomination={100}
+            mintUrl="example.mint.com"
+            token="example-token"
+            colorCode={selectedColor}
+            cornerBrandLogoURL=""
+            brandLogoURL=""
+            unit="sat"
+          />
+        {:else}
+          <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
+            <span class="text-amber-600 font-semibold">No template selected</span>
+          </div>
+        {/if}
       </div>
     </div>
   </div>
 
-  <!-- Progress Indicator -->
-  <div class="flex justify-center mb-6">
-    <div class="flex items-center gap-4">
-      <!-- Step 1: Connect Mint (Completed) -->
-      <div class="w-6 h-6 rounded-full" style="background-color: #2B9707;"></div>
-      
-      <!-- Connector Line -->
-      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
-      
-      <!-- Step 2: Customize (Active/Current) -->
-      <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background-color: #5C4F21;">
-        <div class="w-4 h-4 rounded-full" style="background-color: #8B7B2F;"></div>
-      </div>
-      
-      <!-- Connector Line -->
-      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
-      
-      <!-- Step 3: Generate (Inactive) -->
-      <div class="w-6 h-6 rounded-full" style="background-color: #F0E0B0;"></div>
-    </div>
-  </div>
+
 
   <!-- Navigation -->
   <div class="flex justify-between items-center mt-8 px-6 pb-6">
@@ -171,10 +171,9 @@
     </button>
     
     <button 
-      class="btn px-6 py-2 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-      style="background-color: {amountPerNote > 0 && numberOfNotes > 0 && numberOfNotes <= 100 ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {amountPerNote > 0 && numberOfNotes > 0 && numberOfNotes <= 100 ? '#A94705' : '#6B7280'};"
+      class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+      style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
       onclick={proceedToNext}
-      disabled={amountPerNote <= 0 || numberOfNotes <= 0 || numberOfNotes > 100}
     >
       Next →
     </button>

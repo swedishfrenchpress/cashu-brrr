@@ -25,17 +25,23 @@
   const randomID = bytesToHex(secp256k1.utils.randomPrivateKey()).slice(0, 12);
 
   onMount(() => {
-    imageURL = document.getElementById("qr-" + randomID).toDataURL();
+    const element = document.getElementById("qr-" + randomID);
+    if (element && element instanceof HTMLCanvasElement) {
+      imageURL = element.toDataURL();
+    }
   });
 
-  const downloadNote = async (e) => {
-    const svg = e.target.nearestViewportElement;
-    const xml = new XMLSerializer().serializeToString(svg);
-    const svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
-    var a = document.createElement("a"); //Create <a>
-    a.href = "data:image/svg+xml;base64," + svg64; //Image Base64 Goes here
-    a.download = `${mintUrl}_${denomination}_${unit}.svg`; //File name Here
-    a.click(); //Downloaded file
+  const downloadNote = async (e: Event) => {
+    const target = e.target as HTMLElement;
+    const svg = target.closest('svg');
+    if (svg) {
+      const xml = new XMLSerializer().serializeToString(svg);
+      const svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+      var a = document.createElement("a"); //Create <a>
+      a.href = "data:image/svg+xml;base64," + svg64; //Image Base64 Goes here
+      a.download = `${mintUrl}_${denomination}_${unit}.svg`; //File name Here
+      a.click(); //Downloaded file
+    }
   };
 </script>
 
@@ -47,7 +53,7 @@
     displayID="qr-{randomID}"
   />
 </div>
-<button onclick={downloadNote} class="w-full">
+<div class="w-full">
   <svg
    version="1.1"
    viewBox="0 0 420.32997 214.49"
@@ -8418,4 +8424,4 @@
          ry="1.92"
          id="ellipse1542" /></g></g></svg>
 
-</button>
+</div>

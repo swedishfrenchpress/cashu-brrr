@@ -2,8 +2,8 @@
   import PrintTab from "./PrintTab.svelte";
   import HistoryTab from "./HistoryTab.svelte";
   import NoteTemplateSelector from "./NoteTemplateSelector.svelte";
-  import NoteCustomizer from "./NoteCustomizer.svelte";
   import MintConnection from "./MintConnection.svelte";
+  import NoteCustomizer from "./NoteCustomizer.svelte";
   import PaymentStep from "./PaymentStep.svelte";
   import PostItCard from "./PostItCard.svelte";
   import { step, selectedTemplate } from "./stores.svelte";
@@ -74,9 +74,9 @@
         {#if $step === 1}
           <NoteTemplateSelector />
         {:else if $step === 2}
-          <MintConnection />
-        {:else if $step === 3}
           <NoteCustomizer />
+        {:else if $step === 3}
+          <MintConnection />
         {:else if $step === 4}
           <PaymentStep />
         {:else}

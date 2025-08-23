@@ -137,7 +137,7 @@
 
   // Go back to previous step
   const goBack = () => {
-    step.set(1);
+    step.set(2);
   };
 
   // Proceed to next step (amount selection)
@@ -150,7 +150,7 @@
     try {
       // For now, just proceed to the next step without initializing wallet
       // Currency selection will be handled in the next step
-      step.set(3); // Move to amount selection step
+      step.set(4); // Move to payment step
     } catch (error: any) {
       toast.error("Failed to proceed: " + error.message);
     }
@@ -162,12 +162,39 @@
       connectToMint();
     }
   };
+
+  // Hover effects for mint buttons
+  const handleMintHover = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    target.style.background = 'rgba(115, 111, 111, 0.08)';
+    target.style.borderColor = '#5A5A5A';
+    target.style.color = '#5A5A5A';
+  };
+
+  const handleMintLeave = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    target.style.background = 'transparent';
+    target.style.borderColor = '#736F6F';
+    target.style.color = '#736F6F';
+  };
+
+  const handleSuggestedMintHover = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    target.style.background = 'rgba(205, 138, 24, 0.08)';
+    target.style.color = '#B0791C';
+  };
+
+  const handleSuggestedMintLeave = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    target.style.background = 'transparent';
+    target.style.color = '#CD8A18';
+  };
 </script>
 
 <div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
   <div class="text-left mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318; text-decoration: underline;">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">
       Step 1: Connect a mint
     </h2>
   </div>
@@ -211,7 +238,9 @@
           {#each suggestedMints as suggestedMint}
             <button
               onclick={() => selectMint(suggestedMint)}
-              class="px-4 py-2 transition-all duration-200 hover:scale-105 text-center flex-1"
+              onmouseenter={handleSuggestedMintHover}
+              onmouseleave={handleSuggestedMintLeave}
+              class="px-4 py-2 transition-all duration-200 hover:scale-105 text-center flex-1 rounded-full"
               style="color: #CD8A18; background: transparent !important; border: none !important; box-shadow: none !important;"
             >
               {suggestedMint}
@@ -237,7 +266,9 @@
             {#each $discoveredMints as discoveredMint}
               <button
                 onclick={() => selectMint(discoveredMint.url)}
-                class="px-3 py-1 text-xs rounded-full transition-colors"
+                onmouseenter={handleMintHover}
+                onmouseleave={handleMintLeave}
+                class="px-3 py-1 text-xs rounded-full transition-all duration-200 hover:scale-105"
                 style="background: transparent; border: 1px solid #736F6F; color: #736F6F;"
               >
                 {discoveredMint.url}
@@ -266,23 +297,23 @@
 
   <!-- Progress Indicator -->
   <div class="flex justify-center mb-8">
-    <div class="flex items-center gap-4">
+    <div class="flex items-center">
       <!-- Step 1: Connect Mint (Active/Current) -->
-      <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background-color: #5C4F21;">
-        <div class="w-4 h-4 rounded-full" style="background-color: #8B7B2F;"></div>
+      <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-md" style="background: linear-gradient(135deg, #E4690A, #CD8A18); border: 2px solid #A94705;">
+        <span class="text-white font-bold text-sm">1</span>
       </div>
+      <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #E4690A, #F0E0B0);"></div>
       
-      <!-- Connector Line -->
-      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
+      <!-- Step 2: Payment (Inactive) -->
+      <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
+        <span class="text-gray-500 font-bold text-sm">2</span>
+      </div>
+      <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #F0E0B0, #F0E0B0);"></div>
       
-      <!-- Step 2: Customize (Inactive) -->
-      <div class="w-6 h-6 rounded-full" style="background-color: #F0E0B0;"></div>
-      
-      <!-- Connector Line -->
-      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
-      
-      <!-- Step 3: Generate (Inactive) -->
-      <div class="w-6 h-6 rounded-full" style="background-color: #F0E0B0;"></div>
+      <!-- Step 3: Print (Inactive) -->
+      <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
+        <span class="text-gray-500 font-bold text-sm">3</span>
+      </div>
     </div>
   </div>
 

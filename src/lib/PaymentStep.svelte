@@ -61,7 +61,7 @@
 
   function proceedToNext() {
     // Handle payment completion
-    step.set(4);
+    step.set(5);
   }
 
   function copyInvoice() {
@@ -76,7 +76,7 @@
 <div class="w-full h-full flex flex-col p-8 overflow-hidden" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
   <div class="text-left mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318; text-decoration: underline;">Step 3: Payment</h2>
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Step 2: Payment</h2>
   </div>
 
   <!-- Main Content -->
@@ -89,9 +89,9 @@
           <div class="space-y-3">
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium" style="color: #4E4318;">Mint:</span>
-              <div class="px-3 py-1 rounded-full text-sm font-medium" style="background: transparent; border: 1px solid #736F6F; color: #736F6F;">
+              <span class="text-sm font-medium text-gray-900">
                 {$mint?.url || "mint.lnvoltz.com"}
-              </div>
+              </span>
             </div>
             
             <div class="flex justify-between items-center">
@@ -207,23 +207,27 @@
   </div>
 
   <!-- Progress Indicator -->
-  <div class="flex justify-center mb-6">
-    <div class="flex items-center gap-4">
+  <div class="flex justify-center mb-8">
+    <div class="flex items-center">
       <!-- Step 1: Connect Mint (Completed) -->
-      <div class="w-6 h-6 rounded-full" style="background-color: #2B9707;"></div>
+      <div class="flex items-center">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #2B9707, #1F7A05);">
+          <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #2B9707, #E4690A);"></div>
+      </div>
       
-      <!-- Connector Line -->
-      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
+      <!-- Step 2: Payment (Active/Current) -->
+      <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-md" style="background: linear-gradient(135deg, #E4690A, #CD8A18); border: 2px solid #A94705;">
+        <span class="text-white font-bold text-sm">2</span>
+      </div>
+      <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #E4690A, #F0E0B0);"></div>
       
-      <!-- Step 2: Customize (Completed) -->
-      <div class="w-6 h-6 rounded-full" style="background-color: #2B9707;"></div>
-      
-      <!-- Connector Line -->
-      <div class="w-8 h-0.5" style="background-color: #FFD700;"></div>
-      
-      <!-- Step 3: Payment (Active/Current) -->
-      <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background-color: #5C4F21;">
-        <div class="w-4 h-4 rounded-full" style="background-color: #8B7B2F;"></div>
+      <!-- Step 3: Print (Inactive) -->
+      <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
+        <span class="text-gray-500 font-bold text-sm">3</span>
       </div>
     </div>
   </div>
