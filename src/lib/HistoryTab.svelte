@@ -14,23 +14,29 @@
     selectedNumberOfNotes.set(numberOfNotes);
     preparedTokens.set(print.tokens);
     
-    // Set a default template (you might want to store this in the print history)
-    selectedTemplate.set({
-      id: 'custom',
-      name: 'Custom Note',
-      type: 'custom'
-    });
+    // Restore the actual template and style from the stored print data
+    if (print.template) {
+      selectedTemplate.set(print.template);
+    } else {
+      // Fallback to comic template if no template stored
+      selectedTemplate.set({
+        id: 'comic',
+        name: 'Comic Note',
+        type: 'comic'
+      });
+    }
     
-    selectedStyle.set({
-      id: 'custom',
-      name: 'Custom Note',
-      type: 'custom',
-      colorCode: '#E4690A'
-    });
-    
-    // Set the mint URL (you might need to create a mint object)
-    // Note: We don't set the mint store here because we don't have the required keys, keysets, and info
-    // The PrintScreen component will use the mint URL from the tokens themselves
+    if (print.style) {
+      selectedStyle.set(print.style);
+    } else {
+      // Fallback to default comic style if no style stored
+      selectedStyle.set({
+        id: 'comic',
+        name: 'Comic Note',
+        type: 'comic',
+        design: 7
+      });
+    }
     
     // Navigate to the print tab and set step to print screen
     step.set(6);

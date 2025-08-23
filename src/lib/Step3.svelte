@@ -7,6 +7,8 @@
     proofs,
     selectedDenomination,
     selectedNumberOfNotes,
+    selectedTemplate,
+    selectedStyle,
     step,
     wallet,
     type Print,
@@ -106,6 +108,8 @@
       donation: donationToken,
       mint: $wallet.mint.mintUrl,
       ts: Date.now(),
+      template: $selectedTemplate,
+      style: $selectedStyle,
     };
     prints.update((ctx) => [print, ...ctx]);
     preparedTokens.set(tokens);
