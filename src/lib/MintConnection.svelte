@@ -50,6 +50,11 @@
       
       const m = await loadMint(formattedUrl);
       mint.set(m);
+      
+      // Create wallet from the mint
+      const w = await getWalletWithUnit(m, "sat");
+      wallet.set(w);
+      
       mintUrl = formattedUrl; // Update the input with the formatted URL
       toast.success("Connected to " + m.url);
     } catch (error: any) {
@@ -77,6 +82,7 @@
     // Clear the mint store by setting it to undefined
     // This will trigger a re-render and show the connect button again
     mint.set(undefined as any);
+    wallet.set(undefined as any);
     mintUrl = "";
     toast.success("Disconnected from mint");
   };
@@ -160,11 +166,10 @@
 
 <div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
-  <div class="text-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 mb-2">
-      Step 1: Connect to a Mint
+  <div class="text-left mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318; text-decoration: underline;">
+      Step 1: Connect a mint
     </h2>
-    <p class="text-gray-600 text-lg">Choose a mint to connect to and start printing your ecash notes</p>
   </div>
 
   <!-- Main Content -->

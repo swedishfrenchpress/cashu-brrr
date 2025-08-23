@@ -13,6 +13,7 @@
     "@cashu/cashu-ts": "^2.0.0-rc4",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tsconfig/svelte": "^5.0.0",
+    "@types/qrcode": "^1.5.5",
     "autoprefixer": "^10.4.14",
     "daisyui": "^4.7.3",
     "lucide-svelte": "^0.461.0",

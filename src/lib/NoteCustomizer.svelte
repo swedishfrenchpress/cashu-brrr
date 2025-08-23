@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { step, selectedTemplate, mint } from "./stores.svelte";
+  import { step, selectedTemplate, mint, selectedDenomination, selectedNumberOfNotes, donation } from "./stores.svelte";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import { toast } from "svelte-sonner";
 
-  let amountPerNote = $state(10);
-  let numberOfNotes = $state(1);
+  let amountPerNote = $derived($selectedDenomination);
+  let numberOfNotes = $derived($selectedNumberOfNotes);
   let totalAmount = $derived(amountPerNote * numberOfNotes);
 
   function goBack() {
@@ -25,16 +25,16 @@
       toast.error("Maximum 100 notes allowed");
       return;
     }
-    step.set(3);
+    step.set(4);
   }
 
   function handleAmountChange(event: Event) {
     const target = event.target as HTMLInputElement;
     const value = parseInt(target.value);
     if (!isNaN(value) && value >= 0) {
-      amountPerNote = value;
+      selectedDenomination.set(value);
     } else if (target.value === '') {
-      amountPerNote = 0;
+      selectedDenomination.set(0);
     }
   }
 
@@ -42,15 +42,15 @@
     const target = event.target as HTMLInputElement;
     const value = parseInt(target.value);
     if (!isNaN(value) && value >= 0) {
-      numberOfNotes = value;
+      selectedNumberOfNotes.set(value);
     }
   }
 </script>
 
 <div class="w-full h-full flex flex-col p-8 overflow-hidden" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
-  <div class="text-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Step 2: Choose amounts</h2>
+  <div class="text-left mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318; text-decoration: underline;">Step 2: Choose amounts</h2>
   </div>
 
     <!-- Main Content -->
