@@ -305,21 +305,15 @@
       </div>
       <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #E4690A, #F0E0B0);"></div>
       
-      <!-- Step 2: Choose Amounts (Inactive) -->
+      <!-- Step 2: Choose Amounts (Pending) -->
       <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
         <span class="text-gray-500 font-bold text-sm">2</span>
       </div>
       <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #F0E0B0, #F0E0B0);"></div>
       
-      <!-- Step 3: Payment (Inactive) -->
+      <!-- Step 3: Payment (Pending) -->
       <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
         <span class="text-gray-500 font-bold text-sm">3</span>
-      </div>
-      <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #F0E0B0, #F0E0B0);"></div>
-      
-      <!-- Step 4: Print (Inactive) -->
-      <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
-        <span class="text-gray-500 font-bold text-sm">4</span>
       </div>
     </div>
   </div>
