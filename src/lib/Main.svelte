@@ -61,10 +61,23 @@
       FAQs
     </h2>
     <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-8">
-      <PostItCard title="What is an ecash note?" body="A bitcoin ecash note is a printable slip with a QR code that holds a claimable amount of bitcoin-backed ecash. You can hand it to someone like cash, and they can scan it to redeem the funds. Once claimed, the note is no longer valid and can’t be reused." rotation="rotate-[15deg]" />
-      <PostItCard title="What happens if I lose it?" body="If the QR code on the note is never scanned and claimed, the ecash stays unredeemed. Only the person holding the physical note can access the funds, so treat it like real cash — if it’s lost, it can’t be recovered.." rotation="-rotate-[15deg]" />
+      <PostItCard title="What is an ecash note?" body="A bitcoin ecash note is a printable slip with a QR code that holds a claimable amount of bitcoin-backed ecash. You can hand it to someone like cash, and they can scan it to redeem the funds. Once claimed, the note is no longer valid and can't be reused." rotation="rotate-[15deg]" />
+      <PostItCard title="What happens if I lose it?" body="If the QR code on the note is never scanned and claimed, the ecash stays unredeemed. Only the person holding the physical note can access the funds, so treat it like real cash — if it's lost, it can't be recovered.." rotation="-rotate-[15deg]" />
       <PostItCard title="How do I print?" body="Just choose a design, select how many notes you want to print and for what amounts, then pay using lightning or ecash. The app will generate a printable sheet you can cut and hand out." rotation="rotate-[15deg]" />
     </div>
+  </div>
+
+  <!-- Start Over Button -->
+  <div class="flex justify-center mt-8 mb-6">
+    <button
+      class="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+      onclick={() => {
+        step.set(1);
+        activeTab = 'print';
+      }}
+    >
+      Start Over
+    </button>
   </div>
 
   <!-- Tabbed Navigation -->

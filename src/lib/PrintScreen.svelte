@@ -12,17 +12,18 @@
   let numberOfNotes = $derived($selectedNumberOfNotes);
   let denomination = $derived($selectedDenomination);
   
-  // Use preparedTokens for reprint functionality, fallback to most recent print
-  let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
+  // Use the same token source as PrintPage - get from most recent print job
+  let currentPrint = $derived($prints[$prints.length - 1]);
+  let currentTokens = $derived(currentPrint?.tokens || []);
   
-  // Pagination for notes preview
+  // Pagination for notes preview - use actual number of tokens
   let currentPage = $state(1);
   let notesPerPage = 3;
-  let totalPages = $derived(Math.ceil(numberOfNotes / notesPerPage));
+  let totalPages = $derived(Math.ceil(currentTokens.length / notesPerPage));
   
   // Calculate which notes to show on current page
   let startIndex = $derived((currentPage - 1) * notesPerPage);
-  let endIndex = $derived(Math.min(startIndex + notesPerPage, numberOfNotes));
+  let endIndex = $derived(Math.min(startIndex + notesPerPage, currentTokens.length));
   let currentNotes = $derived(Array.from({ length: endIndex - startIndex }, (_, i) => startIndex + i));
 
   function nextPage() {

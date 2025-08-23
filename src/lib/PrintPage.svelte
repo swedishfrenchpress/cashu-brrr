@@ -190,14 +190,9 @@
 
   <!-- Simple notes layout -->
   <div style="background: white; padding: 20px;">
-    <!-- Debug info -->
-    <div style="text-align: center; margin-bottom: 20px; color: red; font-weight: bold;">
-      Debug: {currentNumberOfNotes} notes, {currentTokens.length} tokens available
-    </div>
-    
-    <!-- Force exactly 4 notes per page -->
+    <!-- Render notes directly -->
     {#each currentTokens as token, index}
-      <div style="text-align: center; margin: 15px 0;">
+      <div style="margin: 20px 0; text-align: center;">
         {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
           <div style="display: inline-block; width: 420px; height: 214px;">
             <ComicNote
