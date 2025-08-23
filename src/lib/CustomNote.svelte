@@ -349,7 +349,7 @@
       xml:space="preserve"
       style="white-space: pre"
       font-family="Fira Code"
-      font-size="14"
+      font-size="6"
       font-weight="bold"
       letter-spacing="0em"
       ><tspan x="55" y="64.848">{formatAmount(denomination, unit)}</tspan></text

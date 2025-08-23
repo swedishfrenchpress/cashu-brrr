@@ -9,8 +9,23 @@
   import PrintScreen from "./PrintScreen.svelte";
   import PostItCard from "./PostItCard.svelte";
   import { step, selectedTemplate } from "./stores.svelte";
+  import { onMount } from "svelte";
 
   let activeTab = $state<'print' | 'history'>('print');
+
+  onMount(() => {
+    // Listen for the custom event to switch to print tab
+    const handleSwitchToPrintTab = () => {
+      activeTab = 'print';
+    };
+    
+    window.addEventListener('switchToPrintTab', handleSwitchToPrintTab);
+    
+    // Cleanup event listener on component destroy
+    return () => {
+      window.removeEventListener('switchToPrintTab', handleSwitchToPrintTab);
+    };
+  });
 </script>
 
 <div class="min-h-screen w-full px-32">

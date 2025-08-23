@@ -12,10 +12,9 @@
   let numberOfNotes = $derived($selectedNumberOfNotes);
   let denomination = $derived($selectedDenomination);
   
-  // Get the most recent print (the one we just created)
-  let currentPrint = $derived($prints[$prints.length - 1]);
-  let currentTokens = $derived(currentPrint?.tokens || []);
-
+  // Use preparedTokens for reprint functionality, fallback to most recent print
+  let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
+  
   // Pagination for notes preview
   let currentPage = $state(1);
   let notesPerPage = 3;
@@ -118,44 +117,71 @@
   <!-- Main Content -->
   <div class="flex-1 flex gap-8">
     <!-- Left Side - Preview Area -->
-    <div class="flex-1">
-      <div class="space-y-6">
-        <!-- Notes Preview -->
-        {#each currentNotes as noteIndex}
-          <div class="flex justify-center">
-            <div class="scale-75 transform">
-              {#if currentTokens[noteIndex]}
-                {#if $selectedTemplate?.type === 'comic'}
-                  <ComicNote
-                    design={$selectedStyle?.design || 7}
-                    denomination={denomination}
-                    mintUrl={$mint?.url || "example.mint.com"}
-                    token={getEncodedTokenV4(currentTokens[noteIndex])}
-                    unit="sat"
-                  />
-                {:else if $selectedTemplate?.type === 'custom'}
-                  <CustomNote
-                    denomination={denomination}
-                    mintUrl={$mint?.url || "example.mint.com"}
-                    token={getEncodedTokenV4(currentTokens[noteIndex])}
-                    colorCode={$selectedStyle?.colorCode || '#E4690A'}
-                    cornerBrandLogoURL=""
-                    brandLogoURL=""
-                    unit="sat"
-                  />
-                {:else}
+    <div class="flex-1 max-w-md">
+      <div class="overflow-y-auto pr-2 max-h-96">
+        {#if $selectedTemplate?.type === 'comic'}
+          <!-- Comic Design Selection -->
+          <div class="space-y-2">
+            {#each currentNotes as noteIndex}
+              <div class="cursor-pointer">
+                <div class="scale-[0.12] transform pointer-events-none">
+                  {#if currentTokens[noteIndex]}
+                    <ComicNote
+                      design={$selectedStyle?.design || 7}
+                      denomination={denomination}
+                      mintUrl={$mint?.url || "example.mint.com"}
+                      token={getEncodedTokenV4(currentTokens[noteIndex])}
+                      unit="sat"
+                    />
+                  {:else}
+                    <div class="w-64 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <span class="text-gray-500 font-semibold">Loading token...</span>
+                    </div>
+                  {/if}
+                </div>
+              </div>
+            {/each}
+          </div>
+        {:else if $selectedTemplate?.type === 'custom'}
+          <!-- Custom Color Selection -->
+          <div class="space-y-2">
+            {#each currentNotes as noteIndex}
+              <div class="cursor-pointer">
+                <div class="scale-[0.12] transform pointer-events-none">
+                  {#if currentTokens[noteIndex]}
+                    <CustomNote
+                      denomination={denomination}
+                      mintUrl={$mint?.url || "example.mint.com"}
+                      token={getEncodedTokenV4(currentTokens[noteIndex])}
+                      colorCode={$selectedStyle?.colorCode || '#E4690A'}
+                      cornerBrandLogoURL=""
+                      brandLogoURL=""
+                      unit="sat"
+                    />
+                  {:else}
+                    <div class="w-64 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <span class="text-gray-500 font-semibold">Loading token...</span>
+                    </div>
+                  {/if}
+                </div>
+              </div>
+            {/each}
+          </div>
+        {:else}
+          <!-- Fallback -->
+          <div class="space-y-2">
+            {#each currentNotes as noteIndex}
+              <div class="cursor-pointer">
+                <div class="scale-[0.12] transform pointer-events-none">
                   <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
                     <span class="text-amber-600 font-semibold">Note {noteIndex + 1}</span>
                   </div>
-                {/if}
-              {:else}
-                <div class="w-64 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
-                  <span class="text-gray-500 font-semibold">Loading token...</span>
                 </div>
-              {/if}
-            </div>
+              </div>
+            {/each}
           </div>
-        {/each}
+        {/if}
+      </div>
 
         <!-- Pagination -->
         {#if totalPages > 1}
@@ -188,7 +214,6 @@
           </div>
         {/if}
       </div>
-    </div>
 
     <!-- Right Side - Print Actions -->
     <div class="w-80 space-y-4">
@@ -212,3 +237,5 @@
     </div>
   </div>
 </div>
+
+

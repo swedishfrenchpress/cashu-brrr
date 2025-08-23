@@ -1,11 +1,43 @@
 <script lang="ts">
-  import { prints } from "./stores.svelte";
+  import { prints, step, selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes, mint, preparedTokens } from "./stores.svelte";
   import { getAmountForTokenSet } from "./utils";
   import NotesCalc from "./comp/NotesCalc.svelte";
 
   function reprint(print: any) {
-    // TODO: Implement reprint functionality
-    console.log("Reprinting:", print);
+    // Restore the print job settings from the selected print
+    const denomination = getAmountForTokenSet(print.tokens[0].proofs);
+    const numberOfNotes = print.tokens.length;
+    const mintUrl = print.mint;
+    
+    // Set the stores back to the values from this print job
+    selectedDenomination.set(denomination);
+    selectedNumberOfNotes.set(numberOfNotes);
+    preparedTokens.set(print.tokens);
+    
+    // Set a default template (you might want to store this in the print history)
+    selectedTemplate.set({
+      id: 'custom',
+      name: 'Custom Note',
+      type: 'custom'
+    });
+    
+    selectedStyle.set({
+      id: 'custom',
+      name: 'Custom Note',
+      type: 'custom',
+      colorCode: '#E4690A'
+    });
+    
+    // Set the mint URL (you might need to create a mint object)
+    // Note: We don't set the mint store here because we don't have the required keys, keysets, and info
+    // The PrintScreen component will use the mint URL from the tokens themselves
+    
+    // Navigate to the print tab and set step to print screen
+    step.set(6);
+    
+    // Dispatch a custom event to notify the parent component to switch tabs
+    const event = new CustomEvent('switchToPrintTab');
+    window.dispatchEvent(event);
   }
 </script>
 

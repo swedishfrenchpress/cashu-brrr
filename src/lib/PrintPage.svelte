@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes, mint, prints } from "./stores.svelte";
+  import { selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes, mint, prints, preparedTokens } from "./stores.svelte";
   import { getEncodedTokenV4 } from "@cashu/cashu-ts";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
@@ -9,9 +9,8 @@
   let numberOfNotes = $derived($selectedNumberOfNotes);
   let denomination = $derived($selectedDenomination);
   
-  // Get the most recent print (the one we just created)
-  let currentPrint = $derived($prints[$prints.length - 1]);
-  let currentTokens = $derived(currentPrint?.tokens || []);
+  // Use preparedTokens for reprint functionality, fallback to most recent print
+  let currentTokens = $derived($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || []));
 
   // Auto-print when component loads
   onMount(() => {
@@ -40,6 +39,13 @@
     .note-container:last-child {
       page-break-after: avoid;
     }
+    /* Ensure notes are properly sized for printing */
+    .note-container svg {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+    }
   }
   
   /* Screen styles */
@@ -56,6 +62,14 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+  }
+  
+  /* Ensure notes are properly sized for screen preview */
+  .note-container svg {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
   }
   
   .print-header {

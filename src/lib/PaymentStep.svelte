@@ -1,6 +1,7 @@
 <script lang="ts">
   import { step, selectedTemplate, selectedStyle, mint, wallet, selectedDenomination, selectedNumberOfNotes, donation, prints } from "./stores.svelte";
-  import { MintQuoteState } from "@cashu/cashu-ts";
+  import { MintQuoteState, getEncodedTokenV4 } from "@cashu/cashu-ts";
+  import { createOutputAmounts, createOutputAmount, getAmountForTokenSet } from "./utils";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import { toast } from "svelte-sonner";
@@ -129,11 +130,12 @@
       
       console.log('Generating ecash tokens...');
       
-      // Create output amounts for the tokens
-      const outputAmounts = [];
-      for (let i = 0; i < numberOfNotes; i++) {
-        outputAmounts.push(denomination);
-      }
+      // Create output amounts for the tokens using the proper function
+      const outputAmounts = await createOutputAmounts(
+        denomination,
+        numberOfNotes,
+        true // isMint = true
+      );
       
       // Mint proofs using the paid quote
       const proofs = await $wallet.mintProofs(
@@ -144,25 +146,35 @@
       
       console.log('Minted proofs:', proofs);
       
-      // Create tokens from proofs
-      const tokens = [];
-      for (let i = 0; i < numberOfNotes; i++) {
-        const token = {
-          mint: $mint?.url || 'unknown',
-          proofs: [proofs[i]],
-          unit: 'sat',
-          amount: denomination
-        };
-        tokens.push(token);
-      }
+      // Create tokens from proofs using the same logic as the working version
+      const tokens = await createTokensForPrint(
+        proofs,
+        $mint?.url || 'unknown',
+        'sat',
+        numberOfNotes
+      );
       
-      generatedTokens = tokens;
-      console.log('Generated tokens:', tokens);
-      console.log('Generated tokens length:', tokens.length);
+      generatedTokens = tokens.tokens;
+      console.log('Generated tokens:', tokens.tokens);
+      console.log('Generated tokens length:', tokens.tokens.length);
+      
+      // Debug: Check if tokens are unique
+      const tokenStrings = tokens.tokens.map(token => getEncodedTokenV4(token));
+      console.log('Token strings (first 3):', tokenStrings.slice(0, 3));
+      console.log('Are tokens unique?', new Set(tokenStrings).size === tokenStrings.length);
+      console.log('Total unique tokens:', new Set(tokenStrings).size);
+      console.log('Total tokens:', tokenStrings.length);
+      
+      // If tokens are not unique, this is a problem!
+      if (new Set(tokenStrings).size !== tokenStrings.length) {
+        console.error('WARNING: Tokens are not unique! This means only one note will be redeemable.');
+        toast.error('Warning: Generated tokens are not unique. Only one note will be redeemable.');
+      }
       
       // Save to prints store
       const newPrint = {
-        tokens: tokens,
+        tokens: tokens.tokens,
+        donation: tokens.donation,
         mint: $mint?.url || 'unknown',
         ts: Date.now()
       };
@@ -177,6 +189,41 @@
       toast.error('Failed to generate tokens: ' + error.message);
     }
   }
+  
+  // Copy the createTokensForPrint function from the working version
+  const createTokensForPrint = async (
+    proofs: any[],
+    mint: string,
+    unit: string,
+    n: number,
+  ) => {
+    const tokens: any[] = [];
+    let donationToken: any = undefined;
+    const ps = [...proofs];
+    const outputAmount = await createOutputAmount(denomination);
+
+    while (ps.length) {
+      const token: any = {
+        mint,
+        unit,
+        proofs: [],
+      };
+      if (getAmountForTokenSet(tokens.map((t: any) => t.proofs).flat()) >= denomination * numberOfNotes) {
+        token.proofs.push(...ps);
+        donationToken = token;
+        return { tokens: tokens, donation: donationToken };
+      }
+      for (const amount of outputAmount) {
+        const proof = ps.splice(
+          ps.findIndex((p: any) => p.amount === amount),
+          1,
+        );
+        token.proofs.push(...proof);
+      }
+      tokens.push(token);
+    }
+    return { tokens: tokens, donation: donationToken };
+  };
 
   function copyInvoice() {
     navigator.clipboard.writeText(lightningInvoice).then(() => {
