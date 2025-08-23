@@ -70,7 +70,7 @@
     </div>
 
     <!-- Tab Content -->
-    <div class="bg-white rounded-b-lg shadow-lg min-h-[600px] max-h-[80vh] overflow-y-auto">
+    <div class="bg-white rounded-b-lg shadow-lg min-h-[600px] overflow-y-auto">
       {#if activeTab === 'print'}
         {#if $step === 1}
           <NoteTemplateSelector />

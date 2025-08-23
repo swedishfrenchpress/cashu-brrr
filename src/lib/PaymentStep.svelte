@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { step, selectedTemplate, mint, wallet, selectedDenomination, selectedNumberOfNotes, donation } from "./stores.svelte";
+  import { step, selectedTemplate, selectedStyle, mint, wallet, selectedDenomination, selectedNumberOfNotes, donation } from "./stores.svelte";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import { toast } from "svelte-sonner";
@@ -120,26 +120,24 @@
             <div class="relative bg-gray-200 rounded-lg p-4 w-full" style="background-color: #EFEDEA;">
               <span class="absolute top-2 left-2 text-sm font-medium" style="color: #4E4318;">Preview</span>
               <div class="scale-75 transform mt-4 grid place-items-center w-full">
-                {#if $selectedTemplate}
-                  {#if $selectedTemplate.type === 'comic' && $selectedTemplate.design}
-                    <ComicNote
-                      design={$selectedTemplate.design}
-                      denomination={denomination}
-                      mintUrl={$mint?.url || "example.mint.com"}
-                      token="example-token"
-                      unit="sat"
-                    />
-                  {:else if $selectedTemplate.type === 'custom'}
-                    <CustomNote
-                      denomination={denomination}
-                      mintUrl={$mint?.url || "example.mint.com"}
-                      token="example-token"
-                      colorCode="#E4690A"
-                      cornerBrandLogoURL=""
-                      brandLogoURL=""
-                      unit="sat"
-                    />
-                  {/if}
+                {#if $selectedTemplate?.type === 'comic'}
+                  <ComicNote
+                    design={$selectedStyle?.design || 7}
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token="example-token"
+                    unit="sat"
+                  />
+                {:else if $selectedTemplate?.type === 'custom'}
+                  <CustomNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token="example-token"
+                    colorCode={$selectedStyle?.colorCode || '#E4690A'}
+                    cornerBrandLogoURL=""
+                    brandLogoURL=""
+                    unit="sat"
+                  />
                 {:else}
                   <div class="w-48 h-32 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
                     <span class="text-amber-600 font-semibold text-sm">No template selected</span>
@@ -233,12 +231,6 @@
       <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-md" style="background: linear-gradient(135deg, #E4690A, #CD8A18); border: 2px solid #A94705;">
         <span class="text-white font-bold text-sm">3</span>
       </div>
-      <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #E4690A, #F0E0B0);"></div>
-      
-      <!-- Step 4: Print (Inactive) -->
-      <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
-        <span class="text-gray-500 font-bold text-sm">4</span>
-      </div>
     </div>
   </div>
 
@@ -257,7 +249,7 @@
       style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
       onclick={proceedToNext}
     >
-      Next →
+      Finish
     </button>
   </div>
 </div>

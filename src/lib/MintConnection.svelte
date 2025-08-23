@@ -191,7 +191,7 @@
   };
 </script>
 
-<div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+<div class="w-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); min-height: 600px;">
   <!-- Header -->
   <div class="text-left mb-8">
     <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">
