@@ -31,6 +31,11 @@
       currentMintUrl
     });
     
+    // Debug token data
+    console.log('First token:', currentTokens[0]);
+    console.log('Template type:', currentTemplate?.type);
+    console.log('Style type:', currentStyle?.type);
+    
     setTimeout(() => {
       window.print();
     }, 1000);
@@ -45,22 +50,75 @@
       padding: 0;
       background: white;
     }
+    
+    /* Simple flexbox layout for multiple notes per page */
+    .notes-container {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+      padding: 20px !important;
+      justify-content: center !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
     .note-container {
-      margin: 2px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      page-break-inside: avoid;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      page-break-inside: avoid !important;
+      min-height: 200px !important;
+      border: 1px solid #ccc !important; /* Debug border to see containers */
+      visibility: visible !important;
+      opacity: 1 !important;
     }
+    
     .note-container:last-child {
-      page-break-after: avoid;
+      page-break-after: avoid !important;
     }
-    /* Ensure notes are properly sized for printing */
+    
+    /* Ensure notes are visible and properly sized */
     .note-container svg {
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
+      width: 400px !important; /* Slightly smaller than original for better fit */
+      height: auto !important;
+      max-height: 200px !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      display: block !important;
+    }
+    
+    /* For CustomNote which has different dimensions */
+    .note-container svg[viewBox="0 0 534 279"] {
+      width: 500px !important;
+      max-height: 250px !important;
+    }
+    
+    /* Ensure all SVG elements are visible */
+    .note-container svg * {
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    /* Ensure note components themselves are visible */
+    .note-container > * {
+      visibility: visible !important;
+      opacity: 1 !important;
+      display: block !important;
+    }
+    
+    /* Ensure proper page breaks */
+    .page-break {
+      page-break-before: always !important;
+    }
+    
+    /* Header styling for print */
+    .print-header {
+      text-align: center !important;
+      margin-bottom: 20px !important;
+      color: #4E4318 !important;
+      page-break-after: avoid !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
   }
   
@@ -72,24 +130,39 @@
     background: white;
   }
   
+  /* Simple flexbox layout for screen preview */
+  .notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+  }
+  
   .note-container {
-    margin: 2px 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 200px;
+    border: 1px solid #ccc; /* Debug border to see containers */
   }
   
-  /* Ensure notes are properly sized for screen preview */
+  /* Ensure notes are visible and properly sized on screen */
   .note-container svg {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
+    width: 400px; /* Slightly smaller than original for better fit */
     height: auto;
+    max-height: 200px;
+  }
+  
+  /* For CustomNote which has different dimensions */
+  .note-container svg[viewBox="0 0 534 279"] {
+    width: 500px;
+    max-height: 250px;
   }
   
   .print-header {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     color: #4E4318;
   }
   
@@ -115,48 +188,45 @@
     <p>Mint: {currentMintUrl}</p>
   </div>
 
-  <!-- Individual notes for printing -->
-  {#each Array.from({ length: currentNumberOfNotes }, (_, i) => i) as noteIndex}
-    <div class="note-container">
-      <div class="scale-[0.8] transform">
-        {#if currentTokens[noteIndex]}
-          <!-- Try to determine template type from available data -->
-          {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
+  <!-- Simple notes layout -->
+  <div style="background: white; padding: 20px;">
+    <!-- Debug info -->
+    <div style="text-align: center; margin-bottom: 20px; color: red; font-weight: bold;">
+      Debug: {currentNumberOfNotes} notes, {currentTokens.length} tokens available
+    </div>
+    
+    <!-- Force exactly 4 notes per page -->
+    {#each currentTokens as token, index}
+      <div style="text-align: center; margin: 15px 0;">
+        {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
+          <div style="display: inline-block; width: 420px; height: 214px;">
             <ComicNote
               design={currentStyle?.design || 7}
               denomination={currentDenomination}
               mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(currentTokens[noteIndex])}
+              token={getEncodedTokenV4(token)}
               unit="sat"
             />
-          {:else if currentTemplate?.type === 'custom' || currentStyle?.type === 'custom'}
+          </div>
+        {:else}
+          <div style="display: inline-block; width: 534px; height: 279px;">
             <CustomNote
               denomination={currentDenomination}
               mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(currentTokens[noteIndex])}
+              token={getEncodedTokenV4(token)}
               colorCode={currentStyle?.colorCode || '#E4690A'}
               cornerBrandLogoURL=""
               brandLogoURL=""
               unit="sat"
             />
-          {:else}
-            <!-- Default to CustomNote if we can't determine the type -->
-            <CustomNote
-              denomination={currentDenomination}
-              mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(currentTokens[noteIndex])}
-              colorCode="#E4690A"
-              cornerBrandLogoURL=""
-              brandLogoURL=""
-              unit="sat"
-            />
-          {/if}
-        {:else}
-          <div class="w-64 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
-            <span class="text-gray-500 font-semibold">Loading token...</span>
           </div>
         {/if}
       </div>
-    </div>
-  {/each}
+      
+      <!-- Force page break after every 4th note -->
+      {#if (index + 1) % 4 === 0 && index < currentTokens.length - 1}
+        <div style="page-break-after: always;"></div>
+      {/if}
+    {/each}
+  </div>
 </div>

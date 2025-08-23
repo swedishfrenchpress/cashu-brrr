@@ -188,7 +188,7 @@
     <h2 class="font-bold text-lg text-center">Notes are ready to be printed</h2>
     <div class="flex flex-col gap-2">
 
-      <button class="btn btn-primary" onclick={() => (active = 'print')}>
+      <button class="btn btn-primary" onclick={() => window.location.href = window.location.href + '?print=true'}>
         Print now! BRRRRRRRRRR
       </button>
       <button class="btn  btn-outline btn-secondary" onclick={downloadQRs}>
