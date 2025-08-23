@@ -56,7 +56,7 @@
   });
 
   function goBack() {
-    step.set(3);
+    step.set(4); // Go back to ChooseAmounts (Step 2)
   }
 
   function proceedToNext() {
@@ -76,7 +76,7 @@
 <div class="w-full h-full flex flex-col p-8 overflow-hidden" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
   <div class="text-left mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Step 2: Payment</h2>
+    <h2 class="text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Step 3: Payment</h2>
   </div>
 
   <!-- Main Content -->
@@ -219,15 +219,25 @@
         <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #2B9707, #E4690A);"></div>
       </div>
       
-      <!-- Step 2: Payment (Active/Current) -->
+      <!-- Step 2: Choose Amounts (Completed) -->
+      <div class="flex items-center">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #2B9707, #1F7A05);">
+          <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #2B9707, #E4690A);"></div>
+      </div>
+      
+      <!-- Step 3: Payment (Active/Current) -->
       <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-md" style="background: linear-gradient(135deg, #E4690A, #CD8A18); border: 2px solid #A94705;">
-        <span class="text-white font-bold text-sm">2</span>
+        <span class="text-white font-bold text-sm">3</span>
       </div>
       <div class="w-12 h-0.5 ml-2" style="background: linear-gradient(to right, #E4690A, #F0E0B0);"></div>
       
-      <!-- Step 3: Print (Inactive) -->
+      <!-- Step 4: Print (Inactive) -->
       <div class="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #F0E0B0, #E5D5A0);">
-        <span class="text-gray-500 font-bold text-sm">3</span>
+        <span class="text-gray-500 font-bold text-sm">4</span>
       </div>
     </div>
   </div>
