@@ -4,7 +4,7 @@
     import ComicNote from "./lib/ComicNote.svelte";
     import SovereignNote from "./lib/SovereignNote.svelte";
     import ChaumNote from "./lib/ChaumNote.svelte";
-    import SovereignTest from "./lib/SovereignTest.svelte";
+
   import Main from "./lib/Main.svelte";
   import PrintPage from "./lib/PrintPage.svelte";
     import { getAmountForTokenSet } from "./lib/utils";
@@ -59,8 +59,6 @@
   />
 {/if}
 </div>
-{:else if window.location.hash.includes('test')}
-  <SovereignTest />
 {:else}
   
 <Main></Main>

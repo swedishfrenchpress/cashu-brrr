@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PrintTab from "./PrintTab.svelte";
+
   import HistoryTab from "./HistoryTab.svelte";
   import NoteTemplateSelector from "./NoteTemplateSelector.svelte";
   import MintConnection from "./MintConnection.svelte";
@@ -8,6 +8,8 @@
   import PaymentStep from "./PaymentStep.svelte";
   import PrintScreen from "./PrintScreen.svelte";
   import PostItCard from "./PostItCard.svelte";
+  import Sponsor from "./Sponsor.svelte";
+  import { SPONSORS } from "./sponsors";
   import { step, selectedTemplate } from "./stores.svelte";
   import { onMount } from "svelte";
 
@@ -42,21 +44,36 @@
     <div class="flex justify-center w-full mt-32">
       <div class="relative" style="width: 36rem; height: 600px;">
         <!-- Left notes (move further left with negative left values) -->
-        <img src="/Ecash_Note_template.svg" class="absolute left-[-6rem] top-24 w-40 rotate-[-15deg]" />
-        <img src="/Ecash_Note_template.svg" class="absolute left-[-8rem] top-48 w-40 rotate-[10deg]" />
-        <img src="/Ecash_Note_template.svg" class="absolute left-[-5rem] top-80 w-40 rotate-[-8deg]" />
-        <img src="/Ecash_Note_template.svg" class="absolute left-0 top-96 w-40 rotate-[5deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-[-6rem] top-24 w-40 rotate-[-15deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-[-8rem] top-48 w-40 rotate-[10deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-[-5rem] top-80 w-40 rotate-[-8deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-0 top-96 w-40 rotate-[5deg]" />
 
         <!-- Printer -->
-        <img src="/printer.png" class="absolute left-1/2 top-1/2 z-20 w-[36rem] -translate-x-1/2 -translate-y-1/2" />
+        <img src="/printer.png" alt="Printer" class="absolute left-1/2 top-1/2 z-20 w-[36rem] -translate-x-1/2 -translate-y-1/2" />
 
         <!-- Right notes (move further right with negative right values) -->
-        <img src="/Ecash_Note_template.svg" class="absolute right-[-6rem] top-24 w-40 rotate-[12deg]" />
-        <img src="/Ecash_Note_template.svg" class="absolute right-[-8rem] top-48 w-40 rotate-[-10deg]" />
-        <img src="/Ecash_Note_template.svg" class="absolute right-[-5rem] top-80 w-40 rotate-[7deg]" />
-        <img src="/Ecash_Note_template.svg" class="absolute right-0 top-96 w-40 rotate-[-6deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-[-6rem] top-24 w-40 rotate-[12deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-[-8rem] top-48 w-40 rotate-[-10deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-[-5rem] top-80 w-40 rotate-[7deg]" />
+        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-0 top-96 w-40 rotate-[-6deg]" />
       </div>
     </div>
+    
+    <!-- Sponsors Section -->
+    {#if SPONSORS.length > 0}
+      <div class="mt-16 mb-8">
+        <h2 class="text-center font-ojuju font-bold text-4xl text-gray-900 mb-8">
+          Our Sponsors
+        </h2>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
+          {#each SPONSORS as sponsor}
+            <Sponsor {sponsor} />
+          {/each}
+        </div>
+      </div>
+    {/if}
+    
     <h2 class="text-center font-manrope font-bold text-4xl text-gray-900 mt-12 mb-4">
       FAQs
     </h2>
@@ -115,7 +132,7 @@
         {:else if $step === 6}
           <PrintScreen />
         {:else}
-          <PrintTab />
+          <NoteTemplateSelector />
         {/if}
       {:else}
         <HistoryTab />
