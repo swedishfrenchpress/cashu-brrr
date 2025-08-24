@@ -3,6 +3,7 @@
   import "./app.css";
     import ComicNote from "./lib/ComicNote.svelte";
     import SovereignNote from "./lib/SovereignNote.svelte";
+    import ChaumNote from "./lib/ChaumNote.svelte";
     import SovereignTest from "./lib/SovereignTest.svelte";
   import Main from "./lib/Main.svelte";
   import PrintPage from "./lib/PrintPage.svelte";
@@ -36,6 +37,13 @@
 <div>
 {#if template === 6}
   <SovereignNote
+    denomination={getAmountForTokenSet(token.proofs)}
+    mintUrl={token.mint}
+    token={getEncodedTokenV4(token)}
+    unit={token.unit??"sat"}
+  />
+{:else if template === 7}
+  <ChaumNote
     denomination={getAmountForTokenSet(token.proofs)}
     mintUrl={token.mint}
     token={getEncodedTokenV4(token)}

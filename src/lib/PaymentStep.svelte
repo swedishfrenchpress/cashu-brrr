@@ -5,6 +5,7 @@
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
+  import ChaumNote from "./ChaumNote.svelte";
   import { toast } from "svelte-sonner";
   import QRCode from "qrcode";
   import { onMount } from "svelte";
@@ -309,6 +310,13 @@
                     token="example-token"
                     unit="sat"
                     design={typeof $selectedStyle?.design === 'string' ? $selectedStyle.design : 'Soverign_Note.png'}
+                  />
+                {:else if $selectedTemplate?.type === 'chaum'}
+                  <ChaumNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token="example-token"
+                    unit="sat"
                   />
                 {:else}
                   <div class="w-48 h-32 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">

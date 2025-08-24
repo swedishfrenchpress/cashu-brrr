@@ -4,6 +4,7 @@
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
+  import ChaumNote from "./ChaumNote.svelte";
   import { onMount } from "svelte";
   import { getAmountForTokenSet } from "./utils";
 
@@ -303,6 +304,16 @@
               unit="sat"
               isPrint={true}
               design={typeof currentStyle?.design === 'string' ? currentStyle.design : 'Soverign_Note.png'}
+            />
+          </div>
+        {:else if currentTemplate?.type === 'chaum' || currentStyle?.type === 'chaum'}
+          <div style="display: inline-block;">
+            <ChaumNote
+              denomination={currentDenomination}
+              mintUrl={currentMintUrl}
+              token={getEncodedTokenV4(token)}
+              unit="sat"
+              isPrint={true}
             />
           </div>
         {:else}

@@ -17,13 +17,13 @@ export type Print = {
   template?: {
     id: string;
     name: string;
-    type: 'comic' | 'custom' | 'sovereign';
+    type: 'comic' | 'custom' | 'sovereign' | 'chaum';
     design?: number | string;
   } | null;
   style?: {
     id: string;
     name: string;
-    type: 'comic' | 'custom' | 'sovereign';
+    type: 'comic' | 'custom' | 'sovereign' | 'chaum';
     design?: number | string;
     colorCode?: string;
   } | null;
@@ -79,14 +79,14 @@ export const preparedTokens = writable<Token[]>([]);
 export const selectedTemplate = writable<{
   id: string;
   name: string;
-  type: 'comic' | 'custom' | 'sovereign';
+  type: 'comic' | 'custom' | 'sovereign' | 'chaum';
   design?: number | string;
 } | null>(null);
 
 export const selectedStyle = writable<{
   id: string;
   name: string;
-  type: 'comic' | 'custom' | 'sovereign';
+  type: 'comic' | 'custom' | 'sovereign' | 'chaum';
   design?: number | string;
   colorCode?: string;
 } | null>(null);

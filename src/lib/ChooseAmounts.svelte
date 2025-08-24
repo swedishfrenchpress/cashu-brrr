@@ -3,6 +3,7 @@
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
+  import ChaumNote from "./ChaumNote.svelte";
 
   let amountPerNote = $state('');
   let numberOfNotes = $state('');
@@ -107,6 +108,13 @@
                 token="example-token"
                 unit="sat"
                 design={typeof $selectedStyle?.design === 'string' ? $selectedStyle.design : 'Soverign_Note.png'}
+              />
+            {:else if $selectedTemplate?.type === 'chaum'}
+              <ChaumNote
+                denomination={parseFloat(amountPerNote) || 0}
+                mintUrl="example.mint.com"
+                token="example-token"
+                unit="sat"
               />
             {:else}
               <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
