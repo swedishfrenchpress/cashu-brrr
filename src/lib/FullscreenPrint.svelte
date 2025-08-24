@@ -38,7 +38,7 @@
       
       <button 
         onclick={goHome}
-        class="text-2xl font-bold text-gray-900 font-ojuju hover:text-orange-600 transition-colors cursor-pointer"
+        class="text-4xl font-bold text-green-800 font-ojuju hover:text-green-600 transition-colors cursor-pointer"
       >
         Cashu Brrr
       </button>

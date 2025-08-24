@@ -72,6 +72,31 @@
       </div>
     </div>
     
+    <!-- GO BRRRR Button -->
+    <div class="flex justify-center mt-16 mb-8">
+      <button
+        class="px-12 py-4 text-5xl font-bold rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg"
+        style="background-color: #E4690A; color: white; border: 3px solid #A94705; font-family: 'Cabinet Grotesk', sans-serif;"
+        onclick={() => {
+          // Navigate to fullscreen print page using hash routing
+          console.log('GO BRRRR clicked! Setting hash to #print');
+          window.location.hash = 'print';
+          console.log('Hash set to:', window.location.hash);
+        }}
+      >
+        GO BRRRR! →
+      </button>
+    </div>
+    
+    <h2 class="text-center font-ojuju font-bold text-4xl text-gray-900 mt-12 mb-4">
+      FAQs
+    </h2>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-8">
+      <PostItCard title="What is an ecash note?" body="A bitcoin ecash note is a printable slip with a QR code that holds a claimable amount of bitcoin-backed ecash. You can hand it to someone like cash, and they can scan it to redeem the funds. Once claimed, the note is no longer valid and can't be reused." rotation="rotate-[15deg]" />
+      <PostItCard title="What happens if I lose it?" body="If the QR code on the note is never scanned and claimed, the ecash stays unredeemed. Only the person holding the physical note can access the funds, so treat it like real cash — if it's lost, it can't be recovered.." rotation="-rotate-[15deg]" />
+      <PostItCard title="How do I print?" body="Just choose a design, select how many notes you want to print and for what amounts, then pay using lightning or ecash. The app will generate a printable sheet you can cut and hand out." rotation="rotate-[15deg]" />
+    </div>
+    
     <!-- Sponsors Section -->
     {#if SPONSORS.length > 0}
       <div class="mt-16 mb-8">
@@ -85,31 +110,6 @@
         </div>
       </div>
     {/if}
-    
-    <h2 class="text-center font-ojuju font-bold text-4xl text-gray-900 mt-12 mb-4">
-      FAQs
-    </h2>
-    <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-8">
-      <PostItCard title="What is an ecash note?" body="A bitcoin ecash note is a printable slip with a QR code that holds a claimable amount of bitcoin-backed ecash. You can hand it to someone like cash, and they can scan it to redeem the funds. Once claimed, the note is no longer valid and can't be reused." rotation="rotate-[15deg]" />
-      <PostItCard title="What happens if I lose it?" body="If the QR code on the note is never scanned and claimed, the ecash stays unredeemed. Only the person holding the physical note can access the funds, so treat it like real cash — if it's lost, it can't be recovered.." rotation="-rotate-[15deg]" />
-      <PostItCard title="How do I print?" body="Just choose a design, select how many notes you want to print and for what amounts, then pay using lightning or ecash. The app will generate a printable sheet you can cut and hand out." rotation="rotate-[15deg]" />
-    </div>
-    
-    <!-- GO BRRRR Button -->
-    <div class="flex justify-center mt-16 mb-8">
-      <button
-        class="px-12 py-4 text-3xl font-bold rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg"
-        style="background-color: #E4690A; color: white; border: 3px solid #A94705; font-family: 'Cabinet Grotesk', sans-serif;"
-        onclick={() => {
-          // Navigate to fullscreen print page using hash routing
-          console.log('GO BRRRR clicked! Setting hash to #print');
-          window.location.hash = 'print';
-          console.log('Hash set to:', window.location.hash);
-        }}
-      >
-        GO BRRRR! 💰
-      </button>
-    </div>
   </div>
 
 

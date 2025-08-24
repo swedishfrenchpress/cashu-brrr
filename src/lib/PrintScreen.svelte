@@ -33,8 +33,9 @@
     
     localStorage.setItem('currentPrintData', JSON.stringify(printData));
     
-    // Open current page in new tab with print parameter
-    window.open(window.location.href + '?print=true', '_blank');
+    // Open the print page in new tab with print parameter
+    const baseUrl = window.location.origin + window.location.pathname;
+    window.open(baseUrl + '?print=true', '_blank');
   }
 
   function generateNoteHtml(index: number): string {
@@ -112,14 +113,17 @@
   <div class="flex-1 flex flex-col">
     <!-- Notes Preview Area -->
     <div class="flex-1 mb-8">
-      <h3 class="text-xl font-semibold mb-4" style="color: #4E4318;">Your Notes ({currentTokens.length} total)</h3>
-      <div class="overflow-y-auto" style="max-height: 500px; padding-right: 16px; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold" style="color: #4E4318;">Your Notes ({currentTokens.length} total)</h3>
+        <div class="text-sm text-gray-600">Ready to print your ecash notes!</div>
+      </div>
+      <div class="overflow-y-auto" style="max-height: 600px; padding-right: 16px; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
         {#if $selectedTemplate?.type === 'comic'}
           <!-- Comic Design Selection -->
-          <div class="grid grid-cols-2 gap-6">
+          <div class="grid grid-cols-3 gap-8">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center">
-                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
+              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 280px;">
                   <ComicNote
                     design={typeof $selectedStyle?.design === 'number' ? $selectedStyle.design : 7}
@@ -134,10 +138,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'custom'}
           <!-- Custom Color Selection -->
-          <div class="grid grid-cols-2 gap-6">
+          <div class="grid grid-cols-3 gap-8">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center">
-                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
+              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 360px;">
                   <CustomNote
                     denomination={denomination}
@@ -154,10 +158,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'sovereign'}
           <!-- Sovereign Note Selection -->
-          <div class="grid grid-cols-2 gap-6">
+          <div class="grid grid-cols-3 gap-8">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center">
-                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
+              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 400px;">
                   <SovereignNote
                     denomination={denomination}
@@ -172,10 +176,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'chaum'}
           <!-- Chaum Note Selection -->
-          <div class="grid grid-cols-2 gap-6">
+          <div class="grid grid-cols-3 gap-8">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center">
-                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
+              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 400px;">
                   <ChaumNote
                     denomination={denomination}
@@ -189,10 +193,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'meadows'}
           <!-- Mr. Meadows Note Selection -->
-          <div class="grid grid-cols-2 gap-6">
+          <div class="grid grid-cols-3 gap-8">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center">
-                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
+              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 400px;">
                   <MeadowsNote
                     denomination={denomination}
@@ -206,10 +210,10 @@
           </div>
         {:else}
           <!-- Fallback -->
-          <div class="grid grid-cols-2 gap-6">
+          <div class="grid grid-cols-3 gap-8">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center">
-                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
+              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
                 <div class="w-full max-w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
                   <span class="text-amber-600 font-semibold">Note {index + 1}</span>
                 </div>
@@ -226,7 +230,7 @@
       <button
         onclick={downloadQRs}
         class="px-8 py-3 rounded-lg text-lg font-bold transition-all duration-200 hover:scale-105"
-        style="background-color: #CD8A18; color: white; border: 2px solid #B0791C"
+        style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18"
       >
         Download only QRs
       </button>
@@ -235,7 +239,7 @@
       <button
         onclick={printNotes}
         class="px-8 py-3 rounded-lg text-xl font-bold transition-all duration-200 hover:scale-105"
-        style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18"
+        style="background-color: #CD8A18; color: white; border: 2px solid #B0791C"
       >
         Print now! BRRRRRR
       </button>
