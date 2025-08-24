@@ -141,7 +141,7 @@
               >
                 <div class="scale-10 transform pointer-events-none">
                   <SovereignNote
-                    denomination={100}
+                    denomination={0}
                     mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"
@@ -177,7 +177,7 @@
           />
         {:else if $selectedTemplate?.type === 'sovereign'}
                           <SovereignNote
-                  denomination={100}
+                  denomination={0}
                   mintUrl="example.mint.com"
                   token="example-token"
                   unit="sat"

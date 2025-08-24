@@ -240,6 +240,17 @@
     margin: 10px 0 0 0;
     opacity: 0.7;
   }
+  
+  /* Force font size for SovereignNote denomination text in both preview and print */
+  .sovereign-denomination {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    color: #8B4513 !important;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+    font-family: 'Porter Sans Inline Block', sans-serif !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
 </style>
 
 <!-- Print page content -->

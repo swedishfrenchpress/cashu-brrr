@@ -79,7 +79,7 @@
               {:else if template.type === 'sovereign'}
                 <div style="transform: scale(0.8);">
                   <SovereignNote
-                    denomination={100}
+                    denomination={0}
                     mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"
@@ -127,7 +127,7 @@
               {:else if template.type === 'sovereign'}
                 <div style="transform: scale(0.8);">
                   <SovereignNote
-                    denomination={100}
+                    denomination={0}
                     mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"

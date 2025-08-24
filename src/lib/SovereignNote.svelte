@@ -71,20 +71,22 @@
   />
   
   <!-- Amount Display - positioned at bottom right of the note -->
-  <div 
-    class="absolute font-bold sovereign-denomination"
-    style="
-      right: 6%;
-      bottom: 20%;
-      color: #8B4513;
-      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-      font-size: 0.75rem;
-      font-family: 'Porter Sans Inline Block', sans-serif;
-      white-space: nowrap;
-    "
-  >
-    {denomination}₿
-  </div>
+  {#if denomination > 0}
+    <div 
+      class="absolute font-bold sovereign-denomination"
+      style="
+        right: 6%;
+        bottom: 20%;
+        color: #8B4513;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        font-size: 0.75rem;
+        font-family: 'Porter Sans Inline Block', sans-serif;
+        white-space: nowrap;
+      "
+    >
+      {denomination}₿
+    </div>
+  {/if}
   
 
 </div>

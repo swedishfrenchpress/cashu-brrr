@@ -23,7 +23,7 @@
     "https://mint.lnvoltz.com"
   ];
 
-  let mintUrl = $state("");
+  let mintUrl = $state($mint?.url || "");
   let isConnecting = $state(false);
   let isDiscovering = $state(false);
 
