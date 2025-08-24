@@ -1,12 +1,13 @@
 <script lang="ts">
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
+  import SovereignNote from "./SovereignNote.svelte";
   import { step, selectedTemplate } from "./stores.svelte";
   
   interface NoteTemplate {
     id: string;
     name: string;
-    type: 'comic' | 'custom';
+    type: 'comic' | 'custom' | 'sovereign';
     design?: number;
     preview: string;
   }
@@ -15,6 +16,7 @@
   const noteTemplates: NoteTemplate[] = [
     { id: 'custom-1', name: 'Custom Note', type: 'custom', preview: '/Ecash_Note_template.svg' },
     { id: 'bitpopart-1', name: 'Bitpopart', type: 'comic', design: 7, preview: '/Ecash_Note_template.svg' },
+    { id: 'sovereign-1', name: 'Sovereign Note', type: 'sovereign', design: 6, preview: '/Soverign_Note.png' },
   ];
 
   let selectedTemplateId = $state<string | null>(null);
@@ -41,19 +43,19 @@
   </div>
 
   <!-- Main Content -->
-  <div class="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full">
+  <div class="flex-1 flex flex-col justify-center">
     <!-- Note Selection Section -->
-    <div class="bg-transparent rounded-xl border-0 p-8 mb-8">
-      <div class="flex justify-center gap-8">
-        {#each noteTemplates as template}
-          <button
-            class="group relative bg-transparent rounded-lg transition-all duration-200 p-4 border-2 {selectedTemplateId === template.id ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'}"
-            onclick={() => selectTemplate(template)}
-          >
-            <!-- Note Preview -->
-            <div class="mb-4 h-48 flex items-center justify-center">
+    <div class="flex flex-col items-center gap-12 px-8">
+      <!-- First row: Custom Note and Bitpopart -->
+      <div class="flex justify-center items-center gap-16">
+        {#each noteTemplates.slice(0, 2) as template}
+          <div class="flex flex-col items-center">
+            <button
+              class="border-2 rounded-lg p-6 transition-all duration-200 flex flex-col items-center {selectedTemplateId === template.id ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'}"
+              onclick={() => selectTemplate(template)}
+            >
               {#if template.type === 'comic' && template.design}
-                <div class="scale-75 transform pointer-events-none">
+                <div style="transform: scale(0.8);">
                   <ComicNote
                     design={template.design}
                     denomination={100}
@@ -63,7 +65,7 @@
                   />
                 </div>
               {:else if template.type === 'custom'}
-                <div class="scale-75 transform pointer-events-none">
+                <div style="transform: scale(0.65);">
                   <CustomNote
                     denomination={100}
                     mintUrl="example.mint.com"
@@ -74,25 +76,73 @@
                     unit="sat"
                   />
                 </div>
-              {:else}
-                <!-- Fallback placeholder -->
-                <div class="w-full h-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center pointer-events-none">
-                  <span class="text-amber-600 font-semibold">Custom</span>
+              {:else if template.type === 'sovereign'}
+                <div style="transform: scale(0.8);">
+                  <SovereignNote
+                    denomination={100}
+                    mintUrl="example.mint.com"
+                    token="example-token"
+                    unit="sat"
+                  />
                 </div>
               {/if}
-            </div>
-            
-            <!-- Template Name -->
-            <h3 class="text-base font-normal transition-colors" style="color: #4E4318;">
-              {template.name}
-            </h3>
-          </button>
+              <h3 class="text-base font-normal mt-4 text-center" style="color: #4E4318;">
+                {template.name}
+              </h3>
+            </button>
+          </div>
+        {/each}
+      </div>
+      
+      <!-- Second row: Sovereign Note centered -->
+      <div class="flex justify-center items-center">
+        {#each noteTemplates.slice(2) as template}
+          <div class="flex flex-col items-center">
+            <button
+              class="border-2 rounded-lg p-6 transition-all duration-200 flex flex-col items-center {selectedTemplateId === template.id ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'}"
+              onclick={() => selectTemplate(template)}
+            >
+              {#if template.type === 'comic' && template.design}
+                <div style="transform: scale(0.8);">
+                  <ComicNote
+                    design={template.design}
+                    denomination={100}
+                    mintUrl="example.mint.com"
+                    token="example-token"
+                    unit="sat"
+                  />
+                </div>
+              {:else if template.type === 'custom'}
+                <div style="transform: scale(0.65);">
+                  <CustomNote
+                    denomination={100}
+                    mintUrl="example.mint.com"
+                    token="example-token"
+                    colorCode="#E4690A"
+                    cornerBrandLogoURL=""
+                    brandLogoURL=""
+                    unit="sat"
+                  />
+                </div>
+              {:else if template.type === 'sovereign'}
+                <div style="transform: scale(0.8);">
+                  <SovereignNote
+                    denomination={100}
+                    mintUrl="example.mint.com"
+                    token="example-token"
+                    unit="sat"
+                  />
+                </div>
+              {/if}
+              <h3 class="text-base font-normal mt-4 text-center" style="color: #4E4318;">
+                {template.name}
+              </h3>
+            </button>
+          </div>
         {/each}
       </div>
     </div>
   </div>
-
-
 
   <!-- Navigation -->
   <div class="flex justify-between items-center mt-8 px-6 pb-6">

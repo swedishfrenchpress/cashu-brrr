@@ -2,6 +2,7 @@
   import { step, selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes, mint, preparedTokens, prints } from "./stores.svelte";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
+  import SovereignNote from "./SovereignNote.svelte";
   import { onMount } from "svelte";
   import { getEncodedTokenV4 } from "@cashu/cashu-ts";
   import { getAmountForTokenSet } from "./utils";
@@ -140,6 +141,22 @@
                     colorCode={$selectedStyle?.colorCode || '#E4690A'}
                     cornerBrandLogoURL=""
                     brandLogoURL=""
+                    unit="sat"
+                  />
+                </div>
+              </div>
+            {/each}
+          </div>
+        {:else if $selectedTemplate?.type === 'sovereign'}
+          <!-- Sovereign Note Selection -->
+          <div class="space-y-6">
+            {#each currentTokens as token, index}
+              <div class="flex justify-center">
+                <div style="width: 100%; max-width: 400px;">
+                  <SovereignNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token={getEncodedTokenV4(token)}
                     unit="sat"
                   />
                 </div>

@@ -2,6 +2,7 @@
   import { step, selectedTemplate, selectedStyle } from "./stores.svelte";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
+  import SovereignNote from "./SovereignNote.svelte";
   import { toast } from "svelte-sonner";
 
   // Available comic designs (3-25 as mentioned in the user's memory)
@@ -39,6 +40,12 @@
     { id: 'purple', name: 'Purple', code: '#8B5CF6' },
     { id: 'red', name: 'Red', code: '#EF4444' },
     { id: 'pink', name: 'Pink', code: '#EC4899' },
+  ];
+
+  // Available sovereign note designs (placeholder for future variations)
+  const sovereignDesigns = [
+    { id: 6, name: 'Classic Sovereign', preview: 'Sovereign design 1' },
+    // Add more designs here when you upload variations
   ];
 
   let selectedDesign = $state(7); // Default to design 7
@@ -124,6 +131,25 @@
               </div>
             {/each}
           </div>
+        {:else if $selectedTemplate?.type === 'sovereign'}
+          <!-- Sovereign Design Selection -->
+          <div class="space-y-2">
+            {#each sovereignDesigns as design}
+              <div
+                onclick={() => selectDesign(design.id)}
+                class="cursor-pointer {selectedDesign === design.id ? 'ring-2 ring-orange-500' : ''}"
+              >
+                <div class="scale-10 transform pointer-events-none">
+                  <SovereignNote
+                    denomination={100}
+                    mintUrl="example.mint.com"
+                    token="example-token"
+                    unit="sat"
+                  />
+                </div>
+              </div>
+            {/each}
+          </div>
         {/if}
       </div>
     </div>
@@ -149,6 +175,13 @@
             brandLogoURL=""
             unit="sat"
           />
+        {:else if $selectedTemplate?.type === 'sovereign'}
+                          <SovereignNote
+                  denomination={100}
+                  mintUrl="example.mint.com"
+                  token="example-token"
+                  unit="sat"
+                />
         {:else}
           <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
             <span class="text-amber-600 font-semibold">No template selected</span>

@@ -2,6 +2,7 @@
   import { step, selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes } from "./stores.svelte";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
+  import SovereignNote from "./SovereignNote.svelte";
 
   let amountPerNote = $state('');
   let numberOfNotes = $state('');
@@ -97,6 +98,13 @@
                 colorCode={$selectedStyle?.colorCode || '#E4690A'}
                 cornerBrandLogoURL=""
                 brandLogoURL=""
+                unit="sat"
+              />
+            {:else if $selectedTemplate?.type === 'sovereign'}
+              <SovereignNote
+                denomination={parseFloat(amountPerNote) || 0}
+                mintUrl="example.mint.com"
+                token="example-token"
                 unit="sat"
               />
             {:else}

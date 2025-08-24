@@ -3,6 +3,7 @@
   import { getEncodedTokenV4 } from "@cashu/cashu-ts";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
+  import SovereignNote from "./SovereignNote.svelte";
   import { onMount } from "svelte";
   import { getAmountForTokenSet } from "./utils";
 
@@ -126,6 +127,35 @@
       max-height: 250px !important;
     }
     
+    /* For SovereignNote which is HTML-based, not SVG */
+    .note-container .note-container {
+      width: 800px !important;
+      height: 400px !important;
+      max-width: none !important;
+      max-height: none !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      display: block !important;
+    }
+    
+    /* Ensure SovereignNote text elements are properly sized for print */
+    .note-container .note-container div[style*="font-size"] {
+      font-size: 16px !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    /* Force font size for SovereignNote denomination text specifically */
+    .sovereign-denomination {
+      font-size: 24px !important;
+      font-weight: bold !important;
+      color: #8B4513 !important;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+      font-family: 'Porter Sans Inline Block', sans-serif !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
     /* Ensure all SVG elements are visible */
     .note-container svg * {
       visibility: visible !important;
@@ -230,6 +260,15 @@
           <div style="display: inline-block; width: 420px; height: 214px;">
             <ComicNote
               design={currentStyle?.design || 7}
+              denomination={currentDenomination}
+              mintUrl={currentMintUrl}
+              token={getEncodedTokenV4(token)}
+              unit="sat"
+            />
+          </div>
+        {:else if currentTemplate?.type === 'sovereign' || currentStyle?.type === 'sovereign'}
+          <div style="display: inline-block; width: 800px; height: 400px;">
+            <SovereignNote
               denomination={currentDenomination}
               mintUrl={currentMintUrl}
               token={getEncodedTokenV4(token)}

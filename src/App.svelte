@@ -2,6 +2,8 @@
     import { getDecodedToken, getEncodedTokenV4 } from "@cashu/cashu-ts";
   import "./app.css";
     import ComicNote from "./lib/ComicNote.svelte";
+    import SovereignNote from "./lib/SovereignNote.svelte";
+    import SovereignTest from "./lib/SovereignTest.svelte";
   import Main from "./lib/Main.svelte";
   import PrintPage from "./lib/PrintPage.svelte";
     import { getAmountForTokenSet } from "./lib/utils";
@@ -32,14 +34,25 @@
   <PrintPage />
 {:else if token}
 <div>
-<ComicNote
-  design={template}
-  denomination={getAmountForTokenSet(token.proofs)}
-  mintUrl={token.mint}
-  token={getEncodedTokenV4(token)}
-  unit={token.unit??"sat"}
+{#if template === 6}
+  <SovereignNote
+    denomination={getAmountForTokenSet(token.proofs)}
+    mintUrl={token.mint}
+    token={getEncodedTokenV4(token)}
+    unit={token.unit??"sat"}
   />
+{:else}
+  <ComicNote
+    design={template}
+    denomination={getAmountForTokenSet(token.proofs)}
+    mintUrl={token.mint}
+    token={getEncodedTokenV4(token)}
+    unit={token.unit??"sat"}
+  />
+{/if}
 </div>
+{:else if window.location.hash.includes('test')}
+  <SovereignTest />
 {:else}
   
 <Main></Main>

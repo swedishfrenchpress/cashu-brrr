@@ -65,6 +65,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Porter Sans Inline Block';
+  src: url('/fonts/porter-sans-inline-block-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

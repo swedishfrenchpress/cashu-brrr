@@ -70,7 +70,8 @@
   <!-- Start Over Button -->
   <div class="flex justify-center mt-8 mb-6">
     <button
-      class="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+      class="px-8 py-3 font-semibold rounded-lg transition-all duration-200 hover:scale-105"
+      style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18;"
       onclick={() => {
         step.set(1);
         activeTab = 'print';

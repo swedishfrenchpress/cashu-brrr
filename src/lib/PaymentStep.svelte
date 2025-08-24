@@ -4,6 +4,7 @@
   import { createOutputAmounts, createOutputAmount, getAmountForTokenSet } from "./utils";
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
+  import SovereignNote from "./SovereignNote.svelte";
   import { toast } from "svelte-sonner";
   import QRCode from "qrcode";
   import { onMount } from "svelte";
@@ -299,6 +300,13 @@
                     colorCode={$selectedStyle?.colorCode || '#E4690A'}
                     cornerBrandLogoURL=""
                     brandLogoURL=""
+                    unit="sat"
+                  />
+                {:else if $selectedTemplate?.type === 'sovereign'}
+                  <SovereignNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token="example-token"
                     unit="sat"
                   />
                 {:else}
