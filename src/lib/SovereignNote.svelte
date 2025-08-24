@@ -9,13 +9,15 @@
     mintUrl: string;
     token: string;
     unit: string;
+    isPrint?: boolean;
   }
 
   let {
     denomination,
     mintUrl,
     token,
-    unit
+    unit,
+    isPrint = false
   }: Props = $props();
 
   let imageURL = $state("");
@@ -73,13 +75,12 @@
   <!-- Amount Display - positioned at bottom right of the note -->
   {#if denomination > 0}
     <div 
-      class="absolute font-bold sovereign-denomination"
+      class="absolute font-bold sovereign-denomination denomination-text {isPrint ? 'print-size' : ''}"
       style="
         right: 6%;
         bottom: 20%;
         color: #8B4513;
         text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-        font-size: 0.75rem;
         font-family: 'Porter Sans Inline Block', sans-serif;
         white-space: nowrap;
       "
@@ -101,5 +102,15 @@
   .note-container img {
     max-width: 100%;
     height: auto;
+  }
+  
+  /* Default font size for preview */
+  .denomination-text {
+    font-size: 0.75rem;
+  }
+  
+  /* Print-specific font size for denomination text */
+  .denomination-text.print-size {
+    font-size: 42px;
   }
 </style>
