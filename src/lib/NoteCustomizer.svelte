@@ -165,7 +165,7 @@
 
     <!-- Right Side - Large Preview -->
     <div class="flex-1 flex items-center justify-center">
-      <div class="scale-200 transform">
+      <div class="scale-[230%] transform">
         {#if $selectedTemplate?.type === 'comic'}
           <ComicNote
             design={typeof selectedDesign === 'number' ? selectedDesign : 7}

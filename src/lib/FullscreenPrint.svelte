@@ -84,7 +84,7 @@
     <!-- Tab Content -->
     <div class="w-full">
       {#if activeTab === 'print'}
-        <div class="bg-white rounded-lg shadow-lg min-h-[700px] print-steps">
+        <div class="min-h-[700px] print-steps">
           {#if $step === 1}
             <NoteTemplateSelector />
           {:else if $step === 2}
