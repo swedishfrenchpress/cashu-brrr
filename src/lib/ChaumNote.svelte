@@ -41,7 +41,7 @@
   />
 </div>
 
-<div class="note-container w-full relative" style="aspect-ratio: 2/1; max-width: 100%;">
+<div class="note-container w-full relative" style="aspect-ratio: 1.6/1; max-width: 100%;">
   <!-- PNG Background -->
   <img 
     src="/Chaum-note.jpg" 
@@ -55,11 +55,11 @@
     alt="QR Code" 
     class="absolute"
     style="
-      right: 0%;
-      left: 40%;
-      top: 15%; 
-      width: 75%; 
-      height: 70%; 
+      right: 5%;
+      left: 41%;
+      top: 16%; 
+      width: 76%; 
+      height: 52%; 
       object-fit: contain;
     "
   />
@@ -70,11 +70,16 @@
       class="absolute font-bold chaum-denomination denomination-text {isPrint ? 'print-size' : ''}"
       style="
         left: 5%;
-        bottom: 0%;
-        color: #1E4C50;
-        -webkit-text-stroke: 0.5px #F7EFC0;
-        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-        font-family: 'Roboto',sans-serif;
+        bottom: 20%;
+        color: #F7EFC0 !important;
+        text-shadow: 
+          -1px -1px 0 #1E4C50,
+          1px -1px 0 #1E4C50,
+          -1px 1px 0 #1E4C50,
+          1px 1px 0 #1E4C50,
+          2px 2px 4px rgba(255, 255, 255, 0.8) !important;
+        font-family: 'Inter',sans-serif !important;
+        font-weight: 500 !important;
         white-space: nowrap;
       "
     >
@@ -103,5 +108,18 @@
   /* Print-specific font size for denomination text */
   .denomination-text.print-size {
     font-size: 42px;
+  }
+  
+  /* Chaum Note specific styling */
+  .chaum-denomination {
+    color: #F7EFC0 !important;
+    text-shadow: 
+      -1px -1px 0 #1E4C50,
+      1px -1px 0 #1E4C50,
+      -1px 1px 0 #1E4C50,
+      1px 1px 0 #1E4C50,
+      2px 2px 4px rgba(255, 255, 255, 0.8) !important;
+    font-family: 'Inter',sans-serif !important;
+    font-weight: 600 !important;
   }
 </style>
