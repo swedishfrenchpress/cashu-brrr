@@ -4,6 +4,7 @@
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
   import ChaumNote from "./ChaumNote.svelte";
+  import MeadowsNote from "./MeadowsNote.svelte";
 
   let amountPerNote = $state('');
   let numberOfNotes = $state('');
@@ -111,6 +112,13 @@
               />
             {:else if $selectedTemplate?.type === 'chaum'}
               <ChaumNote
+                denomination={parseFloat(amountPerNote) || 0}
+                mintUrl="example.mint.com"
+                token="example-token"
+                unit="sat"
+              />
+            {:else if $selectedTemplate?.type === 'meadows'}
+              <MeadowsNote
                 denomination={parseFloat(amountPerNote) || 0}
                 mintUrl="example.mint.com"
                 token="example-token"

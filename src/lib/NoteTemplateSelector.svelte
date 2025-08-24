@@ -8,7 +8,7 @@
   interface NoteTemplate {
     id: string;
     name: string;
-    type: 'comic' | 'custom' | 'sovereign' | 'chaum';
+    type: 'comic' | 'custom' | 'sovereign' | 'chaum' | 'meadows';
     design?: number;
     preview: string;
   }
@@ -19,6 +19,7 @@
     { id: 'bitpopart-1', name: 'Bitpopart', type: 'comic', design: 7, preview: '/Ecash_Note_template.svg' },
     { id: 'sovereign-1', name: 'Sovereign Note', type: 'sovereign', design: 6, preview: '/Soverign_Note.png' },
     { id: 'chaum-1', name: 'Chaum Note', type: 'chaum', preview: '/Chaum-note.jpg' },
+    { id: 'meadows-1', name: 'Mr. Meadows', type: 'meadows', preview: '/mr-meadows-note.svg' },
   ];
 
   let selectedTemplateId = $state<string | null>(null);
@@ -28,7 +29,7 @@
     // Store the selected template in the store
     selectedTemplate.set(template);
     
-    // For Chaum Note, also set the selectedStyle immediately
+    // For Chaum Note and Mr. Meadows, also set the selectedStyle immediately
     if (template.type === 'chaum') {
       selectedStyle.set({
         id: 'chaum-1',
@@ -36,6 +37,13 @@
         type: 'chaum'
       });
       console.log('Set selectedStyle for Chaum Note immediately');
+    } else if (template.type === 'meadows') {
+      selectedStyle.set({
+        id: 'meadows-1',
+        name: 'Mr. Meadows',
+        type: 'meadows'
+      });
+      console.log('Set selectedStyle for Mr. Meadows immediately');
     }
     
     console.log('Selected template:', template);
@@ -43,9 +51,12 @@
 
   function proceedToNextStep() {
     if (selectedTemplate) {
-      // For Chaum Note, skip customization and go directly to mint connection
+      // For Chaum Note and Mr. Meadows, skip customization and go directly to mint connection
       if ($selectedTemplate?.type === 'chaum') {
         console.log('Proceeding to mint connection for Chaum Note');
+        step.set(3); // Go directly to mint connection step
+      } else if ($selectedTemplate?.type === 'meadows') {
+        console.log('Proceeding to mint connection for Mr. Meadows');
         step.set(3); // Go directly to mint connection step
       } else {
         // For other notes, proceed to style selection step
@@ -114,6 +125,14 @@
                     unit="sat"
                   />
                 </div>
+              {:else if template.type === 'meadows'}
+                <div style="transform: scale(0.8);">
+                  <img 
+                    src="/mr-meadows-note.svg" 
+                    alt="Mr. Meadows Note" 
+                    style="width: 100%; height: auto;"
+                  />
+                </div>
               {/if}
               <h3 class="text-base font-normal mt-4 text-center" style="color: #4E4318;">
                 {template.name}
@@ -170,6 +189,14 @@
                     mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"
+                  />
+                </div>
+              {:else if template.type === 'meadows'}
+                <div style="transform: scale(0.8);">
+                  <img 
+                    src="/mr-meadows-note.svg" 
+                    alt="Mr. Meadows Note" 
+                    style="width: 100%; height: auto;"
                   />
                 </div>
               {/if}
