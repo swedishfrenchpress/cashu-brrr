@@ -65,10 +65,11 @@
     alt="QR Code" 
     class="absolute"
     style="
-      left: 10%; 
-      top: 25%; 
-      width: 15%; 
-      height: 30%;
+      left: 6%; 
+      top: 15%; 
+      width: 25%; 
+      height: 65%;
+      object-fit: contain;
     "
   />
   
