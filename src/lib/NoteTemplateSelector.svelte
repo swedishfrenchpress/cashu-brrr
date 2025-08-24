@@ -3,7 +3,7 @@
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
   import ChaumNote from "./ChaumNote.svelte";
-  import { step, selectedTemplate } from "./stores.svelte";
+  import { step, selectedTemplate, selectedStyle } from "./stores.svelte";
   
   interface NoteTemplate {
     id: string;
@@ -27,6 +27,17 @@
     selectedTemplateId = template.id;
     // Store the selected template in the store
     selectedTemplate.set(template);
+    
+    // For Chaum Note, also set the selectedStyle immediately
+    if (template.type === 'chaum') {
+      selectedStyle.set({
+        id: 'chaum-1',
+        name: 'Chaum Note',
+        type: 'chaum'
+      });
+      console.log('Set selectedStyle for Chaum Note immediately');
+    }
+    
     console.log('Selected template:', template);
   }
 
@@ -34,6 +45,7 @@
     if (selectedTemplate) {
       // For Chaum Note, skip customization and go directly to mint connection
       if ($selectedTemplate?.type === 'chaum') {
+        console.log('Proceeding to mint connection for Chaum Note');
         step.set(3); // Go directly to mint connection step
       } else {
         // For other notes, proceed to style selection step

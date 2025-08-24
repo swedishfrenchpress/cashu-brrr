@@ -311,7 +311,7 @@
                     unit="sat"
                     design={typeof $selectedStyle?.design === 'string' ? $selectedStyle.design : 'Soverign_Note.png'}
                   />
-                {:else if $selectedTemplate?.type === 'chaum'}
+                {:else if $selectedTemplate?.type === 'chaum' || $selectedStyle?.type === 'chaum'}
                   <ChaumNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
@@ -435,7 +435,8 @@
           Waiting for payment...
         </div>
         <button 
-          class="px-4 py-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          class="btn px-6 py-2 transition-all duration-200 hover:scale-105"
+          style="background-color: #E4690A; color: white; border: 2px solid #A94705;"
           onclick={async () => {
             if (currentQuote) {
               const updatedQuote = await $wallet.checkMintQuote(currentQuote.quote);

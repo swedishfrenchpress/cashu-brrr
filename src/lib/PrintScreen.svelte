@@ -3,6 +3,7 @@
   import ComicNote from "./ComicNote.svelte";
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
+  import ChaumNote from "./ChaumNote.svelte";
   import { onMount } from "svelte";
   import { getEncodedTokenV4 } from "@cashu/cashu-ts";
   import { getAmountForTokenSet } from "./utils";
@@ -118,7 +119,7 @@
               <div class="flex justify-center">
                 <div style="width: 100%; max-width: 280px;">
                   <ComicNote
-                    design={$selectedStyle?.design || 7}
+                    design={typeof $selectedStyle?.design === 'number' ? $selectedStyle.design : 7}
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
                     token={getEncodedTokenV4(token)}
@@ -154,6 +155,22 @@
               <div class="flex justify-center">
                 <div style="width: 100%; max-width: 400px;">
                   <SovereignNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token={getEncodedTokenV4(token)}
+                    unit="sat"
+                  />
+                </div>
+              </div>
+            {/each}
+          </div>
+        {:else if $selectedTemplate?.type === 'chaum'}
+          <!-- Chaum Note Selection -->
+          <div class="space-y-6">
+            {#each currentTokens as token, index}
+              <div class="flex justify-center">
+                <div style="width: 100%; max-width: 400px;">
+                  <ChaumNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
                     token={getEncodedTokenV4(token)}

@@ -283,6 +283,7 @@
   <!-- Simple notes layout -->
   <div style="background: white; padding: 20px;">
     <!-- Render notes directly -->
+
     {#each currentTokens as token, index}
       <div style="margin: 20px 0; text-align: center;">
         {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
@@ -308,6 +309,7 @@
           </div>
         {:else if currentTemplate?.type === 'chaum' || currentStyle?.type === 'chaum'}
           <div style="display: inline-block;">
+
             <ChaumNote
               denomination={currentDenomination}
               mintUrl={currentMintUrl}

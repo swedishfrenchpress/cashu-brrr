@@ -41,7 +41,7 @@
   />
 </div>
 
-<div class="relative note-container" style="aspect-ratio: 2/1; max-width: 100%;">
+<div class="note-container w-full relative" style="aspect-ratio: 2/1; max-width: 100%;">
   <!-- PNG Background -->
   <img 
     src="/Chaum-note.jpg" 
@@ -69,7 +69,7 @@
     <div 
       class="absolute font-bold chaum-denomination denomination-text {isPrint ? 'print-size' : ''}"
       style="
-        left: 10%;
+        left: 5%;
         bottom: 0%;
         color: #1E4C50;
         -webkit-text-stroke: 0.5px #F7EFC0;
