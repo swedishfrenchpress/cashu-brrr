@@ -5,6 +5,7 @@
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
   import ChaumNote from "./ChaumNote.svelte";
+  import MeadowsNote from "./MeadowsNote.svelte";
   import { onMount } from "svelte";
   import { getAmountForTokenSet } from "./utils";
 
@@ -311,6 +312,16 @@
           <div style="display: inline-block;">
 
             <ChaumNote
+              denomination={currentDenomination}
+              mintUrl={currentMintUrl}
+              token={getEncodedTokenV4(token)}
+              unit="sat"
+              isPrint={true}
+            />
+          </div>
+        {:else if currentTemplate?.type === 'meadows' || currentStyle?.type === 'meadows'}
+          <div style="display: inline-block;">
+            <MeadowsNote
               denomination={currentDenomination}
               mintUrl={currentMintUrl}
               token={getEncodedTokenV4(token)}
