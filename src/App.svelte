@@ -7,13 +7,35 @@
 
   import Main from "./lib/Main.svelte";
   import PrintPage from "./lib/PrintPage.svelte";
+  import FullscreenPrint from "./lib/FullscreenPrint.svelte";
     import { getAmountForTokenSet } from "./lib/utils";
   
   // Check if we're in print mode
   const isPrintMode = $derived(window.location.search.includes('print=true'));
   
-  const urlParams = window.location.hash.slice(1).split('/');
+  // Check if we're in fullscreen print mode
+  let currentHash = $state(window.location.hash);
+  const isFullscreenPrintMode = $derived(currentHash === '#print');
+  
+  // Debug logging
+  console.log('Current hash:', currentHash);
+  console.log('isFullscreenPrintMode:', isFullscreenPrintMode);
+  
+  // Listen for hash changes
+  $effect(() => {
+    const handleHashChange = () => {
+      currentHash = window.location.hash;
+      console.log('Hash changed to:', currentHash);
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  });
+  
+  // Only process token URLs if we're not in fullscreen print mode
+  const urlParams = $derived(isFullscreenPrintMode ? [] : currentHash.slice(1).split('/'));
   const token = $derived.by(()=>{
+    if (isFullscreenPrintMode) return undefined;
     const tokenString = urlParams[0];
     try {
       return getDecodedToken(tokenString??"")
@@ -21,6 +43,7 @@
       return undefined
     } })
   const template = $derived.by(()=>{
+    if (isFullscreenPrintMode) return 5;
     const param = urlParams[1];
     if (!param) return 5;
     const design = Number.parseInt(param)
@@ -33,6 +56,8 @@
 
 {#if isPrintMode}
   <PrintPage />
+{:else if isFullscreenPrintMode}
+  <FullscreenPrint />
 {:else if token}
 <div>
 {#if template === 6}

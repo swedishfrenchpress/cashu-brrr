@@ -94,18 +94,18 @@
   <!-- Main Content -->
   <div class="flex-1 flex gap-8">
     <!-- Left Side - Styles Section -->
-    <div class="w-1/3">
+    <div class="w-2/5">
       <h3 class="text-lg font-semibold mb-4" style="color: #4E4318;">Styles</h3>
-      <div class="overflow-y-auto pr-2 max-h-96">
+      <div class="overflow-y-auto pr-2 max-h-[600px]">
         {#if $selectedTemplate?.type === 'comic'}
           <!-- Comic Design Selection -->
-          <div class="space-y-2">
+          <div class="grid grid-cols-2 gap-4 p-2">
             {#each comicDesigns as design}
               <div
                 onclick={() => selectDesign(design.id)}
-                class="cursor-pointer {selectedDesign === design.id ? 'ring-2 ring-orange-500' : ''}"
+                class="cursor-pointer p-1 rounded-lg {selectedDesign === design.id ? 'ring-2 ring-orange-500 bg-orange-50' : 'hover:bg-gray-50'}"
               >
-                <div class="scale-10 transform pointer-events-none">
+                <div class="scale-75 transform pointer-events-none">
                   <ComicNote
                     design={design.id}
                     denomination={100}
@@ -119,13 +119,13 @@
           </div>
         {:else if $selectedTemplate?.type === 'custom'}
           <!-- Custom Color Selection -->
-          <div class="space-y-2">
+          <div class="grid grid-cols-2 gap-4 p-2">
             {#each colorOptions as color}
               <div
                 onclick={() => selectColor(color.code)}
-                class="cursor-pointer {selectedColor === color.code ? 'ring-2 ring-orange-500' : ''}"
+                class="cursor-pointer p-1 rounded-lg {selectedColor === color.code ? 'ring-2 ring-orange-500 bg-orange-50' : 'hover:bg-gray-50'}"
               >
-                <div class="scale-10 transform pointer-events-none">
+                <div class="scale-75 transform pointer-events-none">
                   <CustomNote
                     denomination={100}
                     mintUrl="example.mint.com"
@@ -141,13 +141,13 @@
           </div>
         {:else if $selectedTemplate?.type === 'sovereign'}
           <!-- Sovereign Design Selection -->
-          <div class="space-y-2">
+          <div class="grid grid-cols-2 gap-4 p-2">
             {#each sovereignDesigns as design}
               <div
                 onclick={() => selectDesign(design.id)}
-                class="cursor-pointer {selectedDesign === design.id ? 'ring-2 ring-orange-500' : ''}"
+                class="cursor-pointer p-1 rounded-lg {selectedDesign === design.id ? 'ring-2 ring-orange-500 bg-orange-50' : 'hover:bg-gray-50'}"
               >
-                <div class="scale-10 transform pointer-events-none">
+                <div class="scale-75 transform pointer-events-none">
                   <SovereignNote
                     denomination={0}
                     mintUrl="example.mint.com"
@@ -165,7 +165,7 @@
 
     <!-- Right Side - Large Preview -->
     <div class="flex-1 flex items-center justify-center">
-      <div class="scale-150 transform">
+      <div class="scale-200 transform">
         {#if $selectedTemplate?.type === 'comic'}
           <ComicNote
             design={typeof selectedDesign === 'number' ? selectedDesign : 7}

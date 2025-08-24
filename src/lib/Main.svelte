@@ -1,17 +1,8 @@
 <script lang="ts">
 
-  import HistoryTab from "./HistoryTab.svelte";
-  import NoteTemplateSelector from "./NoteTemplateSelector.svelte";
-  import MintConnection from "./MintConnection.svelte";
-  import NoteCustomizer from "./NoteCustomizer.svelte";
-  import ChooseAmounts from "./ChooseAmounts.svelte";
-  import PaymentStep from "./PaymentStep.svelte";
-  import PrintScreen from "./PrintScreen.svelte";
   import PostItCard from "./PostItCard.svelte";
   import Sponsor from "./Sponsor.svelte";
   import { SPONSORS } from "./sponsors";
-  import { step, selectedTemplate } from "./stores.svelte";
-  import { onMount } from "svelte";
 
   // Array of available note images for random selection
   const noteImages = [
@@ -48,21 +39,7 @@
     return specificNotes[index] || getRandomNoteImage();
   };
 
-  let activeTab = $state<'print' | 'history'>('print');
 
-  onMount(() => {
-    // Listen for the custom event to switch to print tab
-    const handleSwitchToPrintTab = () => {
-      activeTab = 'print';
-    };
-    
-    window.addEventListener('switchToPrintTab', handleSwitchToPrintTab);
-    
-    // Cleanup event listener on component destroy
-    return () => {
-      window.removeEventListener('switchToPrintTab', handleSwitchToPrintTab);
-    };
-  });
 </script>
 
 <div class="min-h-screen w-full px-32">
@@ -117,63 +94,25 @@
       <PostItCard title="What happens if I lose it?" body="If the QR code on the note is never scanned and claimed, the ecash stays unredeemed. Only the person holding the physical note can access the funds, so treat it like real cash — if it's lost, it can't be recovered.." rotation="-rotate-[15deg]" />
       <PostItCard title="How do I print?" body="Just choose a design, select how many notes you want to print and for what amounts, then pay using lightning or ecash. The app will generate a printable sheet you can cut and hand out." rotation="rotate-[15deg]" />
     </div>
-  </div>
-
-  <!-- Start Over Button -->
-  <div class="flex justify-center mt-8 mb-6">
-    <button
-      class="px-8 py-3 font-semibold rounded-lg transition-all duration-200 hover:scale-105"
-      style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18;"
-      onclick={() => {
-        step.set(1);
-        activeTab = 'print';
-      }}
-    >
-      Start Over
-    </button>
-  </div>
-
-  <!-- Tabbed Navigation -->
-  <div class="w-full max-w-4xl mx-auto">
-    <!-- Tab Headers -->
-    <div class="flex bg-white rounded-t-lg overflow-hidden shadow-sm print-steps">
+    
+    <!-- GO BRRRR Button -->
+    <div class="flex justify-center mt-16 mb-8">
       <button
-        class="flex-1 py-4 px-6 text-2xl font-bold transition-all duration-200 {activeTab === 'print' ? 'bg-yellow-400 text-black' : 'bg-gray-100 text-black hover:bg-gray-200'}"
-        onclick={() => activeTab = 'print'}
+        class="px-12 py-4 text-3xl font-bold rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg"
+        style="background-color: #E4690A; color: white; border: 3px solid #A94705; font-family: 'Cabinet Grotesk', sans-serif;"
+        onclick={() => {
+          // Navigate to fullscreen print page using hash routing
+          console.log('GO BRRRR clicked! Setting hash to #print');
+          window.location.hash = 'print';
+          console.log('Hash set to:', window.location.hash);
+        }}
       >
-        Print
-      </button>
-      <button
-        class="flex-1 py-4 px-6 text-2xl font-bold transition-all duration-200 {activeTab === 'history' ? 'bg-yellow-400 text-black' : 'bg-gray-100 text-black hover:bg-gray-200'}"
-        onclick={() => activeTab = 'history'}
-      >
-        History
+        GO BRRRR! 💰
       </button>
     </div>
-
-    <!-- Tab Content -->
-    <div class="bg-white rounded-b-lg shadow-lg min-h-[600px] overflow-y-auto print-steps">
-      {#if activeTab === 'print'}
-        {#if $step === 1}
-          <NoteTemplateSelector />
-        {:else if $step === 2}
-          <NoteCustomizer />
-        {:else if $step === 3}
-          <MintConnection />
-        {:else if $step === 4}
-          <ChooseAmounts />
-        {:else if $step === 5}
-          <PaymentStep />
-        {:else if $step === 6}
-          <PrintScreen />
-        {:else}
-          <NoteTemplateSelector />
-        {/if}
-      {:else}
-        <HistoryTab />
-      {/if}
-    </div>
   </div>
+
+
   
   <!-- Bottom spacing -->
   <div class="h-16"></div>
