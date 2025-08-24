@@ -109,15 +109,17 @@
   </div>
 
   <!-- Main Content -->
-  <div class="flex-1 flex gap-8">
-    <!-- Left Side - Preview Area -->
-    <div class="flex-1 max-w-md">
-      <div class="overflow-y-auto" style="max-height: 400px; padding-right: 16px; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
+  <div class="flex-1 flex flex-col">
+    <!-- Notes Preview Area -->
+    <div class="flex-1 mb-8">
+      <h3 class="text-xl font-semibold mb-4" style="color: #4E4318;">Your Notes ({currentTokens.length} total)</h3>
+      <div class="overflow-y-auto" style="max-height: 500px; padding-right: 16px; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
         {#if $selectedTemplate?.type === 'comic'}
           <!-- Comic Design Selection -->
-          <div class="space-y-6">
+          <div class="grid grid-cols-2 gap-6">
             {#each currentTokens as token, index}
-              <div class="flex justify-center">
+              <div class="flex flex-col items-center">
+                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 280px;">
                   <ComicNote
                     design={typeof $selectedStyle?.design === 'number' ? $selectedStyle.design : 7}
@@ -132,9 +134,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'custom'}
           <!-- Custom Color Selection -->
-          <div class="space-y-6">
+          <div class="grid grid-cols-2 gap-6">
             {#each currentTokens as token, index}
-              <div class="flex justify-center">
+              <div class="flex flex-col items-center">
+                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 360px;">
                   <CustomNote
                     denomination={denomination}
@@ -151,9 +154,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'sovereign'}
           <!-- Sovereign Note Selection -->
-          <div class="space-y-6">
+          <div class="grid grid-cols-2 gap-6">
             {#each currentTokens as token, index}
-              <div class="flex justify-center">
+              <div class="flex flex-col items-center">
+                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 400px;">
                   <SovereignNote
                     denomination={denomination}
@@ -168,9 +172,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'chaum'}
           <!-- Chaum Note Selection -->
-          <div class="space-y-6">
+          <div class="grid grid-cols-2 gap-6">
             {#each currentTokens as token, index}
-              <div class="flex justify-center">
+              <div class="flex flex-col items-center">
+                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 400px;">
                   <ChaumNote
                     denomination={denomination}
@@ -184,9 +189,10 @@
           </div>
         {:else if $selectedTemplate?.type === 'meadows'}
           <!-- Mr. Meadows Note Selection -->
-          <div class="space-y-6">
+          <div class="grid grid-cols-2 gap-6">
             {#each currentTokens as token, index}
-              <div class="flex justify-center">
+              <div class="flex flex-col items-center">
+                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 400px;">
                   <MeadowsNote
                     denomination={denomination}
@@ -200,9 +206,10 @@
           </div>
         {:else}
           <!-- Fallback -->
-          <div class="space-y-6">
+          <div class="grid grid-cols-2 gap-6">
             {#each currentTokens as token, index}
-              <div class="flex justify-center">
+              <div class="flex flex-col items-center">
+                <div class="text-lg font-bold mb-2 text-orange-600">Note #{index + 1}</div>
                 <div class="w-full max-w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
                   <span class="text-amber-600 font-semibold">Note {index + 1}</span>
                 </div>
@@ -213,12 +220,12 @@
       </div>
     </div>
 
-    <!-- Right Side - Print Actions -->
-    <div class="w-80 space-y-4">
+    <!-- Bottom Action Buttons -->
+    <div class="flex justify-end space-x-4">
       <!-- Download QRs Button -->
       <button
         onclick={downloadQRs}
-        class="w-full py-4 px-6 rounded-lg text-lg font-bold transition-all duration-200 hover:scale-105"
+        class="px-8 py-3 rounded-lg text-lg font-bold transition-all duration-200 hover:scale-105"
         style="background-color: #CD8A18; color: white; border: 2px solid #B0791C"
       >
         Download only QRs
@@ -227,7 +234,7 @@
       <!-- Print Button -->
       <button
         onclick={printNotes}
-        class="w-full py-4 px-6 rounded-lg text-xl font-bold transition-all duration-200 hover:scale-105"
+        class="px-8 py-3 rounded-lg text-xl font-bold transition-all duration-200 hover:scale-105"
         style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18"
       >
         Print now! BRRRRRR
