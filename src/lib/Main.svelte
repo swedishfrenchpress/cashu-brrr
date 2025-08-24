@@ -13,6 +13,41 @@
   import { step, selectedTemplate } from "./stores.svelte";
   import { onMount } from "svelte";
 
+  // Array of available note images for random selection
+  const noteImages = [
+    "/Chaum-note.jpg",
+    "/Taj-India-Note.png",
+    "/Soverign_Note.png",
+    "/Leafy-Nature-Note.png",
+    "/Nostr-note-1.png",
+    "/Nostr-note-2.png",
+    "/Nostr-Note-3.png",
+    "/Pizzaday-green.png",
+    "/Satoshi-nirvana.png",
+    "/Your-honor.png",
+    "/Ecash_Note_template.svg"  // Cosmic Note (Bitpopart)
+  ];
+
+  // Function to get a random note image
+  const getRandomNoteImage = () => {
+    return noteImages[Math.floor(Math.random() * noteImages.length)];
+  };
+
+  // Function to get specific notes for testing - ensures Chaum and Taj India are visible
+  const getSpecificNoteImage = (index: number) => {
+    const specificNotes = [
+      "/Chaum-note.jpg",           // Left top
+      "/Taj-India-Note.png",       // Left second
+      "/Soverign_Note.png",        // Left third
+      "/Leafy-Nature-Note.png",    // Left bottom
+      "/Nostr-note-1.png",         // Right top
+      "/Ecash_Note_template.svg",  // Right second (Cosmic Note)
+      "/Nostr-note-2.png",         // Right third (Cosmic Note variation)
+      "/Satoshi-nirvana.png"       // Right bottom
+    ];
+    return specificNotes[index] || getRandomNoteImage();
+  };
+
   let activeTab = $state<'print' | 'history'>('print');
 
   onMount(() => {
@@ -44,19 +79,19 @@
     <div class="flex justify-center w-full mt-32">
       <div class="relative" style="width: 36rem; height: 600px;">
         <!-- Left notes (move further left with negative left values) -->
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-[-6rem] top-24 w-40 rotate-[-15deg]" />
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-[-8rem] top-48 w-40 rotate-[10deg]" />
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-[-5rem] top-80 w-40 rotate-[-8deg]" />
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute left-0 top-96 w-40 rotate-[5deg]" />
+        <img src={getSpecificNoteImage(0)} alt="Note Template" class="absolute left-[-6rem] top-24 w-40 rotate-[-15deg]" />
+        <img src={getSpecificNoteImage(1)} alt="Note Template" class="absolute left-[-8rem] top-48 w-40 rotate-[10deg]" />
+        <img src={getSpecificNoteImage(2)} alt="Note Template" class="absolute left-[-5rem] top-80 w-40 rotate-[-8deg]" />
+        <img src={getSpecificNoteImage(3)} alt="Note Template" class="absolute left-0 top-96 w-40 rotate-[5deg]" />
 
         <!-- Printer -->
         <img src="/printer.png" alt="Printer" class="absolute left-1/2 top-1/2 z-20 w-[36rem] -translate-x-1/2 -translate-y-1/2" />
 
         <!-- Right notes (move further right with negative right values) -->
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-[-6rem] top-24 w-40 rotate-[12deg]" />
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-[-8rem] top-48 w-40 rotate-[-10deg]" />
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-[-5rem] top-80 w-40 rotate-[7deg]" />
-        <img src="/Ecash_Note_template.svg" alt="Ecash Note Template" class="absolute right-0 top-96 w-40 rotate-[-6deg]" />
+        <img src={getSpecificNoteImage(4)} alt="Note Template" class="absolute right-[-6rem] top-24 w-40 rotate-[12deg]" />
+        <img src={getSpecificNoteImage(5)} alt="Note Template" class="absolute right-[-8rem] top-48 w-40 rotate-[-10deg]" />
+        <img src={getSpecificNoteImage(6)} alt="Note Template" class="absolute right-[-5rem] top-80 w-40 rotate-[7deg]" />
+        <img src={getSpecificNoteImage(7)} alt="Note Template" class="absolute right-0 top-96 w-40 rotate-[-6deg]" />
       </div>
     </div>
     
@@ -74,7 +109,7 @@
       </div>
     {/if}
     
-    <h2 class="text-center font-manrope font-bold text-4xl text-gray-900 mt-12 mb-4">
+    <h2 class="text-center font-ojuju font-bold text-4xl text-gray-900 mt-12 mb-4">
       FAQs
     </h2>
     <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-8">

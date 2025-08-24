@@ -159,6 +159,7 @@
                     mintUrl={$mint?.url || "example.mint.com"}
                     token={getEncodedTokenV4(token)}
                     unit="sat"
+                    design={typeof $selectedStyle?.design === 'string' ? $selectedStyle.design : 'Soverign_Note.png'}
                   />
                 </div>
               </div>
