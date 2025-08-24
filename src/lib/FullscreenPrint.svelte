@@ -30,9 +30,9 @@
   }
 </script>
 
-<div class="min-h-screen w-full bg-gradient-to-br from-yellow-50 to-orange-50">
+<div class="min-h-screen w-full bg-gradient-to-br from-yellow-50 to-orange-50 flex flex-col fullscreen-print">
   <!-- Header -->
-  <div class="w-full bg-white shadow-sm border-b border-gray-200">
+  <div class="w-full bg-white shadow-sm border-b border-gray-200 flex-shrink-0">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="w-24"></div> <!-- Spacer for centering -->
       
@@ -48,9 +48,9 @@
   </div>
 
   <!-- Main Content -->
-  <div class="max-w-7xl mx-auto px-6 py-8">
+  <div class="flex-1 max-w-7xl mx-auto px-4 py-4 w-full">
     <!-- Start Over Button -->
-    <div class="flex justify-center mb-6">
+    <div class="flex justify-center mb-4">
       <button
         class="px-6 py-2 font-semibold rounded-lg transition-all duration-200 hover:scale-105"
         style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18;"
@@ -64,7 +64,7 @@
     </div>
 
     <!-- Tab Navigation -->
-    <div class="flex justify-center mb-8">
+    <div class="flex justify-center mb-6">
       <div class="bg-white rounded-lg shadow-lg overflow-hidden print-steps">
         <button
           class="px-8 py-4 text-xl font-bold transition-all duration-200 {activeTab === 'print' ? 'bg-yellow-400 text-black' : 'bg-gray-100 text-black hover:bg-gray-200'}"
@@ -82,9 +82,9 @@
     </div>
 
     <!-- Tab Content -->
-    <div class="w-full">
+    <div class="w-full flex-1">
       {#if activeTab === 'print'}
-        <div class="min-h-[700px] print-steps">
+        <div class="print-steps h-full">
           {#if $step === 1}
             <NoteTemplateSelector />
           {:else if $step === 2}
@@ -102,7 +102,7 @@
           {/if}
         </div>
       {:else}
-        <div class="bg-white rounded-lg shadow-lg min-h-[700px] print-steps">
+        <div class="bg-white rounded-lg shadow-lg print-steps h-full">
           <HistoryTab />
         </div>
       {/if}

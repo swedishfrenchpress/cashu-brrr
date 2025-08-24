@@ -103,28 +103,30 @@
   }
 </script>
 
-<div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); min-height: 600px;">
+<div class="w-full h-full flex flex-col p-4" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
-  <div class="text-left mb-8">
-    <h2 class="text-3xl font-bold mb-2" style="color: #4E4318;">Print</h2>
+  <div class="text-left mb-4">
+    <h2 class="text-3xl font-bold mb-1" style="color: #4E4318;">Print</h2>
   </div>
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col">
     <!-- Notes Preview Area -->
-    <div class="flex-1 mb-8">
-      <div class="flex justify-between items-center mb-6">
+    <div class="flex-1 mb-4">
+      <div class="flex justify-between items-center mb-3">
         <h3 class="text-2xl font-bold" style="color: #4E4318;">Your Notes ({currentTokens.length} total)</h3>
         <div class="text-sm text-gray-600">Ready to print your ecash notes!</div>
       </div>
-      <div class="overflow-y-auto" style="max-height: 600px; padding-right: 16px; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
+      
+      <!-- Notes Grid - Responsive with scroll limit for 9+ notes -->
+      <div class="w-full {currentTokens.length > 9 ? 'overflow-y-auto' : ''}" style="{currentTokens.length > 9 ? 'max-height: 75vh; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;' : ''}">
         {#if $selectedTemplate?.type === 'comic'}
           <!-- Comic Design Selection -->
-          <div class="grid grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
-                <div style="width: 100%; max-width: 280px;">
+              <div class="flex flex-col items-center bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                <div class="text-sm font-bold mb-2 text-orange-600 bg-orange-50 px-2 py-1 rounded-full">Note #{index + 1}</div>
+                <div style="width: 100%; max-width: 240px;">
                   <ComicNote
                     design={typeof $selectedStyle?.design === 'number' ? $selectedStyle.design : 7}
                     denomination={denomination}
@@ -138,11 +140,11 @@
           </div>
         {:else if $selectedTemplate?.type === 'custom'}
           <!-- Custom Color Selection -->
-          <div class="grid grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
-                <div style="width: 100%; max-width: 360px;">
+              <div class="flex flex-col items-center bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                <div class="text-sm font-bold mb-2 text-orange-600 bg-orange-50 px-2 py-1 rounded-full">Note #{index + 1}</div>
+                <div style="width: 100%; max-width: 300px;">
                   <CustomNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
@@ -158,11 +160,11 @@
           </div>
         {:else if $selectedTemplate?.type === 'sovereign'}
           <!-- Sovereign Note Selection -->
-          <div class="grid grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
-                <div style="width: 100%; max-width: 400px;">
+              <div class="flex flex-col items-center bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                <div class="text-sm font-bold mb-2 text-orange-600 bg-orange-50 px-2 py-1 rounded-full">Note #{index + 1}</div>
+                <div style="width: 100%; max-width: 320px;">
                   <SovereignNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
@@ -176,11 +178,11 @@
           </div>
         {:else if $selectedTemplate?.type === 'chaum'}
           <!-- Chaum Note Selection -->
-          <div class="grid grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
-                <div style="width: 100%; max-width: 400px;">
+              <div class="flex flex-col items-center bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                <div class="text-sm font-bold mb-2 text-orange-600 bg-orange-50 px-2 py-1 rounded-full">Note #{index + 1}</div>
+                <div style="width: 100%; max-width: 320px;">
                   <ChaumNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
@@ -193,11 +195,11 @@
           </div>
         {:else if $selectedTemplate?.type === 'meadows'}
           <!-- Mr. Meadows Note Selection -->
-          <div class="grid grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
-                <div style="width: 100%; max-width: 400px;">
+              <div class="flex flex-col items-center bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                <div class="text-sm font-bold mb-2 text-orange-600 bg-orange-50 px-2 py-1 rounded-full">Note #{index + 1}</div>
+                <div style="width: 100%; max-width: 320px;">
                   <MeadowsNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
@@ -210,11 +212,11 @@
           </div>
         {:else}
           <!-- Fallback -->
-          <div class="grid grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each currentTokens as token, index}
-              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
-                <div class="w-full max-w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
+              <div class="flex flex-col items-center bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                <div class="text-sm font-bold mb-2 text-orange-600 bg-orange-50 px-2 py-1 rounded-full">Note #{index + 1}</div>
+                <div class="w-full max-w-56 h-32 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
                   <span class="text-amber-600 font-semibold">Note {index + 1}</span>
                 </div>
               </div>
@@ -225,11 +227,11 @@
     </div>
 
     <!-- Bottom Action Buttons -->
-    <div class="flex justify-end space-x-4">
+    <div class="flex justify-end space-x-4 mt-auto">
       <!-- Download QRs Button -->
       <button
         onclick={downloadQRs}
-        class="px-8 py-3 rounded-lg text-lg font-bold transition-all duration-200 hover:scale-105"
+        class="px-6 py-2 rounded-lg text-base font-bold transition-all duration-200 hover:scale-105"
         style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18"
       >
         Download only QRs
@@ -238,7 +240,7 @@
       <!-- Print Button -->
       <button
         onclick={printNotes}
-        class="px-8 py-3 rounded-lg text-xl font-bold transition-all duration-200 hover:scale-105"
+        class="px-6 py-2 rounded-lg text-lg font-bold transition-all duration-200 hover:scale-105"
         style="background-color: #CD8A18; color: white; border: 2px solid #B0791C"
       >
         Print now! BRRRRRR
