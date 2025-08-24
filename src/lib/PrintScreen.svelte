@@ -104,19 +104,40 @@
 </script>
 
 <div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); min-height: 600px;">
-  <!-- Header -->
-  <div class="text-left mb-8">
-    <h2 class="text-3xl font-bold mb-2" style="color: #4E4318;">Print</h2>
+  <!-- Header with Action Buttons -->
+  <div class="flex justify-between items-start mb-8">
+    <div>
+      <h2 class="text-3xl font-bold mb-2" style="color: #4E4318;">Print</h2>
+      <h3 class="text-2xl font-bold" style="color: #4E4318;">Your Notes ({currentTokens.length} total)</h3>
+      <div class="text-sm text-gray-600">Ready to print your ecash notes!</div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="flex space-x-4">
+      <!-- Download QRs Button -->
+      <button
+        onclick={downloadQRs}
+        class="px-6 py-3 rounded-lg text-lg font-bold btn-elegant"
+        style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18"
+      >
+        Download only QRs
+      </button>
+
+      <!-- Print Button -->
+      <button
+        onclick={printNotes}
+        class="px-6 py-3 rounded-lg text-xl font-bold btn-elegant"
+        style="background-color: #CD8A18; color: white; border: 2px solid #B0791C"
+      >
+        Print now! BRRRRRR
+      </button>
+    </div>
   </div>
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col">
     <!-- Notes Preview Area -->
-    <div class="flex-1 mb-8">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-2xl font-bold" style="color: #4E4318;">Your Notes ({currentTokens.length} total)</h3>
-        <div class="text-sm text-gray-600">Ready to print your ecash notes!</div>
-      </div>
+    <div class="flex-1">
       <div class="overflow-y-auto" style="max-height: 600px; padding-right: 16px; scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
         {#if $selectedTemplate?.type === 'comic'}
           <!-- Comic Design Selection -->
@@ -222,27 +243,6 @@
           </div>
         {/if}
       </div>
-    </div>
-
-    <!-- Bottom Action Buttons -->
-    <div class="flex justify-end space-x-4">
-      <!-- Download QRs Button -->
-      <button
-        onclick={downloadQRs}
-        class="px-8 py-3 rounded-lg text-lg font-bold transition-all duration-200 hover:scale-105"
-        style="background-color: transparent; color: #CD8A18; border: 2px solid #CD8A18"
-      >
-        Download only QRs
-      </button>
-
-      <!-- Print Button -->
-      <button
-        onclick={printNotes}
-        class="px-8 py-3 rounded-lg text-xl font-bold transition-all duration-200 hover:scale-105"
-        style="background-color: #CD8A18; color: white; border: 2px solid #B0791C"
-      >
-        Print now! BRRRRRR
-      </button>
     </div>
   </div>
 </div>
