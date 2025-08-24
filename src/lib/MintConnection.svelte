@@ -6,6 +6,7 @@
     pool,
     step,
     wallet,
+    selectedTemplate,
   } from "./stores.svelte";
   import { type Event, type Filter } from "nostr-tools";
   import {
@@ -137,7 +138,12 @@
 
   // Go back to previous step
   const goBack = () => {
-    step.set(2);
+    // If Chaum Note is selected, go back to home (step 1) since it skips customization
+    if ($selectedTemplate?.type === 'chaum') {
+      step.set(1);
+    } else {
+      step.set(2);
+    }
   };
 
   // Proceed to next step (amount selection)
