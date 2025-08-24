@@ -13,6 +13,20 @@
     design?: string;
   }
 
+  // Color mapping for different Sovereign Note designs
+  const designColors = {
+    'Soverign_Note.png': '#8B4513', // Classic brown
+    'Leafy-Nature-Note.png': '#2D5016', // Dark green
+    'Nostr-note-1.png': '#581C87', // Dark purple
+    'Nostr-note-2.png': '#581C87', // Dark purple
+    'Nostr-Note-3.png': '#581C87', // Dark purple
+    'Pizza-day-orange.png': '#D97706', // Orange
+    'Pizzaday-green.png': '#059669', // Green
+    'Satoshi-nirvana.png': '#B45309', // Dark orange
+    'Taj-India-Note.png': '#92400E', // Dark brown
+    'Your-honor.png': '#581C87', // Dark purple
+  };
+
   let {
     denomination,
     mintUrl,
@@ -21,6 +35,9 @@
     isPrint = false,
     design = 'Soverign_Note.png'
   }: Props = $props();
+
+  // Get the appropriate text color for the current design
+  let textColor = $derived(designColors[design as keyof typeof designColors] || '#8B4513');
 
   let imageURL = $state("");
 
@@ -76,21 +93,21 @@
   />
   
   <!-- Amount Display - positioned at bottom right of the note -->
-  {#if denomination > 0}
-    <div 
-      class="absolute font-bold sovereign-denomination denomination-text {isPrint ? 'print-size' : ''}"
-      style="
-        right: 6%;
-        bottom: 20%;
-        color: #8B4513;
-        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-        font-family: 'Porter Sans Inline Block', sans-serif;
-        white-space: nowrap;
-      "
-    >
-      {denomination}₿
-    </div>
-  {/if}
+         {#if denomination > 0}
+         <div 
+           class="absolute font-bold sovereign-denomination denomination-text {isPrint ? 'print-size' : ''}"
+           style="
+             right: 6%;
+             bottom: 20%;
+             color: {textColor};
+             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+             font-family: 'Porter Sans Inline Block', sans-serif;
+             white-space: nowrap;
+           "
+         >
+           {denomination}₿
+         </div>
+       {/if}
   
 
 </div>
