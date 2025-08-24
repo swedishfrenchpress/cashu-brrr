@@ -70,7 +70,6 @@
   <!-- Header -->
   <div class="text-center mb-8">
     <h2 class="text-4xl font-bold mb-3" style="color: #4E4318;">Choose Your Note Style</h2>
-    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Select from our collection of beautifully designed ecash notes. Each style has its own unique character and charm.</p>
   </div>
 
   <!-- Main Content -->
