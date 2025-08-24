@@ -84,7 +84,7 @@
           <div class="scale-150 transform">
             {#if $selectedTemplate?.type === 'comic'}
               <ComicNote
-                design={$selectedStyle?.design || 7}
+                design={typeof $selectedStyle?.design === 'number' ? $selectedStyle.design : 7}
                 denomination={parseFloat(amountPerNote) || 0}
                 mintUrl="example.mint.com"
                 token="example-token"
@@ -106,6 +106,7 @@
                 mintUrl="example.mint.com"
                 token="example-token"
                 unit="sat"
+                design={typeof $selectedStyle?.design === 'string' ? $selectedStyle.design : 'Soverign_Note.png'}
               />
             {:else}
               <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">

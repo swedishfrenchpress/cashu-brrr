@@ -286,7 +286,7 @@
               <div class="scale-75 transform mt-4 grid place-items-center w-full">
                 {#if $selectedTemplate?.type === 'comic'}
                   <ComicNote
-                    design={$selectedStyle?.design || 7}
+                    design={typeof $selectedStyle?.design === 'number' ? $selectedStyle.design : 7}
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
                     token="example-token"
@@ -308,6 +308,7 @@
                     mintUrl={$mint?.url || "example.mint.com"}
                     token="example-token"
                     unit="sat"
+                    design={typeof $selectedStyle?.design === 'string' ? $selectedStyle.design : 'Soverign_Note.png'}
                   />
                 {:else}
                   <div class="w-48 h-32 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">

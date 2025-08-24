@@ -42,13 +42,21 @@
     { id: 'pink', name: 'Pink', code: '#EC4899' },
   ];
 
-  // Available sovereign note designs (placeholder for future variations)
+  // Available sovereign note designs
   const sovereignDesigns = [
-    { id: 6, name: 'Classic Sovereign', preview: 'Sovereign design 1' },
-    // Add more designs here when you upload variations
+    { id: 'Soverign_Note.png', name: 'Classic Sovereign', preview: 'Classic Sovereign design' },
+    { id: 'Leafy-Nature-Note.png', name: 'Leafy Nature', preview: 'Nature-inspired design' },
+    { id: 'Nostr-note-1.png', name: 'Nostr Note 1', preview: 'Nostr-inspired design 1' },
+    { id: 'Nostr-note-2.png', name: 'Nostr Note 2', preview: 'Nostr-inspired design 2' },
+    { id: 'Nostr-Note-3.png', name: 'Nostr Note 3', preview: 'Nostr-inspired design 3' },
+    { id: 'Pizza-day-orange.png', name: 'Pizza Day Orange', preview: 'Orange pizza-themed design' },
+    { id: 'Pizzaday-green.png', name: 'Pizza Day Green', preview: 'Green pizza-themed design' },
+    { id: 'Satoshi-nirvana.png', name: 'Satoshi Nirvana', preview: 'Satoshi-inspired design' },
+    { id: 'Taj-India-Note.png', name: 'Taj India', preview: 'India-inspired design' },
+    { id: 'Your-honor.png', name: 'Your Honor', preview: 'Legal-themed design' },
   ];
 
-  let selectedDesign = $state(7); // Default to design 7
+  let selectedDesign: string | number = $state('Soverign_Note.png'); // Default to classic sovereign
   let selectedColor = $state('#E4690A'); // Default orange color
 
   function goBack() {
@@ -59,7 +67,7 @@
     // Store the selected style in the store
     selectedStyle.set({
       id: selectedDesign.toString(),
-      name: `Design ${selectedDesign}`,
+      name: typeof selectedDesign === 'string' ? selectedDesign : `Design ${selectedDesign}`,
       type: $selectedTemplate?.type || 'comic',
       design: selectedDesign,
       colorCode: selectedColor
@@ -68,7 +76,7 @@
     step.set(3); // Move to mint connection step
   }
 
-  function selectDesign(designId: number) {
+  function selectDesign(designId: number | string) {
     selectedDesign = designId;
   }
 
@@ -145,6 +153,7 @@
                     mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"
+                    design={design.id}
                   />
                 </div>
               </div>
@@ -159,7 +168,7 @@
       <div class="scale-150 transform">
         {#if $selectedTemplate?.type === 'comic'}
           <ComicNote
-            design={selectedDesign}
+            design={typeof selectedDesign === 'number' ? selectedDesign : 7}
             denomination={100}
             mintUrl="example.mint.com"
             token="example-token"
@@ -181,6 +190,7 @@
                   mintUrl="example.mint.com"
                   token="example-token"
                   unit="sat"
+                  design={selectedDesign}
                 />
         {:else}
           <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">

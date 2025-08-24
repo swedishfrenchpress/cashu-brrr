@@ -10,6 +10,7 @@
     token: string;
     unit: string;
     isPrint?: boolean;
+    design?: string;
   }
 
   let {
@@ -17,7 +18,8 @@
     mintUrl,
     token,
     unit,
-    isPrint = false
+    isPrint = false,
+    design = 'Soverign_Note.png'
   }: Props = $props();
 
   let imageURL = $state("");
@@ -54,7 +56,7 @@
 <div class="note-container w-full relative" style="aspect-ratio: 2/1; max-width: 100%;">
   <!-- PNG Background -->
   <img 
-    src="/Soverign_Note.png" 
+    src="/{design}" 
     alt="Sovereign Note" 
     class="absolute top-0 left-0 w-full h-full object-contain"
   />

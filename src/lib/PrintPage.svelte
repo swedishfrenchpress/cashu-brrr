@@ -287,7 +287,7 @@
         {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
           <div style="display: inline-block; width: 420px; height: 214px;">
             <ComicNote
-              design={currentStyle?.design || 7}
+              design={typeof currentStyle?.design === 'number' ? currentStyle.design : 7}
               denomination={currentDenomination}
               mintUrl={currentMintUrl}
               token={getEncodedTokenV4(token)}
@@ -302,6 +302,7 @@
               token={getEncodedTokenV4(token)}
               unit="sat"
               isPrint={true}
+              design={typeof currentStyle?.design === 'string' ? currentStyle.design : 'Soverign_Note.png'}
             />
           </div>
         {:else}
