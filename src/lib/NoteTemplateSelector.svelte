@@ -68,158 +68,89 @@
 
 <div class="w-full h-full flex flex-col p-8" style="background-color: #FFFCF6; border: 1px solid rgba(255, 222, 55, 0.35); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
   <!-- Header -->
-  <div class="text-center mb-8">
-    <h2 class="text-left text-3xl font-bold text-gray-900 mb-2" style="color: #4E4318;">Select a note style</h2>
+  <div class="text-center mb-12">
+    <h2 class="text-4xl font-bold mb-4" style="color: #4E4318;">Choose Your Note Style</h2>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Select from our collection of beautifully designed ecash notes. Each style has its own unique character and charm.</p>
   </div>
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col justify-center">
     <!-- Note Selection Section -->
-    <div class="flex flex-col items-center gap-12 px-8">
-      <!-- First row: Custom Note and Bitpopart -->
-      <div class="flex justify-center items-center gap-16">
-        {#each noteTemplates.slice(0, 2) as template}
-          <div class="flex flex-col items-center">
-            <button
-              class="border-2 rounded-lg p-6 transition-all duration-200 flex flex-col items-center {selectedTemplateId === template.id ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'}"
-              style="width: 280px; height: 280px;"
-              onclick={() => selectTemplate(template)}
-            >
-              {#if template.type === 'comic' && template.design}
-                <div style="transform: scale(0.8);">
-                  <ComicNote
-                    design={template.design}
-                    denomination={100}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'custom'}
-                <div style="transform: scale(0.8);">
-                  <CustomNote
-                    denomination={100}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    colorCode="#E4690A"
-                    cornerBrandLogoURL=""
-                    brandLogoURL=""
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'sovereign'}
-                <div style="transform: scale(0.8);">
-                  <SovereignNote
-                    denomination={0}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'chaum'}
-                <div style="transform: scale(0.8);">
-                  <ChaumNote
-                    denomination={0}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'meadows'}
-                <div style="transform: scale(0.8);">
-                  <img 
-                    src="/mr-meadows-note.svg" 
-                    alt="Mr. Meadows Note" 
-                    style="width: 100%; height: auto;"
-                  />
-                </div>
-              {/if}
-              <h3 class="text-base font-normal mt-4 text-center" style="color: #4E4318;">
-                {template.name}
-              </h3>
-            </button>
-          </div>
-        {/each}
-      </div>
-      
-      <!-- Second row: Sovereign Note and Chaum Note -->
-      <div class="flex justify-center items-center gap-16">
-        {#each noteTemplates.slice(2) as template}
-          <div class="flex flex-col items-center">
-            <button
-              class="border-2 rounded-lg p-6 transition-all duration-200 flex flex-col items-center {selectedTemplateId === template.id ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'}"
-              style="width: 280px; height: 280px;"
-              onclick={() => selectTemplate(template)}
-            >
-              {#if template.type === 'comic' && template.design}
-                <div style="transform: scale(0.8);">
-                  <ComicNote
-                    design={template.design}
-                    denomination={100}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'custom'}
-                <div style="transform: scale(0.8);">
-                  <CustomNote
-                    denomination={100}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    colorCode="#E4690A"
-                    cornerBrandLogoURL=""
-                    brandLogoURL=""
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'sovereign'}
-                <div style="transform: scale(0.8);">
-                  <SovereignNote
-                    denomination={0}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'chaum'}
-                <div style="transform: scale(0.8);">
-                  <ChaumNote
-                    denomination={0}
-                    mintUrl="example.mint.com"
-                    token="example-token"
-                    unit="sat"
-                  />
-                </div>
-              {:else if template.type === 'meadows'}
-                <div style="transform: scale(0.8);">
-                  <img 
-                    src="/mr-meadows-note.svg" 
-                    alt="Mr. Meadows Note" 
-                    style="width: 100%; height: auto;"
-                  />
-                </div>
-              {/if}
-              <h3 class="text-base font-normal mt-4 text-center" style="color: #4E4318;">
-                {template.name}
-              </h3>
-            </button>
-          </div>
-        {/each}
-      </div>
+    <div class="grid grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {#each noteTemplates as template}
+        <div class="flex flex-col items-center">
+          <button
+            class="group relative bg-white rounded-xl p-6 transition-all duration-300 flex flex-col items-center shadow-sm hover:shadow-lg border-2 {selectedTemplateId === template.id ? 'border-orange-500 shadow-lg scale-105' : 'border-gray-100 hover:border-orange-200'}"
+            style="width: 320px; height: 320px;"
+            onclick={() => selectTemplate(template)}
+          >
+            {#if template.type === 'comic' && template.design}
+              <div style="transform: scale(0.8);">
+                <ComicNote
+                  design={template.design}
+                  denomination={100}
+                  mintUrl="example.mint.com"
+                  token="example-token"
+                  unit="sat"
+                />
+              </div>
+            {:else if template.type === 'custom'}
+              <div style="transform: scale(0.8);">
+                <CustomNote
+                  denomination={100}
+                  mintUrl="example.mint.com"
+                  token="example-token"
+                  colorCode="#E4690A"
+                  cornerBrandLogoURL=""
+                  brandLogoURL=""
+                  unit="sat"
+                />
+              </div>
+            {:else if template.type === 'sovereign'}
+              <div style="transform: scale(0.8);">
+                <SovereignNote
+                  denomination={0}
+                  mintUrl="example.mint.com"
+                  token="example-token"
+                  unit="sat"
+                />
+              </div>
+            {:else if template.type === 'chaum'}
+              <div style="transform: scale(0.8);">
+                <ChaumNote
+                  denomination={0}
+                  mintUrl="example.mint.com"
+                  token="example-token"
+                  unit="sat"
+                />
+              </div>
+            {:else if template.type === 'meadows'}
+              <div style="transform: scale(0.8);">
+                <img 
+                  src="/mr-meadows-note.svg" 
+                  alt="Mr. Meadows Note" 
+                  style="width: 100%; height: auto;"
+                />
+              </div>
+            {/if}
+            <h3 class="text-lg font-semibold mt-4 text-center" style="color: #4E4318;">
+              {template.name}
+            </h3>
+          </button>
+        </div>
+      {/each}
     </div>
-  </div>
 
-  <!-- Navigation -->
-  <div class="flex justify-between items-center mt-8 px-6 pb-6">
-    <div></div> <!-- Empty div for spacing -->
-    <button 
-      class="btn px-6 py-2 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-      style="background-color: {selectedTemplateId ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplateId ? '#A94705' : '#6B7280'};"
-      onclick={proceedToNextStep}
-      disabled={!selectedTemplateId}
-    >
-      Next →
-    </button>
+    <!-- Navigation -->
+    <div class="flex justify-end mt-12">
+      <button 
+        class="px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+        style="background-color: {selectedTemplateId ? '#E4690A' : '#9CA3AF'}; color: white; border: 2px solid {selectedTemplateId ? '#A94705' : '#6B7280'};"
+        onclick={proceedToNextStep}
+        disabled={!selectedTemplateId}
+      >
+        Continue →
+      </button>
+    </div>
   </div>
 </div>
