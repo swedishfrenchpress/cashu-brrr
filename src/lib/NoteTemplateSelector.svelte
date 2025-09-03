@@ -93,6 +93,7 @@
                     mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"
+                    isPrint={false}
                   />
                 </div>
               {:else if template.type === 'custom'}

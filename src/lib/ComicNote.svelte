@@ -9,7 +9,8 @@
     mintUrl: string;
     token: string;
     unit: string;
-    design: number
+    design: number;
+    isPrint?: boolean;
   }
 
   let {
@@ -17,7 +18,8 @@
     mintUrl,
     token,
     unit,
-    design
+    design,
+    isPrint = false
   }: Props = $props();
 
   let imageURL = $state("");
@@ -8425,3 +8427,21 @@
          id="ellipse1542" /></g></g></svg>
 
 </div>
+
+<style>
+  /* Print-specific styles to match SovereignNote size */
+  @media print {
+    .w-full svg {
+      width: 800px !important;
+      height: auto !important;
+      max-width: none !important;
+      max-height: none !important;
+    }
+  }
+  
+  /* Screen styles - maintain current size */
+  .w-full svg {
+    width: 100%;
+    height: auto;
+  }
+</style>

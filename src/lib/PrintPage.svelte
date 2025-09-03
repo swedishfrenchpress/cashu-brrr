@@ -129,6 +129,14 @@
       max-height: 250px !important;
     }
     
+    /* For ComicNote - make it the same size as SovereignNote when printing */
+    .note-container svg[viewBox="0 0 420.32997 214.49"] {
+      width: 800px !important;
+      height: auto !important;
+      max-width: none !important;
+      max-height: none !important;
+    }
+    
     /* For SovereignNote which is HTML-based, not SVG */
     .note-container .note-container {
       width: 800px !important;
@@ -251,6 +259,13 @@
     max-height: 250px;
   }
   
+  /* For ComicNote - allow it to scale properly on screen */
+  .note-container svg[viewBox="0 0 420.32997 214.49"] {
+    width: 400px;
+    height: auto;
+    max-height: 200px;
+  }
+  
   .print-header {
     text-align: center;
     margin-bottom: 20px;
@@ -288,13 +303,14 @@
     {#each currentTokens as token, index}
       <div style="margin: 20px 0; text-align: center;">
         {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
-          <div style="display: inline-block; width: 420px; height: 214px;">
+          <div style="display: inline-block;">
             <ComicNote
               design={typeof currentStyle?.design === 'number' ? currentStyle.design : 7}
               denomination={currentDenomination}
               mintUrl={currentMintUrl}
               token={getEncodedTokenV4(token)}
               unit="sat"
+              isPrint={true}
             />
           </div>
         {:else if currentTemplate?.type === 'sovereign' || currentStyle?.type === 'sovereign'}

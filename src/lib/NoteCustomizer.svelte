@@ -112,6 +112,7 @@
                     mintUrl="example.mint.com"
                     token="example-token"
                     unit="sat"
+                    isPrint={false}
                   />
                 </div>
               </div>
@@ -173,6 +174,7 @@
             mintUrl="example.mint.com"
             token="example-token"
             unit="sat"
+            isPrint={false}
           />
         {:else if $selectedTemplate?.type === 'custom'}
           <CustomNote
@@ -190,7 +192,7 @@
                   mintUrl="example.mint.com"
                   token="example-token"
                   unit="sat"
-                  design={selectedDesign}
+                  design={typeof selectedDesign === 'string' ? selectedDesign : 'Soverign_Note.png'}
                 />
         {:else}
           <div class="w-64 h-40 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">

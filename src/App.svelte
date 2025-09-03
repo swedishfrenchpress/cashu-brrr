@@ -81,6 +81,7 @@
     mintUrl={token.mint}
     token={getEncodedTokenV4(token)}
     unit={token.unit??"sat"}
+    isPrint={false}
   />
 {/if}
 </div>

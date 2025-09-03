@@ -152,6 +152,7 @@
                     mintUrl={$mint?.url || "example.mint.com"}
                     token={getEncodedTokenV4(token)}
                     unit="sat"
+                    isPrint={false}
                   />
                 </div>
               </div>
