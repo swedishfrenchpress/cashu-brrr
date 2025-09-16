@@ -3,12 +3,13 @@
   import CustomNote from "./CustomNote.svelte";
   import SovereignNote from "./SovereignNote.svelte";
   import ChaumNote from "./ChaumNote.svelte";
+  import SFNote from "./SFNote.svelte";
   import { step, selectedTemplate, selectedStyle } from "./stores.svelte";
   
   interface NoteTemplate {
     id: string;
     name: string;
-    type: 'comic' | 'custom' | 'sovereign' | 'chaum' | 'meadows';
+    type: 'comic' | 'custom' | 'sovereign' | 'chaum' | 'meadows' | 'sf';
     design?: number;
     preview: string;
   }
@@ -20,6 +21,7 @@
     { id: 'sovereign-1', name: 'Sovereign Note', type: 'sovereign', design: 6, preview: '/Soverign_Note.png' },
     { id: 'chaum-1', name: 'Chaum Note', type: 'chaum', preview: '/Chaum-note.jpg' },
     { id: 'meadows-1', name: 'Mr. Meadows', type: 'meadows', preview: '/mr-meadows-note.svg' },
+    { id: 'sf-1', name: 'SF Note', type: 'sf', preview: '/sfnote.jpg' },
   ];
 
   let selectedTemplateId = $state<string | null>(null);
@@ -29,7 +31,7 @@
     // Store the selected template in the store
     selectedTemplate.set(template);
     
-    // For Chaum Note and Mr. Meadows, also set the selectedStyle immediately
+    // For Chaum Note, Mr. Meadows, and SF Note, also set the selectedStyle immediately
     if (template.type === 'chaum') {
       selectedStyle.set({
         id: 'chaum-1',
@@ -44,6 +46,13 @@
         type: 'meadows'
       });
       console.log('Set selectedStyle for Mr. Meadows immediately');
+    } else if (template.type === 'sf') {
+      selectedStyle.set({
+        id: 'sf-1',
+        name: 'SF Note',
+        type: 'sf'
+      });
+      console.log('Set selectedStyle for SF Note immediately');
     }
     
     console.log('Selected template:', template);
@@ -51,12 +60,15 @@
 
   function proceedToNextStep() {
     if (selectedTemplate) {
-      // For Chaum Note and Mr. Meadows, skip customization and go directly to mint connection
+      // For Chaum Note, Mr. Meadows, and SF Note, skip customization and go directly to mint connection
       if ($selectedTemplate?.type === 'chaum') {
         console.log('Proceeding to mint connection for Chaum Note');
         step.set(3); // Go directly to mint connection step
       } else if ($selectedTemplate?.type === 'meadows') {
         console.log('Proceeding to mint connection for Mr. Meadows');
+        step.set(3); // Go directly to mint connection step
+      } else if ($selectedTemplate?.type === 'sf') {
+        console.log('Proceeding to mint connection for SF Note');
         step.set(3); // Go directly to mint connection step
       } else {
         // For other notes, proceed to style selection step
@@ -132,6 +144,15 @@
                     src="/mr-meadows-note.svg" 
                     alt="Mr. Meadows Note" 
                     style="width: 100%; height: auto;"
+                  />
+                </div>
+              {:else if template.type === 'sf'}
+                <div style="transform: scale(0.7); max-width: 100%;">
+                  <SFNote
+                    denomination={100}
+                    mintUrl="example.mint.com"
+                    token="example-token"
+                    unit="sat"
                   />
                 </div>
               {/if}

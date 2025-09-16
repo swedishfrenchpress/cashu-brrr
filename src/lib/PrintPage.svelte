@@ -6,6 +6,7 @@
   import SovereignNote from "./SovereignNote.svelte";
   import ChaumNote from "./ChaumNote.svelte";
   import MeadowsNote from "./MeadowsNote.svelte";
+  import SFNote from "./SFNote.svelte";
   import { onMount } from "svelte";
   import { getAmountForTokenSet } from "./utils";
 
@@ -343,6 +344,15 @@
               token={getEncodedTokenV4(token)}
               unit="sat"
               isPrint={true}
+            />
+          </div>
+        {:else if currentTemplate?.type === 'sf' || currentStyle?.type === 'sf'}
+          <div style="display: inline-block;">
+            <SFNote
+              denomination={currentDenomination}
+              mintUrl={currentMintUrl}
+              token={getEncodedTokenV4(token)}
+              unit="sat"
             />
           </div>
         {:else}

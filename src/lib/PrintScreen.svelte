@@ -5,6 +5,7 @@
   import SovereignNote from "./SovereignNote.svelte";
   import ChaumNote from "./ChaumNote.svelte";
   import MeadowsNote from "./MeadowsNote.svelte";
+  import SFNote from "./SFNote.svelte";
   import { onMount } from "svelte";
   import { getEncodedTokenV4 } from "@cashu/cashu-ts";
   import { getAmountForTokenSet } from "./utils";
@@ -221,6 +222,23 @@
                 <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
                 <div style="width: 100%; max-width: 400px;">
                   <MeadowsNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token={getEncodedTokenV4(token)}
+                    unit="sat"
+                  />
+                </div>
+              </div>
+            {/each}
+          </div>
+        {:else if $selectedTemplate?.type === 'sf'}
+          <!-- SF Note Selection -->
+          <div class="grid grid-cols-3 gap-8">
+            {#each currentTokens as token, index}
+              <div class="flex flex-col items-center bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div class="text-lg font-bold mb-3 text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Note #{index + 1}</div>
+                <div style="width: 100%; max-width: 400px;">
+                  <SFNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
                     token={getEncodedTokenV4(token)}

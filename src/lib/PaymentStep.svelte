@@ -7,6 +7,7 @@
   import SovereignNote from "./SovereignNote.svelte";
   import ChaumNote from "./ChaumNote.svelte";
   import MeadowsNote from "./MeadowsNote.svelte";
+  import SFNote from "./SFNote.svelte";
   import { toast } from "svelte-sonner";
   import QRCode from "qrcode";
   import { onMount } from "svelte";
@@ -322,6 +323,13 @@
                   />
                 {:else if $selectedTemplate?.type === 'meadows'}
                   <MeadowsNote
+                    denomination={denomination}
+                    mintUrl={$mint?.url || "example.mint.com"}
+                    token="example-token"
+                    unit="sat"
+                  />
+                {:else if $selectedTemplate?.type === 'sf'}
+                  <SFNote
                     denomination={denomination}
                     mintUrl={$mint?.url || "example.mint.com"}
                     token="example-token"
