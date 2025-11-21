@@ -85,6 +85,7 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 @keyframes gradientShift {
@@ -103,6 +104,20 @@ body {
 html {
   min-height: 100vh;
   background: inherit;
+  overflow-x: hidden;
+}
+
+/* Ensure fullscreen print mode fills the entire viewport */
+#svelte {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Prevent any gray space at the bottom */
+.fullscreen-print {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #FFFCF6, #FEF7E0);
 }
 
 /* Input placeholder styling */
