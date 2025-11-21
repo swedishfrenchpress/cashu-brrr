@@ -34,7 +34,7 @@
 <a 
     target="_blank" 
     rel="noopener noreferrer"
-    class="block p-6 rounded-lg border-2 {tierConfig.border} {tierConfig.bg} shadow-lg"
+    class="block p-6 rounded-lg border-2 {tierConfig.border} {tierConfig.bg} shadow-lg sponsor-card"
     href="{sponsor.link}"
 >
     <div class="flex items-center gap-4">

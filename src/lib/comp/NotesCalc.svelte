@@ -2,10 +2,15 @@
   import { formatAmount } from "../utils";
 
   let { selectedNumberOfNotes, selectedDenomination, unit, donationAmount, isDonate } = $props();
+
+  // Format sats without Bitcoin symbol for history cards
+  const formatSatsOnly = (amount: number): string => {
+    return new Intl.NumberFormat("en-US").format(amount) + " sats";
+  };
 </script>
 
-<div class="flex flex-wrap gap-1 items-center pb-5">
-  <span class="font-bold badge badge-success gap-2">
+<div class="flex flex-wrap gap-2 items-center pb-5">
+  <span class="badge-elegant quantity">
     {selectedNumberOfNotes}
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +18,7 @@
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="w-5 h-5"
+      class="w-4 h-4"
     >
       <path
         stroke-linecap="round"
@@ -22,20 +27,12 @@
       />
     </svg>
   </span>
-  x
-  <span class="font-bold badge badge-warning gap-2"
-    >{formatAmount(selectedDenomination, unit)}
+  <span class="text-gray-500 font-medium">×</span>
+  <span class="badge-elegant amount">
+    {formatSatsOnly(selectedDenomination)}
   </span>
-  <div>
-    <span class="rotate-90"> = </span>
-  </div>
-  <span class="font-bold badge badge-warning gap-2">
-    {formatAmount(selectedDenomination * selectedNumberOfNotes, unit)}
+  <span class="text-gray-500 font-medium">=</span>
+  <span class="badge-elegant total">
+    {formatSatsOnly(selectedDenomination * selectedNumberOfNotes)}
   </span>
-  {#if isDonate}
-  +
-  <span class="font-bold badge badge-secondary gap-2">
-    {formatAmount(donationAmount, unit)}
-  </span>
-  {/if}
 </div>

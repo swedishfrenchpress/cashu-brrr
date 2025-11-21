@@ -3,6 +3,7 @@
   import PostItCard from "./PostItCard.svelte";
   import Sponsor from "./Sponsor.svelte";
   import { SPONSORS } from "./sponsors";
+  import { step, selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes, donation, preparedTokens } from "./stores.svelte";
 
   // Array of available note images for random selection
   const noteImages = [
@@ -75,11 +76,20 @@
     <!-- GO BRRRR Button -->
     <div class="flex justify-center mt-16 mb-8">
       <button
-        class="px-12 py-4 text-5xl font-bold rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg"
+        class="px-12 py-4 text-5xl font-bold rounded-lg btn-elegant"
         style="background-color: #E4690A; color: white; border: 3px solid #A94705; font-family: 'Cabinet Grotesk', sans-serif;"
         onclick={() => {
+          // Reset all application state to start fresh
+          step.set(1);
+          selectedTemplate.set(null);
+          selectedStyle.set(null);
+          selectedDenomination.set(1);
+          selectedNumberOfNotes.set(1);
+          donation.set(1);
+          preparedTokens.set([]);
+          
           // Navigate to fullscreen print page using hash routing
-          console.log('GO BRRRR clicked! Setting hash to #print');
+          console.log('GO BRRRR clicked! Resetting state and setting hash to #print');
           window.location.hash = 'print';
           console.log('Hash set to:', window.location.hash);
         }}

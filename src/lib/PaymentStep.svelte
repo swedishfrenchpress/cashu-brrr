@@ -293,6 +293,7 @@
                     mintUrl={$mint?.url || "example.mint.com"}
                     token="example-token"
                     unit="sat"
+                    isPrint={false}
                   />
                 {:else if $selectedTemplate?.type === 'custom'}
                   <CustomNote

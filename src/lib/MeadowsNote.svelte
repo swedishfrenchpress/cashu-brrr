@@ -55,7 +55,7 @@
     alt="QR Code" 
     class="absolute"
     style="
-      left: 6%; 
+      left: 75%; 
       top: 15%; 
       width: 25%; 
       height: 65%;
@@ -68,15 +68,15 @@
     <div 
       class="absolute font-bold meadows-denomination denomination-text {isPrint ? 'print-size' : ''}"
       style="
-        right: 6%;
-        bottom: 20%;
-        color: #8B4513;
+        left: 6%;
+        top: 2%;
+        color: #000000;
         text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-        font-family: 'Porter Sans Inline Block', sans-serif;
+        font-family: 'Dela Gothic One', sans-serif;
         white-space: nowrap;
       "
     >
-      {denomination}₿
+      {denomination}
     </div>
   {/if}
 </div>

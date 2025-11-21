@@ -69,7 +69,7 @@
     <div class="flex-1 overflow-y-auto pr-4" style="scrollbar-width: thin; scrollbar-color: #CD8A18 #F0E0B0;">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {#each $prints as print}
-          <div class="bg-white rounded-xl p-6 transition-all duration-200 hover:shadow-lg" style="border: 1px solid rgba(228, 105, 10, 0.2); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);">
+          <div class="bg-white rounded-xl p-6 history-card" style="border: 1px solid rgba(228, 105, 10, 0.2); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);">
             <!-- Header with date and reprint button -->
             <div class="flex justify-between items-start mb-4">
               <div class="flex flex-col gap-1">
@@ -94,7 +94,7 @@
               </div>
               <button
                 onclick={() => reprint(print)}
-                class="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-105"
+                class="px-4 py-2 rounded-lg text-sm font-semibold btn-reprint"
                 style="background-color: #E4690A; color: white; border: 2px solid #CD8A18;"
               >
                 Reprint
@@ -114,7 +114,7 @@
             
             <!-- Template info -->
             {#if print.template}
-              <div class="mb-4 p-3 rounded-lg" style="background-color: #FFF9EF; border: 1px solid #EFAF42;">
+              <div class="mb-4 template-info">
                 <div class="flex items-center gap-2 mb-1">
                   <svg class="w-4 h-4" style="color: #CD8A18;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
@@ -128,7 +128,7 @@
             {/if}
             
             <!-- Mint info -->
-            <div class="pt-3 border-t" style="border-color: rgba(228, 105, 10, 0.2);">
+            <div class="mint-info">
               <div class="flex items-center gap-2 mb-1">
                 <svg class="w-4 h-4" style="color: #CD8A18;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
