@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { QRCodeImage } from "svelte-qrcode-image";
-  import { secp256k1 } from "@noble/curves/secp256k1";
-  import { bytesToHex } from "@noble/curves/abstract/utils";
 
   interface Props {
     denomination: number;
@@ -41,7 +39,7 @@
 
   let imageURL = $state("");
 
-  const randomID = bytesToHex(secp256k1.utils.randomPrivateKey()).slice(0, 12);
+  const randomID = crypto.randomUUID().replaceAll("-", "").slice(0, 12);
 
   // QR code position for the left textured area
   const qrPosition = {
@@ -70,67 +68,40 @@
   />
 </div>
 
-<div class="note-container w-full relative" style="aspect-ratio: 2/1; max-width: 100%;">
-  <!-- PNG Background -->
-  <img 
-    src="/{design}" 
-    alt="Sovereign Note" 
-    class="absolute top-0 left-0 w-full h-full object-contain"
+<!-- Artwork is 3500 x 1672; the QR sits in the textured panel on the left -->
+<div class="note-container w-full relative" style="aspect-ratio: 3500/1672;">
+  <img
+    src={isPrint ? `/${design}` : `/previews/${design.replace(/\.png$/, ".webp")}`}
+    alt="Sovereign Note"
+    class="absolute top-0 left-0 w-full h-full"
   />
-  
-  <!-- QR Code Overlay - positioned in the left textured area -->
-  <img 
-    src={imageURL} 
-    alt="QR Code" 
-    class="absolute"
-    style="
-      left: 6%; 
-      top: 15%; 
-      width: 25%; 
-      height: 65%;
-      object-fit: contain;
-    "
-  />
-  
-  <!-- Amount Display - positioned at bottom right of the note -->
-         {#if denomination > 0}
-         <div 
-           class="absolute font-bold sovereign-denomination denomination-text {isPrint ? 'print-size' : ''}"
-           style="
-             right: 6%;
-             bottom: 20%;
-             color: {textColor};
-             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-             font-family: 'Porter Sans Inline Block', sans-serif;
-             white-space: nowrap;
-           "
-         >
-           {denomination}₿
-         </div>
-       {/if}
-  
 
+  {#if imageURL}
+    <img
+      src={imageURL}
+      alt="QR code"
+      class="absolute"
+      style="left: 6%; top: 13.4%; width: 25%; height: 68%; object-fit: contain;"
+    />
+  {/if}
+
+  {#if denomination > 0}
+    <div class="absolute sovereign-denomination" style="right: 6%; bottom: 18.6%; color: {textColor};">
+      {denomination}₿
+    </div>
+  {/if}
 </div>
 
 <style>
   .note-container {
-    max-width: 100%;
-    height: auto;
+    container-type: inline-size;
   }
-  
-  /* Ensure the note maintains its aspect ratio */
-  .note-container img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Default font size for preview */
-  .denomination-text {
-    font-size: 0.75rem;
-  }
-  
-  /* Print-specific font size for denomination text */
-  .denomination-text.print-size {
-    font-size: 42px;
+
+  .sovereign-denomination {
+    font-family: "Porter Sans Inline Block", sans-serif;
+    font-size: 7cqw;
+    line-height: 1;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
   }
 </style>

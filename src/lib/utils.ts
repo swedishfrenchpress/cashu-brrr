@@ -7,13 +7,8 @@ import {
   type OutputAmounts,
   type Proof,
 } from "@cashu/cashu-ts";
-import {
-  selectedDenomination,
-  selectedNumberOfNotes,
-  wallet,
-} from "./stores.svelte";
+import { wallet } from "./stores.svelte";
 import { get } from "svelte/store";
-import { toast } from "svelte-sonner";
 
 export const getAmountForTokenSet = (tokens: Array<Proof>): number => {
   return tokens.reduce((acc, t) => {
@@ -170,8 +165,8 @@ export const createOutputAmount = async (denomination: number) => {
 
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-function fallbackCopyTextToClipboard(text: string) {
-  var textArea = document.createElement("textarea");
+function fallbackCopyTextToClipboard(text: string): boolean {
+  const textArea = document.createElement("textarea");
   textArea.value = text;
 
   // Avoid scrolling to bottom
@@ -183,28 +178,26 @@ function fallbackCopyTextToClipboard(text: string) {
   textArea.focus();
   textArea.select();
 
+  let successful = false;
   try {
-    var successful = document.execCommand("copy");
-    if (successful) {
-      toast.info("copied!");
-    }
+    successful = document.execCommand("copy");
   } catch (err) {
-    console.error("Fallback: Oops, unable to copy", err);
+    console.error("Fallback: unable to copy", err);
   }
 
   document.body.removeChild(textArea);
+  return successful;
 }
-export function copyTextToClipboard(text: string) {
+
+export async function copyTextToClipboard(text: string): Promise<boolean> {
   if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-    return;
+    return fallbackCopyTextToClipboard(text);
   }
-  navigator.clipboard.writeText(text).then(
-    function () {
-      toast.info("copied!");
-    },
-    function (err) {
-      console.error("Async: Could not copy text: ", err);
-    },
-  );
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (err) {
+    console.error("Could not copy text: ", err);
+    return fallbackCopyTextToClipboard(text);
+  }
 }

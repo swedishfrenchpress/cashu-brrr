@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { QRCodeImage } from "svelte-qrcode-image";
-  import { secp256k1 } from "@noble/curves/secp256k1";
-  import { bytesToHex } from "@noble/curves/abstract/utils";
 
   interface Props {
     denomination: number;
@@ -24,7 +22,7 @@
 
   let imageURL = $state("");
 
-  const randomID = bytesToHex(secp256k1.utils.randomPrivateKey()).slice(0, 12);
+  const randomID = crypto.randomUUID().replaceAll("-", "").slice(0, 12);
 
   onMount(() => {
     const element = document.getElementById("qr-" + randomID);
@@ -786,9 +784,10 @@
       }
 
       .st407 {
-        fill: #999;
-        font-size: 8.04px;
-        opacity: .5;
+        fill: #141414;
+        font-family: 'Martian Mono', monospace;
+        font-weight: 600;
+        font-size: 10px;
       }
 
       .st259 {
@@ -8429,17 +8428,7 @@
 </div>
 
 <style>
-  /* Print-specific styles to match SovereignNote size */
-  @media print {
-    .w-full svg {
-      width: 800px !important;
-      height: auto !important;
-      max-width: none !important;
-      max-height: none !important;
-    }
-  }
-  
-  /* Screen styles - maintain current size */
+  /* The print sheet sizes each note's cell; the artwork fills it in every medium */
   .w-full svg {
     width: 100%;
     height: auto;

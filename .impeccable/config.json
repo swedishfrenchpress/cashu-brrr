@@ -1,0 +1,48 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(0.22, 1.2, 0.36, 1)",
+        "createdAt": "2026-10-19T17:11:50.286Z",
+        "reason": "model decision: overshoot is used only for the sticker corner-peel lift (--ease-peel), literal motion of the chosen kiss-cut world"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-19T17:17:07.249Z",
+        "reason": "model decision: unchosen decision-round sketch (spent hand), never shipped"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-19T17:36:55.207Z",
+        "reason": "model decision: unchosen decision-round sketch in another world's type, never shipped"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-19T17:36:55.231Z",
+        "reason": "model decision: unchosen category-standard decision sketch, never shipped"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "porter sans inline block",
+        "createdAt": "2026-10-19T17:36:55.260Z",
+        "reason": "model decision: face belongs to the fixed Sovereign note artwork (its amount overlay), not the app type system"
+      }
+    ]
+  }
+}

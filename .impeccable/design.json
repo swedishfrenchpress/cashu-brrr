@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T00:00:00Z",
+  "title": "Design System: Cashu Brrr",
+  "extensions": {
+    "colorMeta": {
+      "cut": {
+        "role": "primary",
+        "displayName": "CutContour Magenta",
+        "canonical": "oklch(59.8% 0.243 358.8)",
+        "tonalRamp": [
+          "oklch(15% 0.06 358.8)",
+          "oklch(27% 0.11 358.8)",
+          "oklch(39% 0.16 358.8)",
+          "oklch(51% 0.21 358.8)",
+          "oklch(60% 0.243 358.8)",
+          "oklch(72% 0.17 358.8)",
+          "oklch(84% 0.09 358.8)",
+          "oklch(95% 0.03 358.8)"
+        ]
+      },
+      "cut-ink": {
+        "role": "primary",
+        "displayName": "Die Ink",
+        "canonical": "oklch(49.9% 0.202 359.6)",
+        "tonalRamp": [
+          "oklch(15% 0.06 359.6)",
+          "oklch(27% 0.11 359.6)",
+          "oklch(39% 0.16 359.6)",
+          "oklch(50% 0.202 359.6)",
+          "oklch(62% 0.2 359.6)",
+          "oklch(74% 0.15 359.6)",
+          "oklch(85% 0.08 359.6)",
+          "oklch(95% 0.03 359.6)"
+        ]
+      },
+      "liner": {
+        "role": "neutral",
+        "displayName": "Gloss Liner",
+        "canonical": "oklch(96.2% 0.005 117.9)",
+        "tonalRamp": [
+          "oklch(15% 0.005 117.9)",
+          "oklch(27% 0.005 117.9)",
+          "oklch(39% 0.005 117.9)",
+          "oklch(51% 0.005 117.9)",
+          "oklch(63% 0.005 117.9)",
+          "oklch(75% 0.005 117.9)",
+          "oklch(86% 0.005 117.9)",
+          "oklch(95% 0.005 117.9)"
+        ]
+      },
+      "liner-deep": {
+        "role": "neutral",
+        "displayName": "Liner Shadow",
+        "canonical": "oklch(92.8% 0.010 119.6)",
+        "tonalRamp": [
+          "oklch(15% 0.01 119.6)",
+          "oklch(27% 0.01 119.6)",
+          "oklch(39% 0.01 119.6)",
+          "oklch(51% 0.01 119.6)",
+          "oklch(63% 0.01 119.6)",
+          "oklch(75% 0.01 119.6)",
+          "oklch(86% 0.01 119.6)",
+          "oklch(95% 0.01 119.6)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Sticker Stock",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(39% 0 0)",
+          "oklch(51% 0 0)",
+          "oklch(63% 0 0)",
+          "oklch(75% 0 0)",
+          "oklch(86% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Registration Black",
+        "canonical": "oklch(19.1% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(39% 0 0)",
+          "oklch(51% 0 0)",
+          "oklch(63% 0 0)",
+          "oklch(75% 0 0)",
+          "oklch(86% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(40.1% 0.011 128.8)",
+        "tonalRamp": [
+          "oklch(15% 0.011 128.8)",
+          "oklch(27% 0.011 128.8)",
+          "oklch(39% 0.011 128.8)",
+          "oklch(51% 0.011 128.8)",
+          "oklch(63% 0.011 128.8)",
+          "oklch(75% 0.011 128.8)",
+          "oklch(86% 0.011 128.8)",
+          "oklch(95% 0.011 128.8)"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink",
+        "canonical": "oklch(53.2% 0.013 128.7)",
+        "tonalRamp": [
+          "oklch(15% 0.013 128.7)",
+          "oklch(27% 0.013 128.7)",
+          "oklch(39% 0.013 128.7)",
+          "oklch(51% 0.013 128.7)",
+          "oklch(63% 0.013 128.7)",
+          "oklch(75% 0.013 128.7)",
+          "oklch(86% 0.013 128.7)",
+          "oklch(95% 0.013 128.7)"
+        ]
+      },
+      "hair": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(83.9% 0.014 124.6)",
+        "tonalRamp": [
+          "oklch(15% 0.014 124.6)",
+          "oklch(27% 0.014 124.6)",
+          "oklch(39% 0.014 124.6)",
+          "oklch(51% 0.014 124.6)",
+          "oklch(63% 0.014 124.6)",
+          "oklch(75% 0.014 124.6)",
+          "oklch(86% 0.014 124.6)",
+          "oklch(95% 0.014 124.6)"
+        ]
+      },
+      "liner-repeat": {
+        "role": "neutral",
+        "displayName": "Liner Repeat",
+        "canonical": "oklch(85.7% 0.010 212.5)",
+        "tonalRamp": [
+          "oklch(15% 0.01 212.5)",
+          "oklch(27% 0.01 212.5)",
+          "oklch(39% 0.01 212.5)",
+          "oklch(51% 0.01 212.5)",
+          "oklch(63% 0.01 212.5)",
+          "oklch(75% 0.01 212.5)",
+          "oklch(86% 0.01 212.5)",
+          "oklch(95% 0.01 212.5)"
+        ],
+        "note": "Rendered at opacity 0.22 behind all content."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Landing headline only; Archivo Expanded Black."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section and page titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Ticket titles; 26-32px variants for history rows and empty states."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Money totals and sheet counts in the landing slug and action bar (24px there)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Explanatory prose, 46-56ch."
+      },
+      "body-ui": {
+        "displayName": "Body UI",
+        "purpose": "Ticket summaries and the custody note."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels above inputs and totals, in Soft Ink."
+      },
+      "slug": {
+        "displayName": "Slug",
+        "purpose": "Uppercase prepress slug lines of real job metadata; 6pt vertical on the printed sheet."
+      },
+      "data": {
+        "displayName": "Data",
+        "purpose": "Numbers in fields; 12-13px for mint URLs, timestamps, step numbers."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-on-liner",
+        "value": "0 1px 2px rgba(20,20,20,0.08), 0 18px 40px -18px rgba(20,20,20,0.28)",
+        "purpose": "Sheet preview and on-screen print sheets; removed in print."
+      },
+      {
+        "name": "peel-flap",
+        "value": "drop-shadow(-3px -4px 5px rgba(20,20,20,0.26))",
+        "purpose": "Filter on the folded-back corner, mirrored per corner (shown for bottom-right)."
+      },
+      {
+        "name": "go-lift",
+        "value": "0 10px 22px -8px rgba(20,20,20,0.45)",
+        "purpose": "GO pill hover only, with translateY(-2px)."
+      },
+      {
+        "name": "knockout-ring",
+        "value": "0 0 0 3px #ffffff",
+        "purpose": "Separates annotation keys and leader dots (2px) from note art."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for controls, re-tile, and lifts (--ease-out)."
+      },
+      {
+        "name": "ease-peel",
+        "value": "cubic-bezier(0.22, 1.2, 0.36, 1)",
+        "purpose": "Corner peel with a slight overshoot (--ease-peel)."
+      },
+      {
+        "name": "peel",
+        "value": "--peel 420ms ease-peel",
+        "purpose": "Corner lift: 0 to 52px hover, 60px picked, 70px picked+hover (30/34/38px under 760px)."
+      },
+      {
+        "name": "retile",
+        "value": "left/top/width/height 420ms ease-out; cells scale 0.94 to 1, 380ms, 45ms stagger",
+        "purpose": "Sheet re-tile on count, paper, or design change."
+      },
+      {
+        "name": "control",
+        "value": "160ms colors / 220ms transform and shadow",
+        "purpose": "Buttons, chips, fields, nav underline."
+      },
+      {
+        "name": "log-line",
+        "value": "fade 160ms",
+        "purpose": "Job log lines printing in."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "1ms",
+        "purpose": "All transitions and animations collapse under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "landing-3col",
+        "value": "1100px"
+      },
+      {
+        "name": "job-stack",
+        "value": "900px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "GO Pill",
+      "kind": "button",
+      "refersTo": "button-go",
+      "description": "The one primary action: ink pill wrapped in a magenta die line.",
+      "html": "<button class=\"ds-btn-go\">GO BRRRR <svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button> <button class=\"ds-btn-go\" disabled>Pay</button>",
+      "css": ".ds-btn-go{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-display);white-space:nowrap;cursor:pointer;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);border:0;}.ds-btn-go{background:var(--ink,#141414);color:#fff;font-stretch:125%;font-weight:900;font-size:18px;padding:16px 32px;border-radius:999px;outline:2px solid var(--cut,#e5007d);outline-offset:5px;margin:8px;}.ds-btn-go:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(20,20,20,.45);}.ds-btn-go:active:not(:disabled){transform:translateY(0);box-shadow:none;}.ds-btn-go:focus-visible{outline-width:3px;}.ds-btn-go:disabled{background:var(--hair,#c8ccc2);color:var(--ink-soft,#464943);outline-color:var(--hair,#c8ccc2);cursor:not-allowed;}"
+    },
+    {
+      "name": "Line Button",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Secondary actions: 1.5px ink stroke pill that fills ink on hover.",
+      "html": "<button class=\"ds-btn-line\">Reprint</button>",
+      "css": ".ds-btn-line{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-display);white-space:nowrap;cursor:pointer;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);border:0;}.ds-btn-line{background:transparent;color:var(--ink,#141414);font-stretch:112%;font-weight:750;font-size:15px;padding:11px 20px;border:1.5px solid var(--ink,#141414);border-radius:999px;}.ds-btn-line:hover:not(:disabled){background:var(--ink,#141414);color:#fff;}.ds-btn-line:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Tertiary underlined text action; hover turns Die Ink.",
+      "html": "<button class=\"ds-btn-quiet\">Change the job</button>",
+      "css": ".ds-btn-quiet{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-display);white-space:nowrap;cursor:pointer;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);border:0;}.ds-btn-quiet{background:none;color:var(--ink,#141414);font-stretch:105%;font-weight:650;font-size:14px;padding:4px 2px;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em;}.ds-btn-quiet:hover{color:var(--cut-ink,#b4005f);}.ds-btn-quiet:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
+    },
+    {
+      "name": "Amount Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Paper field with a mono tabular value and a unit; ink outline on focus.",
+      "html": "<label class=\"ds-wrap\"><span class=\"ds-field-label\">Amount per note</span><span class=\"ds-field\"><input value=\"21\" inputmode=\"numeric\"><span class=\"ds-unit\">sat</span></span></label>",
+      "css": ".ds-wrap{display:block;width:180px;}.ds-field-label{display:block;font-family:var(--font-ui);font-weight:650;font-size:13px;color:var(--ink-soft,#464943);margin-bottom:6px;}.ds-field{display:flex;align-items:baseline;gap:8px;background:var(--paper,#fff);border:1.5px solid var(--ink,#141414);border-radius:8px;padding:10px 14px;outline:2px solid transparent;outline-offset:2px;transition:outline-color 160ms var(--ease-out);}.ds-field:focus-within{outline-color:var(--ink,#141414);}.ds-field input{width:100%;min-width:0;background:transparent;border:0;outline:0;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:600;font-size:20px;color:var(--ink,#141414);caret-color:var(--cut,#e5007d);}.ds-unit{font-family:var(--font-mono);font-size:12px;color:var(--ink-soft,#464943);}"
+    },
+    {
+      "name": "Label Chip",
+      "kind": "chip",
+      "refersTo": "label-chip",
+      "description": "Die-cut label for selectable items; pressed fills ink.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\"><span>mint.minibits.cash</span></button> <button class=\"ds-chip\" aria-pressed=\"false\"><span>8333.space</span></button>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper,#fff);border:1px solid var(--ink,#141414);border-radius:999px;padding:6px 12px;font-family:var(--font-mono);font-size:12px;color:var(--ink,#141414);cursor:pointer;outline:2px solid transparent;outline-offset:3px;transition:outline-color 160ms var(--ease-out),background-color 160ms var(--ease-out);}.ds-chip:hover{background:var(--liner-deep,#e6e8e1);}.ds-chip[aria-pressed=\"true\"]{background:var(--ink,#141414);color:#fff;}.ds-chip:focus-visible{outline-color:var(--cut,#e5007d);}"
+    },
+    {
+      "name": "Header Bar",
+      "kind": "nav",
+      "description": "Liner bar with Expanded Black wordmark; current page underlined in magenta.",
+      "html": "<header class=\"ds-bar\"><a class=\"ds-wordmark\" href=\"#\">CASHU BRRR</a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Print</a><a href=\"#\">History</a></nav></header>",
+      "css": ".ds-bar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 32px;border-bottom:1px solid var(--ink,#141414);background:var(--liner,#f2f3ef);}.ds-wordmark{font-family:var(--font-display);font-stretch:125%;font-weight:900;font-size:22px;letter-spacing:-.01em;color:var(--ink,#141414);text-decoration:none;}.ds-nav{display:flex;gap:28px;}.ds-nav a{font-family:var(--font-display);font-stretch:112%;font-weight:750;font-size:15px;color:var(--ink,#141414);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:border-color 160ms var(--ease-out);}.ds-nav a:hover{border-bottom-color:var(--ink,#141414);}.ds-nav a[aria-current=\"page\"]{border-bottom-color:var(--cut,#e5007d);}"
+    },
+    {
+      "name": "Custody Note",
+      "kind": "card",
+      "refersTo": "custody-note",
+      "description": "Plain statement of where the notes live; paper with an ink stroke.",
+      "html": "<div class=\"ds-custody\"><p class=\"ds-custody-title\">These notes are real money.</p><p>They are stored only in this browser. Download the QR backup before you clear your browser data.</p></div>",
+      "css": ".ds-custody{border:1.5px solid var(--ink,#141414);border-radius:8px;padding:16px 18px;background:var(--paper,#fff);font-family:var(--font-ui);font-size:15px;line-height:1.5;color:var(--ink,#141414);max-width:380px;}.ds-custody-title{font-family:var(--font-display);font-stretch:112%;font-weight:850;font-size:17px;margin:0 0 6px;}.ds-custody p{margin:0;}"
+    },
+    {
+      "name": "Peel Note",
+      "kind": "custom",
+      "refersTo": "peel-note",
+      "description": "Signature: a sticker on the liner with a die line; hover peels the corner, picked burns the line.",
+      "html": "<div class=\"ds-peel ds-int\"><div class=\"ds-art\"></div><div class=\"ds-flap-s\"><div class=\"ds-flap\"></div></div></div> <div class=\"ds-peel ds-picked ds-int\"><div class=\"ds-art\"></div><div class=\"ds-flap-s\"><div class=\"ds-flap\"></div></div></div>",
+      "css": "@property --peel{syntax:'<length>';inherits:true;initial-value:0px;}.ds-peel{--peel:0px;position:relative;display:inline-block;width:220px;aspect-ratio:2/1;margin:14px;border-radius:10px;outline:1px solid rgba(229,0,125,.55);outline-offset:6px;transition:--peel 420ms cubic-bezier(.22,1.2,.36,1),outline-color 200ms cubic-bezier(.16,1,.3,1),transform 300ms cubic-bezier(.16,1,.3,1);}.ds-art{position:absolute;inset:0;border-radius:10px;background:linear-gradient(120deg,#e4690a,#f4b23e);clip-path:polygon(0 0,100% 0,100% calc(100% - var(--peel)),calc(100% - var(--peel)) 100%,0 100%);}.ds-flap-s{position:absolute;right:0;bottom:0;width:var(--peel);height:var(--peel);filter:drop-shadow(-3px -4px 5px rgba(20,20,20,.26));}.ds-flap{width:100%;height:100%;clip-path:polygon(0 0,100% 0,0 100%);background:linear-gradient(135deg,#fff 30%,#dcded8 100%);}.ds-int:hover{--peel:52px;transform:translateY(-2px);}.ds-picked{--peel:60px;outline:2.5px solid var(--cut,#e5007d);}.ds-picked.ds-int:hover{--peel:70px;}"
+    },
+    {
+      "name": "Crop Marks Frame",
+      "kind": "custom",
+      "description": "Prepress frame: 22px L-shaped crop marks inset 24px, registration target top center.",
+      "html": "<div class=\"ds-frame\"><span class=\"ds-m ds-tl\"></span><span class=\"ds-m ds-tr\"></span><span class=\"ds-m ds-bl\"></span><span class=\"ds-m ds-br\"></span><span class=\"ds-reg\"></span><p class=\"ds-slug\">Specimen sheet · 6 notes, 1 sheet · Die lines don't print</p></div>",
+      "css": ".ds-frame{position:relative;width:420px;height:220px;background:var(--liner,#f2f3ef);}.ds-m{position:absolute;width:22px;height:22px;border:0 solid var(--ink,#141414);}.ds-tl{left:24px;top:24px;border-right-width:1px;border-bottom-width:1px;}.ds-tr{right:24px;top:24px;border-left-width:1px;border-bottom-width:1px;}.ds-bl{left:24px;bottom:24px;border-right-width:1px;border-top-width:1px;}.ds-br{right:24px;bottom:24px;border-left-width:1px;border-top-width:1px;}.ds-reg{position:absolute;top:26px;left:50%;width:18px;height:18px;margin-left:-9px;border:1px solid var(--ink,#141414);border-radius:50%;background:linear-gradient(var(--ink,#141414),var(--ink,#141414)) center/1px 30px no-repeat,linear-gradient(var(--ink,#141414),var(--ink,#141414)) center/30px 1px no-repeat;}.ds-slug{position:absolute;left:56px;bottom:52px;margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.6;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft,#464943);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Kiss-Cut Sheet",
+    "overview": "Every screen is a sheet of die-cut stickers on a backing liner. The real note designs are the stickers; everything else is prepress: registration-black ink, hairline rules, crop and registration marks, slug lines of job metadata in a monospace, and CutContour magenta die lines that show where the knife will go. The organizer sees the sheet they are about to print as the page itself, with amount, count, total, and mint set into the bottom slug.\n\nThe chrome is two inks on a pale gloss liner: black and magenta. Full color belongs only to the note artwork, which is fixed and is framed by the app, never restyled. Magenta is the one signal. Faint die lines sit around every cut edge at rest; one element per screen burns (a thicker, fully saturated die line) to mark the focus. Display type is Archivo pushed to its widest and heaviest, so headlines and money figures read like the title stamped on a print job.\n\nDensity is loose on Persuade surfaces (the landing sheet fills the first viewport) and tighter on Operate surfaces (print job, history), which are made of 1px ink rules, a sticky job ticket, and a pinned action bar. Motion has one job, the peel: a note's corner lifts off the liner on hover, and the sheet re-tiles when the count changes.",
+    "keyCharacteristics": [
+      "Gloss liner ground with a faint, rotated CASHU BRRR repeat printed on it.",
+      "Two-ink chrome (registration black and CutContour magenta); the notes carry all the color.",
+      "Magenta is always a line, never a surface: die lines, focus rings, the current-page underline.",
+      "Crop marks, a registration target, and slug lines frame each full-page surface.",
+      "Archivo Expanded Black for display and money; Martian Mono for slugs, data, and figures in fields.",
+      "Signature interaction: the peel (corner lift, re-tile, job states printed as slug lines)."
+    ],
+    "rules": [
+      {
+        "name": "The One Burn Rule",
+        "body": "Each screen has one burning die line: the picked note, the GO pill, or the invoice QR label. Everything else stays at resting alpha or in ink.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Ink Rule",
+        "body": "Chrome uses only black and magenta on liner and paper. Color comes from the note artwork and nowhere else.",
+        "section": "colors"
+      },
+      {
+        "name": "The Line, Not Fill Rule",
+        "body": "Magenta is drawn as a stroke or outline. The only magenta fills in the build are text selection and the 8px error mark in the job log.",
+        "section": "colors"
+      },
+      {
+        "name": "The Expanded Black Rule",
+        "body": "Headlines, the wordmark, button labels on the GO pill, and money totals are Archivo at 118-125% width. Never set display text at normal width.",
+        "section": "typography"
+      },
+      {
+        "name": "The Slug Rule",
+        "body": "Slug lines carry real job metadata (sheet N of M, paper, cell size, mint, time) and sit in margins, below sheets, or in the footer. They are never decorative and never sit above a heading as a label.",
+        "section": "typography"
+      },
+      {
+        "name": "The Physical Depth Rule",
+        "body": "A shadow means paper lifting off paper. If an element is not a sheet, a peeled corner, or the pressed-for-action pill, it is flat.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep one burning magenta die line per screen (2.5px, full `cut`) and leave every other die line at 55-75% alpha.",
+      "Do set headlines, the wordmark, GO pill labels, and money totals in Archivo at 118-125% width and 850-900 weight.",
+      "Do use Martian Mono slug lines (11px, uppercase, 0.06em) for real job metadata, placed in margins, under sheets, and in footers.",
+      "Do frame full-page surfaces with crop marks (22px, 1px ink, inset 24px) and, on the landing and note view, a registration target top center.",
+      "Do use 1px ink rules for structure and 1px Hairline for dividers inside panels.",
+      "Do show die lines on screen and hide them in print; printed sheets carry only pure black cut marks and the vertical slug.",
+      "Do put the peel on anything you can pick, lifting the corner its series names.",
+      "Do write button labels as the action and amount (\"Pay 126 sat\", \"Print 2 sheets\")."
+    ],
+    "donts": [
+      "Don't fill buttons, panels, or backgrounds with magenta; magenta is a line, with text selection and the job-log error mark as the only fills.",
+      "Don't add color to chrome; the notes are the only full color on any screen.",
+      "Don't mark control selection (chips, thumbnails, segmented options, field focus) in magenta; selection in controls is ink, and only a picked note on the sheet burns.",
+      "Don't use slug lines as labels above headings.",
+      "Don't use hard offset shadows or shadows on flat chrome; depth is only the sheet, the peeled corner, and the GO pill's lift.",
+      "Don't restyle, crop, recolor, or re-typeset the note artwork.",
+      "Don't print die lines."
+    ]
+  }
+}

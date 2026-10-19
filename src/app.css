@@ -1,73 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Ojuju:wght@200..800&family=Sedgwick+Ave&display=swap');
-
-/* Cabinet Grotesk Font Family */
+/* Used by the Sovereign note artwork */
 @font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Thin.woff') format('woff');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Extralight.woff') format('woff');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Extrabold.woff') format('woff');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cabinet Grotesk';
-  src: url('/fonts/CabinetGrotesk-Black.woff') format('woff');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Porter Sans Inline Block';
-  src: url('/fonts/porter-sans-inline-block-webfont.woff') format('woff');
+  font-family: "Porter Sans Inline Block";
+  src: url("/fonts/porter-sans-inline-block-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -77,439 +11,292 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Animated Gradient Background */
-body {
-  background-image: linear-gradient(to right, #ffefba, #ffffff);
-  background-size: 200% 100%;
-  animation: gradientShift 20s ease infinite;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+/* ------------------------------------------------------------------ */
+/* Kiss-cut sheet: liner, registration ink, CutContour magenta         */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --liner: #f2f3ef;
+  --liner-deep: #e6e8e1;
+  --paper: #ffffff;
+  --ink: #141414;
+  --ink-soft: #464943;
+  --ink-faint: #6a6e66;
+  --hair: #c8ccc2;
+  --repeat: #c9d2d4;
+  --cut: #e5007d;
+  --cut-ink: #b4005f;
+
+  --font-display: "Archivo Variable", "Archivo", system-ui, sans-serif;
+  --font-ui: "Archivo Variable", "Archivo", system-ui, sans-serif;
+  --font-mono: "Martian Mono", ui-monospace, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-peel: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --radius-note: 10px;
+  --gutter: clamp(16px, 4.4vw, 64px);
+
+  color-scheme: light;
 }
 
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+@property --peel {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
 }
 
-/* Ensure the gradient covers the entire viewport */
 html {
-  min-height: 100vh;
-  background: inherit;
+  background: var(--liner);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scrollbar-color: var(--ink-faint) var(--liner-deep);
+}
+
+body {
+  min-height: 100svh;
+  background: var(--liner);
+  caret-color: var(--cut);
   overflow-x: hidden;
 }
 
-/* Ensure fullscreen print mode fills the entire viewport */
-#svelte {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+::selection {
+  background: var(--cut);
+  color: #fff;
 }
 
-/* Prevent any gray space at the bottom */
-.fullscreen-print {
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, #FFFCF6, #FEF7E0);
+:focus-visible {
+  outline: 2px solid var(--cut);
+  outline-offset: 3px;
 }
 
-/* Input placeholder styling */
-input::placeholder {
-  color: #4E4318;
-  opacity: 0.5;
-  font-weight: 400;
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
 }
 
-/* Cabinet Grotesk for print steps */
-.print-steps {
-  font-family: 'Cabinet Grotesk', sans-serif;
+/* ------------------------------------------------------------------ */
+/* Type                                                                */
+/* ------------------------------------------------------------------ */
+
+.display {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  text-wrap: balance;
 }
 
-/* Prevent horizontal overflow and ensure proper SVG scaling */
-* {
-  box-sizing: border-box;
+.heading {
+  font-family: var(--font-display);
+  font-stretch: 118%;
+  font-weight: 850;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  text-wrap: balance;
 }
 
-/* Ensure SVG notes scale properly within containers */
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
+.slug {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
 
-/* Prevent horizontal scrollbars */
-.overflow-y-auto {
-  overflow-x: hidden !important;
+.data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
-/* Ensure note containers don't overflow */
-.note-container {
-  max-width: 100%;
-  overflow: hidden;
-}
+/* ------------------------------------------------------------------ */
+/* Controls                                                            */
+/* ------------------------------------------------------------------ */
 
-/* Custom scrollbar styling */
-.overflow-y-auto::-webkit-scrollbar {
-  width: 8px;
-}
-
-.overflow-y-auto::-webkit-scrollbar-track {
-  background: #F0E0B0;
-  border-radius: 4px;
-}
-
-.overflow-y-auto::-webkit-scrollbar-thumb {
-  background: #CD8A18;
-  border-radius: 4px;
-}
-
-.overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background: #B0791C;
-}
-
-/* Elegant hover and selection states for home page */
-/* Remove default text selection highlighting */
-* {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Allow text selection only in specific areas where it makes sense */
-p, h1, h2, h3, h4, h5, h6, span, div {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-/* Elegant button hover state - subtle color transition instead of scaling */
-.btn-elegant {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-elegant:hover {
-  background-color: #D15A09 !important;
-  border-color: #8F3D04 !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(228, 105, 10, 0.3);
-}
-
-.btn-elegant:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(228, 105, 10, 0.2);
-}
-
-/* Elegant sponsor card hover state */
-.sponsor-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.sponsor-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.sponsor-card:hover::before {
-  left: 100%;
-}
-
-.sponsor-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* Elegant post-it card hover state */
-.postit-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.postit-card:hover {
-  transform: translateY(-3px) rotate(1deg);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  filter: brightness(1.05);
-}
-
-/* Subtle focus states for accessibility */
-.btn-elegant:focus,
-.sponsor-card:focus,
-.postit-card:focus {
-  outline: 2px solid #CD8A18;
-  outline-offset: 2px;
-}
-
-/* Remove focus outline for mouse users */
-.btn-elegant:focus:not(:focus-visible),
-.sponsor-card:focus:not(:focus-visible),
-.postit-card:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Elegant hover states for note template selection page */
-/* Template selection card hover state */
-.template-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.template-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(228, 105, 10, 0.05), rgba(228, 105, 10, 0.02));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: 0.75rem;
-}
-
-.template-card:hover::before {
-  opacity: 1;
-}
-
-.template-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  border-color: rgba(228, 105, 10, 0.3) !important;
-}
-
-/* Selected template card state */
-.template-card.selected {
-  border-color: #E4690A !important;
-  box-shadow: 0 8px 25px rgba(228, 105, 10, 0.15);
-  transform: translateY(-1px);
-}
-
-.template-card.selected::after {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(135deg, #E4690A, #CD8A18);
-  border-radius: 0.875rem;
-  z-index: -1;
-  opacity: 0.3;
-}
-
-/* Elegant continue button hover state */
-.btn-continue {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-continue::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.btn-continue:hover::before {
-  left: 100%;
-}
-
-.btn-continue:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(228, 105, 10, 0.3);
-}
-
-.btn-continue:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(228, 105, 10, 0.2);
-}
-
-/* Focus states for template selection */
-.template-card:focus,
-.btn-continue:focus {
-  outline: 2px solid #CD8A18;
-  outline-offset: 2px;
-}
-
-.template-card:focus:not(:focus-visible),
-.btn-continue:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Elegant history card styling */
-.history-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.history-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(228, 105, 10, 0.02), rgba(228, 105, 10, 0.01));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: 0.75rem;
-}
-
-.history-card:hover::before {
-  opacity: 1;
-}
-
-.history-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  border-color: rgba(228, 105, 10, 0.3) !important;
-}
-
-/* Elegant badge styling - replacing bright colors with sophisticated tones */
-.badge-elegant {
+.btn-go,
+.btn-line,
+.btn-quiet {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out),
+    background-color 160ms var(--ease-out),
+    color 160ms var(--ease-out),
+    outline-color 160ms var(--ease-out);
 }
 
-.badge-elegant.quantity {
-  background-color: #F8F4E8;
-  color: #8B7355;
-  border-color: #E6D7B8;
+/* The one primary action: ink pill with a die-cut line around it */
+.btn-go {
+  background: var(--ink);
+  color: #fff;
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  outline: 2px solid var(--cut);
+  outline-offset: 5px;
 }
-
-.badge-elegant.quantity:hover {
-  background-color: #F0E8D0;
-  transform: translateY(-1px);
+.btn-go:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -8px rgba(20, 20, 20, 0.45);
 }
-
-.badge-elegant.amount {
-  background-color: #F0F4F8;
-  color: #4A5568;
-  border-color: #CBD5E0;
-}
-
-.badge-elegant.amount:hover {
-  background-color: #E2E8F0;
-  transform: translateY(-1px);
-}
-
-.badge-elegant.total {
-  background-color: #F7FAFC;
-  color: #2D3748;
-  border-color: #A0AEC0;
-  font-weight: 700;
-}
-
-.badge-elegant.total:hover {
-  background-color: #EDF2F7;
-  transform: translateY(-1px);
-}
-
-.badge-elegant.donation {
-  background-color: #FDF2F8;
-  color: #702459;
-  border-color: #FBB6CE;
-}
-
-.badge-elegant.donation:hover {
-  background-color: #FCE7F3;
-  transform: translateY(-1px);
-}
-
-/* Elegant template info box */
-.template-info {
-  background: linear-gradient(135deg, #FFF9F0, #FFF5E6);
-  border: 1px solid #F0E0B0;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  transition: all 0.2s ease;
-}
-
-.template-info:hover {
-  background: linear-gradient(135deg, #FFF5E6, #FFF0D6);
-  border-color: #E6D7B8;
-  transform: translateY(-1px);
-}
-
-/* Elegant mint info section */
-.mint-info {
-  border-top: 1px solid rgba(228, 105, 10, 0.15);
-  padding-top: 0.75rem;
-  transition: all 0.2s ease;
-}
-
-.mint-info:hover {
-  border-color: rgba(228, 105, 10, 0.25);
-}
-
-/* Elegant reprint button */
-.btn-reprint {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-reprint::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.btn-reprint:hover::before {
-  left: 100%;
-}
-
-.btn-reprint:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(228, 105, 10, 0.3);
-}
-
-.btn-reprint:active {
+.btn-go:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(228, 105, 10, 0.2);
+  box-shadow: none;
+}
+.btn-go:focus-visible {
+  outline-width: 3px;
+  outline-offset: 5px;
+}
+.btn-go:disabled {
+  background: var(--hair);
+  color: var(--ink-soft);
+  outline-color: var(--hair);
+  cursor: not-allowed;
 }
 
-/* Focus states for history elements */
-.history-card:focus,
-.btn-reprint:focus {
-  outline: 2px solid #CD8A18;
+.btn-line {
+  background: transparent;
+  color: var(--ink);
+  font-stretch: 112%;
+  font-weight: 750;
+  font-size: 15px;
+  padding: 11px 20px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+}
+.btn-line:hover:not(:disabled) {
+  background: var(--ink);
+  color: #fff;
+}
+.btn-line:disabled {
+  color: var(--ink-faint);
+  border-color: var(--hair);
+  cursor: not-allowed;
+}
+
+.btn-quiet {
+  background: none;
+  color: var(--ink);
+  font-stretch: 105%;
+  font-weight: 650;
+  font-size: 14px;
+  padding: 4px 2px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+.btn-quiet:hover:not(:disabled) {
+  color: var(--cut-ink);
+}
+.btn-quiet:disabled {
+  color: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+.field-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-weight: 650;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.field {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  padding: 10px 14px;
+  transition: outline-color 160ms var(--ease-out);
+  outline: 2px solid transparent;
   outline-offset: 2px;
 }
+.field:focus-within {
+  outline-color: var(--ink);
+}
+.field input {
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--ink);
+}
+.field input::placeholder {
+  color: var(--ink-faint);
+}
+.field .unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.field input::-webkit-outer-spin-button,
+.field input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.field input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
 
-.history-card:focus:not(:focus-visible),
-.btn-reprint:focus:not(:focus-visible) {
-  outline: none;
+/* A die-cut label: chips, small selectable items */
+.label-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    outline-color 160ms var(--ease-out),
+    background-color 160ms var(--ease-out);
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+}
+.label-chip:hover {
+  background: var(--liner-deep);
+}
+.label-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+}
+.label-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
 }

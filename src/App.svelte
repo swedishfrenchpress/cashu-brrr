@@ -1,91 +1,71 @@
 <script lang="ts">
-    import { getDecodedToken, getEncodedTokenV4 } from "@cashu/cashu-ts";
-  import "./app.css";
-    import ComicNote from "./lib/ComicNote.svelte";
-    import SovereignNote from "./lib/SovereignNote.svelte";
-    import ChaumNote from "./lib/ChaumNote.svelte";
-
+  import { getDecodedToken } from "@cashu/cashu-ts";
   import Main from "./lib/Main.svelte";
+  import PrintJob from "./lib/PrintJob.svelte";
+  import History from "./lib/History.svelte";
   import PrintPage from "./lib/PrintPage.svelte";
-  import FullscreenPrint from "./lib/FullscreenPrint.svelte";
-    import { getAmountForTokenSet } from "./lib/utils";
-  
-  // Check if we're in print mode
-  const isPrintMode = $derived(window.location.search.includes('print=true'));
-  
-  // Check if we're in fullscreen print mode
-  let currentHash = $state(window.location.hash);
-  const isFullscreenPrintMode = $derived(currentHash === '#print');
-  
-  // Debug logging
-  console.log('Current hash:', currentHash);
-  console.log('isFullscreenPrintMode:', isFullscreenPrintMode);
-  
-  // Listen for hash changes
-  $effect(() => {
-    const handleHashChange = () => {
-      currentHash = window.location.hash;
-      console.log('Hash changed to:', currentHash);
-    };
-    
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  });
-  
-  // Only process token URLs if we're not in fullscreen print mode
-  const urlParams = $derived(isFullscreenPrintMode ? [] : currentHash.slice(1).split('/'));
-  const token = $derived.by(()=>{
-    if (isFullscreenPrintMode) return undefined;
-    const tokenString = urlParams[0];
-    try {
-      return getDecodedToken(tokenString??"")
-    } catch (error) {
-      return undefined
-    } })
-  const template = $derived.by(()=>{
-    if (isFullscreenPrintMode) return 5;
-    const param = urlParams[1];
-    if (!param) return 5;
-    const design = Number.parseInt(param)
-    const d = isNaN(design) ? 5 : design
-    return d
-  })
-  
-</script>
+  import NoteView from "./lib/NoteView.svelte";
+  import LinerPrint from "./lib/ui/LinerPrint.svelte";
+  import { getAmountForTokenSet } from "./lib/utils";
+  import { encodeToken } from "./lib/job";
 
+  // ?print=true is the print tab; everything else routes on the hash
+  const isPrintMode = window.location.search.includes("print=true");
+
+  let currentHash = $state(window.location.hash);
+  $effect(() => {
+    const onHashChange = () => {
+      currentHash = window.location.hash;
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  });
+
+  const route = $derived(currentHash === "#print" ? "print" : currentHash === "#history" ? "history" : "other");
+
+  // A shared note link: #<token>/<template>
+  const urlParams = $derived(currentHash.slice(1).split("/"));
+  const token = $derived.by(() => {
+    if (route !== "other" || !urlParams[0]) return undefined;
+    try {
+      return getDecodedToken(urlParams[0]);
+    } catch {
+      return undefined;
+    }
+  });
+  const template = $derived.by(() => {
+    const design = Number.parseInt(urlParams[1] ?? "");
+    return Number.isNaN(design) ? 5 : design;
+  });
+</script>
 
 {#if isPrintMode}
   <PrintPage />
-{:else if isFullscreenPrintMode}
-  <FullscreenPrint />
-{:else if token}
-<div>
-{#if template === 6}
-  <SovereignNote
-    denomination={getAmountForTokenSet(token.proofs)}
-    mintUrl={token.mint}
-    token={getEncodedTokenV4(token)}
-    unit={token.unit??"sat"}
-  />
-{:else if template === 7}
-  <ChaumNote
-    denomination={getAmountForTokenSet(token.proofs)}
-    mintUrl={token.mint}
-    token={getEncodedTokenV4(token)}
-    unit={token.unit??"sat"}
-  />
 {:else}
-  <ComicNote
-    design={template}
-    denomination={getAmountForTokenSet(token.proofs)}
-    mintUrl={token.mint}
-    token={getEncodedTokenV4(token)}
-    unit={token.unit??"sat"}
-    isPrint={false}
-  />
+  <LinerPrint />
+  <div class="app">
+    {#if route === "print"}
+      <PrintJob />
+    {:else if route === "history"}
+      <History />
+    {:else if token}
+      <NoteView
+        denomination={getAmountForTokenSet(token.proofs)}
+        mintUrl={token.mint}
+        token={encodeToken(token)}
+        unit={token.unit ?? "sat"}
+        {template}
+      />
+    {:else}
+      <Main />
+    {/if}
+  </div>
 {/if}
-</div>
-{:else}
-  
-<Main></Main>
-{/if}
+
+<style>
+  .app {
+    position: relative;
+    z-index: 1;
+  }
+</style>
