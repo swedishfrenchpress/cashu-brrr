@@ -32,17 +32,10 @@
   --font-mono: "Martian Mono", ui-monospace, monospace;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-peel: cubic-bezier(0.22, 1.2, 0.36, 1);
   --radius-note: 10px;
   --gutter: clamp(16px, 4.4vw, 64px);
 
   color-scheme: light;
-}
-
-@property --peel {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 0px;
 }
 
 html {
@@ -96,15 +89,6 @@ a {
   letter-spacing: -0.015em;
   line-height: 1;
   text-wrap: balance;
-}
-
-.slug {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.6;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
 }
 
 .data {

@@ -7,16 +7,12 @@ export type NoteStyle = {
   colorCode?: string;
 };
 
-export type PeelCorner = "tl" | "tr" | "bl" | "br";
-
 export type NoteFamily = {
   type: NoteType;
   name: string;
   styles: NoteStyle[];
   /** width / height of the artwork, used to size print cells */
   aspect: number;
-  /** the corner that can lift without covering the QR or the amount */
-  peelCorner: PeelCorner;
 };
 
 // Shapes stored in history and print data; kept compatible with older prints.
@@ -56,11 +52,11 @@ const customStyles: NoteStyle[] = [
 ];
 
 export const FAMILIES: NoteFamily[] = [
-  { type: "chaum", name: "Chaum Note", aspect: 2216 / 1147, peelCorner: "tl", styles: [{ id: "chaum-1", name: "Chaum Note" }] },
-  { type: "comic", name: "Bitpopart", aspect: 420.33 / 214.49, peelCorner: "br", styles: comicStyles },
-  { type: "sovereign", name: "Sovereign", aspect: 3500 / 1672, peelCorner: "tr", styles: sovereignStyles },
-  { type: "meadows", name: "Mr. Meadows", aspect: 595 / 239, peelCorner: "bl", styles: [{ id: "meadows-1", name: "Mr. Meadows" }] },
-  { type: "custom", name: "Custom Note", aspect: 534 / 279, peelCorner: "tr", styles: customStyles },
+  { type: "chaum", name: "Chaum Note", aspect: 2216 / 1147, styles: [{ id: "chaum-1", name: "Chaum Note" }] },
+  { type: "comic", name: "Bitpopart", aspect: 420.33 / 214.49, styles: comicStyles },
+  { type: "sovereign", name: "Sovereign", aspect: 3500 / 1672, styles: sovereignStyles },
+  { type: "meadows", name: "Mr. Meadows", aspect: 595 / 239, styles: [{ id: "meadows-1", name: "Mr. Meadows" }] },
+  { type: "custom", name: "Custom Note", aspect: 534 / 279, styles: customStyles },
 ];
 
 export const familyOf = (type: NoteType | undefined): NoteFamily =>
@@ -131,8 +127,7 @@ export const sheetLayout = (family: NoteFamily, paper: PaperSize) => {
   const y0 = (page.h - gridH) / 2;
   const gap = 1.5;
   const lenY = Math.max(2, Math.min(5, y0 - gap - 1.5));
-  // The side margin also carries the sheet slug (about 3-6 mm from the edge); marks start after it
-  const lenX = Math.max(2, Math.min(5, x0 - gap - 7));
+  const lenX = Math.max(2, Math.min(5, x0 - gap - 1.5));
 
   const marks: CutMark[] = [];
   for (let c = 0; c <= cols; c++) {

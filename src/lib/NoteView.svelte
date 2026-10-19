@@ -1,7 +1,5 @@
 <script lang="ts">
   import NoteArt from "./NoteArt.svelte";
-  import PeelNote from "./ui/PeelNote.svelte";
-  import CropMarks from "./ui/CropMarks.svelte";
   import { shortMint } from "./job";
   import { familyOf, type NoteFamily, type NoteStyle } from "./templates";
   import { fmtNum } from "./format";
@@ -28,26 +26,23 @@
 </script>
 
 <main class="view">
-  <CropMarks inset={24} registration />
   <div class="note">
-    <PeelNote>
-      <NoteArt
-        type={design.family.type}
-        design={design.style.design}
-        colorCode={design.style.colorCode}
-        {denomination}
-        {mintUrl}
-        {token}
-        {unit}
-      />
-    </PeelNote>
+    <NoteArt
+      type={design.family.type}
+      design={design.style.design}
+      colorCode={design.style.colorCode}
+      {denomination}
+      {mintUrl}
+      {token}
+      {unit}
+    />
   </div>
   <div class="facts">
     <p class="amount heading">{fmt(denomination)} {unit}</p>
     <p class="how">
       Scan the QR with a Cashu wallet to claim it. Whoever claims it first gets the sats; after that, this note is spent.
     </p>
-    <p class="slug">Issued by {shortMint(mintUrl)}</p>
+    <p class="issuer">Issued by <span class="data">{shortMint(mintUrl)}</span></p>
     <a class="btn-quiet" href="/#">Print your own ecash notes</a>
   </div>
 </main>
@@ -64,6 +59,8 @@
   }
   .note {
     width: min(100%, 860px);
+    border-radius: var(--radius-note);
+    overflow: hidden;
   }
   .facts {
     display: grid;
@@ -74,6 +71,13 @@
   }
   .amount {
     font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+  .issuer {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .issuer .data {
+    font-size: 13px;
   }
   .how {
     font-size: 17px;

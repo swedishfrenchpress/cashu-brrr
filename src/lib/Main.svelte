@@ -3,15 +3,12 @@
   import Sponsor from "./Sponsor.svelte";
   import { SPONSORS } from "./sponsors";
   import NoteArt from "./NoteArt.svelte";
-  import PeelNote from "./ui/PeelNote.svelte";
-  import CropMarks from "./ui/CropMarks.svelte";
   import { SUGGESTED_MINTS } from "./job";
   import { fmtNum } from "./format";
   import {
     familyOf,
     styleRef,
     templateRef,
-    NOTES_PER_SHEET,
     SPECIMEN_TOKEN,
     type NoteFamily,
     type NoteStyle,
@@ -52,7 +49,6 @@
     amountValue > 0 && countValue > 0 && String(amountValue) === amount.trim() && String(countValue) === count.trim(),
   );
   const total = $derived(valid ? amountValue * countValue : 0);
-  const sheets = $derived(valid ? Math.ceil(countValue / NOTES_PER_SHEET) : 1);
   const specimenAmount = $derived(amountValue > 0 ? amountValue : 21);
 
   const fmt = fmtNum;
@@ -72,8 +68,6 @@
 <main>
   <!-- First viewport: the specimen sheet -->
   <section class="hero">
-    <CropMarks inset={24} registration />
-
     <header class="hero-head">
       <h1 class="display">Print your own ecash notes.</h1>
       <div class="brand">
@@ -89,34 +83,26 @@
     <div class="sheet" role="group" aria-label="Pick a design">
       {#each sheet as s, i}
         <div class="cell">
-          {#if i === 0}
-            <span class="callout" style="left: 79%;" aria-hidden="true">QR = the money</span>
-            <span class="leader" style="left: 79%; height: calc(46% + 12px);" aria-hidden="true"></span>
-            <span class="callout" style="left: 9%;" aria-hidden="true">Amount</span>
-            <span class="leader" style="left: 9%; height: calc(72% + 12px);" aria-hidden="true"></span>
-          {/if}
           <button
             class="pick"
             aria-pressed={picked === i}
             aria-label="{s.family.name}: {s.style.name}"
             onclick={() => (picked = i)}
           >
-            <PeelNote picked={picked === i} interactive corner={s.family.peelCorner}>
-              <NoteArt
-                type={s.family.type}
-                design={s.style.design}
-                colorCode={s.style.colorCode}
-                denomination={specimenAmount}
-                mintUrl={SUGGESTED_MINTS[0]}
-                token={SPECIMEN_TOKEN}
-              />
-            </PeelNote>
+            <NoteArt
+              type={s.family.type}
+              design={s.style.design}
+              colorCode={s.style.colorCode}
+              denomination={specimenAmount}
+              mintUrl={SUGGESTED_MINTS[0]}
+              token={SPECIMEN_TOKEN}
+            />
           </button>
         </div>
       {/each}
     </div>
 
-    <form class="job-slug" onsubmit={(e) => { e.preventDefault(); go(); }}>
+    <form class="job-bar" onsubmit={(e) => { e.preventDefault(); go(); }}>
       <div class="fields">
         <label class="slot">
           <span class="field-label">Amount per note</span>
@@ -142,32 +128,22 @@
         GO BRRRR <ArrowRight size={22} strokeWidth={2.5} aria-hidden="true" />
       </button>
     </form>
-
-    <p class="slug meta">
-      Specimen sheet · Your pick: {sheet[picked].family.name} · {valid ? fmt(countValue) : "–"} notes, {sheets}
-      {sheets === 1 ? "sheet" : "sheets"} · Die lines don't print
-    </p>
   </section>
 
   <!-- What a note is -->
   <section class="anatomy">
     <h2 class="heading section-title">What you're handing out</h2>
     <div class="anatomy-grid">
-      <figure class="specimen">
-        <PeelNote>
-          <NoteArt type="chaum" denomination={specimenAmount} mintUrl={SUGGESTED_MINTS[0]} token={SPECIMEN_TOKEN} />
-        </PeelNote>
-        <span class="key" style="left: 64.6%; top: 22.6%;" aria-hidden="true">A</span>
-        <span class="key" style="left: 22%; top: 74%;" aria-hidden="true">B</span>
-        <figcaption class="slug">Chaum Note · specimen, not money</figcaption>
-      </figure>
+      <div class="specimen">
+        <NoteArt type="chaum" denomination={specimenAmount} mintUrl={SUGGESTED_MINTS[0]} token={SPECIMEN_TOKEN} />
+      </div>
       <dl class="notes-on-notes">
         <div>
-          <dt><span class="key-inline" aria-hidden="true">A</span>The QR is the money.</dt>
+          <dt>The QR is the money.</dt>
           <dd>A Cashu wallet scans it and claims the sats. Whoever scans first gets them; after that the note is spent and can't be reused.</dd>
         </div>
         <div>
-          <dt><span class="key-inline" aria-hidden="true">B</span>The amount is fixed at print.</dt>
+          <dt>The amount is fixed at print.</dt>
           <dd>Every note on a sheet carries the same amount, paid for up front with one Lightning invoice.</dd>
         </div>
         <div>
@@ -187,22 +163,18 @@
     <h2 class="heading section-title">From invoice to scissors</h2>
     <ol class="steps">
       <li>
-        <span class="step-n data">1</span>
         <span class="step-title heading">Pick a design.</span>
         <span class="step-note">Five series, from the Chaum Note to Bitpopart, Sovereign, and Mr. Meadows.</span>
       </li>
       <li>
-        <span class="step-n data">2</span>
         <span class="step-title heading">Set amount &times; count.</span>
         <span class="step-note">Any amount in sats. Six notes fit on one A4 or Letter sheet, each about the size of a €10 note.</span>
       </li>
       <li>
-        <span class="step-n data">3</span>
         <span class="step-title heading">Pay one invoice.</span>
         <span class="step-note">Scan the Lightning invoice with your phone. No account, no sign-up.</span>
       </li>
       <li>
-        <span class="step-n data">4</span>
         <span class="step-title heading">Print, cut, hand out.</span>
         <span class="step-note">Cut along the marks. Keep the QR backup until every note is in someone's hand.</span>
       </li>
@@ -227,7 +199,7 @@
   {/if}
 
   <footer class="foot">
-    <p class="slug">Cashu Brrr · Print your own ecash notes · Your notes stay in this browser</p>
+    <p class="foot-mark">CASHU BRRR</p>
     <p class="foot-links">
       <a href="https://cashu.space" target="_blank" rel="noopener noreferrer">Cashu</a>
       <a href="https://github.com/gandlafbtc/cashu-brrr" target="_blank" rel="noopener noreferrer">Source</a>
@@ -273,8 +245,7 @@
   }
   .tagline {
     margin-top: 8px;
-    font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.5;
     color: var(--ink-soft);
     max-width: 22ch;
@@ -307,51 +278,24 @@
     display: block;
     width: 100%;
     border-radius: var(--radius-note);
+    overflow: hidden;
     cursor: pointer;
+    outline: 2.5px solid transparent;
+    outline-offset: 5px;
+    transition: outline-color 160ms var(--ease-out);
+  }
+  .pick[aria-pressed="true"] {
+    outline-color: var(--cut);
   }
   .pick:focus-visible {
-    outline-offset: 10px;
+    outline-color: var(--ink);
   }
 
-  .callout {
-    position: absolute;
-    top: -30px;
-    font-family: var(--font-mono);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 1;
-  }
-  .leader {
-    position: absolute;
-    top: -12px;
-    width: 1px;
-    background: var(--ink);
-    pointer-events: none;
-    z-index: 1;
-  }
-  .leader::after {
-    content: "";
-    position: absolute;
-    left: -3px;
-    bottom: -3px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--ink);
-    box-shadow: 0 0 0 2px var(--paper);
-  }
-
-  .job-slug {
+  .job-bar {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 28px;
-    border-top: 1px solid var(--ink);
-    padding-top: 22px;
     margin-top: auto;
   }
   .fields {
@@ -385,9 +329,6 @@
     font-size: clamp(20px, 1.9vw, 26px);
     padding: 18px 36px;
   }
-  .meta {
-    margin-top: -8px;
-  }
 
   /* ---------------- below the fold ---------------- */
   .anatomy,
@@ -408,40 +349,12 @@
     align-items: start;
   }
   .specimen {
-    position: relative;
-  }
-  .specimen figcaption {
-    margin-top: 18px;
-  }
-  .key,
-  .key-inline {
-    display: inline-grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--ink);
-    color: #fff;
-    font-family: var(--font-mono);
-    font-weight: 600;
-    font-size: 13px;
-  }
-  .key {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 0 3px var(--paper);
-  }
-  .key-inline {
-    margin-right: 12px;
-    vertical-align: 2px;
+    border-radius: var(--radius-note);
+    overflow: hidden;
   }
   .notes-on-notes {
     display: grid;
-    gap: 28px;
-  }
-  .notes-on-notes div {
-    border-top: 1px solid var(--ink);
-    padding-top: 16px;
+    gap: 32px;
   }
   .notes-on-notes dt {
     font-family: var(--font-display);
@@ -460,19 +373,14 @@
 
   .steps {
     list-style: none;
-    border-bottom: 1px solid var(--ink);
+    display: grid;
+    gap: 36px;
   }
   .steps li {
     display: grid;
-    grid-template-columns: 56px minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     gap: 24px;
     align-items: baseline;
-    border-top: 1px solid var(--ink);
-    padding: 26px 0;
-  }
-  .step-n {
-    font-size: 13px;
-    color: var(--ink-soft);
   }
   .step-title {
     font-size: clamp(1.75rem, 3.2vw, 3rem);
@@ -488,7 +396,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding: 40px 0 0;
+    padding: 64px 0 0;
   }
   .again-line {
     font-size: clamp(1.5rem, 2.6vw, 2.25rem);
@@ -507,9 +415,15 @@
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
-    margin: clamp(72px, 10vw, 128px) var(--gutter) 0;
-    padding: 20px 0 32px;
-    border-top: 1px solid var(--ink);
+    margin: clamp(96px, 12vw, 160px) var(--gutter) 0;
+    padding: 0 0 40px;
+  }
+  .foot-mark {
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.01em;
   }
   .foot-links {
     display: flex;
@@ -529,7 +443,7 @@
     .cell:nth-child(n + 7) {
       display: none;
     }
-    .job-slug {
+    .job-bar {
       flex-direction: column;
       align-items: stretch;
     }
@@ -571,10 +485,6 @@
     .cell:nth-child(n + 5) {
       display: none;
     }
-    .callout,
-    .leader {
-      display: none;
-    }
     .fields {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -597,10 +507,8 @@
       grid-template-columns: 1fr;
     }
     .steps li {
-      grid-template-columns: 32px minmax(0, 1fr);
-    }
-    .step-note {
-      grid-column: 2;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
     }
     .again {
       flex-direction: column;

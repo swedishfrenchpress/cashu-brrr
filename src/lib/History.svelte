@@ -75,7 +75,7 @@
               {/if}
             </div>
             <div class="facts">
-              <p class="when data">{fmtDateTime(p.ts)}</p>
+              <p class="when">{fmtDateTime(p.ts)}</p>
               <p class="what heading">{fmt(p.tokens.length)} × {fmt(amount)} sat</p>
               <p class="detail">
                 {fmt(p.tokens.length * amount)} sat · {d.family.name}{d.family.styles.length > 1 ? ` · ${d.style.name}` : ""}
@@ -104,8 +104,7 @@
     justify-content: space-between;
     align-items: end;
     gap: 24px 48px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--ink);
+    padding-bottom: 32px;
   }
   h1 {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
@@ -121,22 +120,21 @@
 
   .jobs {
     list-style: none;
+    display: grid;
+    gap: 12px;
   }
   .job {
     display: grid;
     grid-template-columns: 220px minmax(0, 1fr) auto;
     gap: 28px;
     align-items: center;
-    padding: 22px 0;
-    border-bottom: 1px solid var(--hair);
+    padding: 12px 0;
   }
   .thumb {
     width: 100%;
     background: var(--liner-deep);
     border-radius: 6px;
     overflow: hidden;
-    outline: 1px solid rgba(229, 0, 125, 0.55);
-    outline-offset: 4px;
   }
   .facts {
     display: grid;
@@ -144,7 +142,7 @@
     min-width: 0;
   }
   .when {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--ink-soft);
   }
   .what {

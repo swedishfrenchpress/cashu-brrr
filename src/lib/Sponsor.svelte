@@ -12,7 +12,7 @@
   <img class="avatar" src={sponsor.imageLink} alt="" loading="lazy" width="56" height="56" />
   <span class="body">
     <span class="name">{sponsor.name}</span>
-    <span class="slug">{sponsor.tier} sponsor · {sponsor.amount} sat</span>
+    <span class="tier">{sponsor.tier.charAt(0)}{sponsor.tier.slice(1).toLowerCase()} sponsor · {sponsor.amount} sat</span>
   </span>
 </a>
 
@@ -28,15 +28,10 @@
     border-radius: 999px;
     color: var(--ink);
     text-decoration: none;
-    outline: 1px solid rgba(229, 0, 125, 0.55);
-    outline-offset: 6px;
-    transition:
-      transform 300ms var(--ease-out),
-      outline-color 200ms var(--ease-out);
+    transition: background-color 160ms var(--ease-out);
   }
   .sponsor:hover {
-    transform: translateY(-2px);
-    outline-color: var(--cut);
+    background: var(--liner-deep);
   }
   .avatar {
     width: 56px;
@@ -50,6 +45,10 @@
     display: grid;
     gap: 4px;
     min-width: 0;
+  }
+  .tier {
+    font-size: 14px;
+    color: var(--ink-soft);
   }
   .name {
     font-family: var(--font-display);

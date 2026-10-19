@@ -46,13 +46,12 @@
     selectedTemplate,
   } from "./stores.svelte";
   import { copyTextToClipboard, getAmountForTokenSet } from "./utils";
-  import { fmtClock, fmtDateTime, fmtDuration, fmtNum } from "./format";
+  import { fmtDateTime, fmtDuration, fmtNum } from "./format";
 
   type Phase = "edit" | "invoice" | "minting" | "ready";
-  type LogLine = { id: number; t: number; text: string; kind: "info" | "ok" | "error" };
+  type Status = { text: string; kind: "info" | "error" };
 
   const fmt = fmtNum;
-  const clock = fmtClock;
   const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
   // ---------- the job ----------
@@ -87,11 +86,10 @@
   const noteCount = $derived(tokens.length > 0 ? tokens.length : countValue);
   const jobMintUrl = $derived(tokens.length > 0 ? tokens[0].mint : $mint?.url ?? SUGGESTED_MINTS[0]);
 
-  // ---------- log: states print themselves ----------
-  let log = $state<LogLine[]>([]);
-  let logId = 0;
-  const note = (text: string, kind: LogLine["kind"] = "info") => {
-    log = [...log.slice(-5), { id: ++logId, t: Date.now(), text, kind }];
+  // ---------- status: one plain line under the ticket ----------
+  let status = $state<Status | null>(null);
+  const note = (text: string, kind: Status["kind"] = "info") => {
+    status = { text, kind };
   };
 
   // ---------- sheet ----------
@@ -117,7 +115,7 @@
       mintState = "ok";
       mintPanel = false;
       mintInput = "";
-      note(`Mint connected · ${shortMint(m.url)}`);
+      status = null;
     } catch (e) {
       mintState = "error";
       mintMessage = errorText(e);
@@ -180,7 +178,7 @@
         color: { dark: "#141414", light: "#ffffff" },
       });
       phase = "invoice";
-      note(`Invoice issued · ${fmt(total)} sat`);
+      status = null;
       stopWatching();
       poll = setInterval(() => checkPayment(false), 2000);
       ticker = setInterval(() => (now = Date.now()), 1000);
@@ -197,7 +195,7 @@
     try {
       if (await quoteIsPaid(quote)) {
         stopWatching();
-        note("Paid", "ok");
+        status = null;
         await mintSheet();
       } else if (manual) {
         note("Not paid yet. This page keeps checking every 2 seconds.");
@@ -228,10 +226,9 @@
       mintedAt = job.ts;
       sheetIndex = 0;
       phase = "ready";
-      note(`${fmt(job.tokens.length)} notes minted · saved in this browser`, "ok");
+      status = null;
     } catch (e) {
       mintError = errorText(e);
-      note(`Paid, but minting failed: ${mintError}`, "error");
     }
   }
 
@@ -263,12 +260,12 @@
     };
     localStorage.setItem("currentPrintData", JSON.stringify(printData));
     window.open(`${window.location.origin}${window.location.pathname}?print=true`, "_blank");
-    note(`Print sheet opened in a new tab · ${PAPER[paper].label}`);
+    note("The print sheet opened in a new tab.");
   }
 
   async function downloadBackup() {
     await downloadQrBackup(tokens, noteAmount);
-    note(`QR backup downloaded · ${encoded.length} QR codes`, "ok");
+    note(`QR backup downloaded: ${fmt(encoded.length)} QR codes.`);
   }
 
   function newJob() {
@@ -280,7 +277,7 @@
     mintError = "";
     sheetIndex = 0;
     phase = "edit";
-    log = [];
+    status = null;
     if (!$mint) useMint(SUGGESTED_MINTS[0]);
   }
 
@@ -297,9 +294,6 @@
   });
 
   onMount(() => {
-    if (phase === "ready" && reprintOf) {
-      note(`Reprint of ${fmtDateTime(reprintOf.ts)}`);
-    }
     if (phase === "edit" && !$mint) useMint(SUGGESTED_MINTS[0]);
   });
   onDestroy(stopWatching);
@@ -311,12 +305,9 @@
   <div class="layout">
     <!-- The sheet -->
     <section class="stage" aria-label="Sheet preview">
-      <div class="stage-head">
-        <p class="slug">
-          {phase === "ready" ? "Ready to print" : "Specimen preview"} · Sheet {Math.min(sheetIndex + 1, sheetCount)} of {sheetCount}
-          · {PAPER[paper].label} landscape · {Math.round(cell.w)} × {Math.round(cell.h)} mm
-        </p>
-        {#if phase === "ready" && sheets.length > 1}
+      {#if phase === "ready" && sheets.length > 1}
+        <div class="stage-head">
+          <p class="pager-label">Sheet {sheetIndex + 1} of {sheets.length}</p>
           <div class="pager">
             <button class="btn-quiet" onclick={() => (sheetIndex = Math.max(0, sheetIndex - 1))} disabled={sheetIndex === 0} aria-label="Previous sheet">
               <ChevronLeft size={18} />
@@ -330,8 +321,8 @@
               <ChevronRight size={18} />
             </button>
           </div>
-        {/if}
-      </div>
+        </div>
+      {/if}
 
       <div class="stage-sheet">
         {#if phase === "ready"}
@@ -341,24 +332,6 @@
         {/if}
       </div>
 
-      <div class="stage-foot">
-        {#if phase !== "ready" && countOk && countValue > NOTES_PER_SHEET}
-          <p class="slug">+ {fmt(countValue - NOTES_PER_SHEET)} more notes on {sheetCount - 1} more {sheetCount - 1 === 1 ? "sheet" : "sheets"}</p>
-        {/if}
-        {#if phase !== "ready"}
-          <p class="slug">Real QR codes appear after payment. Die lines don't print; cut marks do.</p>
-        {/if}
-        {#if log.length > 0}
-          <ol class="log" aria-live="polite" aria-label="Job log">
-            {#each log as line (line.id)}
-              <li class="slug {line.kind}" in:fade={{ duration: 160 }}>
-                <span class="data">{clock(line.t)}</span>
-                <span>{line.text}</span>
-              </li>
-            {/each}
-          </ol>
-        {/if}
-      </div>
     </section>
 
     <!-- The ticket -->
@@ -424,6 +397,11 @@
             </div>
             {#if !amountOk || !countOk}
               <p class="error-text">Enter whole numbers, 1 or more.</p>
+            {:else}
+              <p class="hint">
+                {fmt(countValue)} {countValue === 1 ? "note" : "notes"} fill {sheetCount}
+                {sheetCount === 1 ? "sheet" : "sheets"}. Real QR codes are printed after you pay.
+              </p>
             {/if}
           </section>
 
@@ -440,7 +418,9 @@
                 </button>
               {/each}
             </div>
-            <p class="hint">Landscape, {NOTES_PER_SHEET} notes per sheet, cut marks included.</p>
+            <p class="hint">
+              Landscape, {NOTES_PER_SHEET} notes per sheet, each {Math.round(cell.w)} × {Math.round(cell.h)} mm, with cut marks.
+            </p>
           </section>
 
           <section class="group">
@@ -505,8 +485,8 @@
               {/if}
             </div>
             {#if phase === "invoice"}
-              <p class="slug waiting">
-                <LoaderCircle size={14} class="spin" aria-hidden="true" /> Waiting for payment{countdown ? ` · expires in ${countdown}` : ""}
+              <p class="waiting">
+                <LoaderCircle size={16} class="spin" aria-hidden="true" /> Waiting for payment{countdown ? `, expires in ${countdown}` : ""}
               </p>
               <div class="invoice-actions">
                 <button class="btn-line" onclick={copyInvoice}>
@@ -526,7 +506,7 @@
               <p class="error-text">The invoice is paid but the notes weren't minted. Keep this page open and try again.</p>
               <button class="btn-go" onclick={mintSheet}>Try minting again</button>
             {:else}
-              <p class="slug waiting"><LoaderCircle size={14} class="spin" aria-hidden="true" /> Paid · minting {fmt(countValue)} notes…</p>
+              <p class="waiting"><LoaderCircle size={16} class="spin" aria-hidden="true" /> Paid. Minting {fmt(countValue)} notes…</p>
             {/if}
           </div>
         {:else}
@@ -537,6 +517,7 @@
           <p class="summary">
             {family.name}{family.styles.length > 1 ? ` · ${style.name}` : ""} · {fmt(noteCount)} × {fmt(noteAmount)} sat =
             {fmt(noteCount * noteAmount)} sat · <span class="data">{shortMint(jobMintUrl)}</span>
+            {#if reprintOf}<br />Printed first on {fmtDateTime(reprintOf.ts)}.{/if}
           </p>
 
           <div class="custody">
@@ -563,6 +544,10 @@
             <button class="btn-line" onclick={downloadBackup}><Download size={16} aria-hidden="true" /> Download QR backup (.zip)</button>
             <button class="btn-quiet" onclick={newJob}>Start a new job</button>
           </div>
+        {/if}
+
+        {#if status}
+          <p class="status" class:error={status.kind === "error"} aria-live="polite" in:fade={{ duration: 160 }}>{status.text}</p>
         {/if}
       </div>
 
@@ -618,7 +603,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    min-height: 28px;
+    max-width: 1040px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .pager-label {
+    font-size: 14px;
+    font-weight: 600;
   }
   .pager {
     display: flex;
@@ -629,40 +620,6 @@
     max-width: 1040px;
     margin: 0 auto;
   }
-  .stage-foot {
-    display: grid;
-    gap: 6px;
-    max-width: 1040px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  .log {
-    list-style: none;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--ink);
-    display: grid;
-    gap: 2px;
-  }
-  .log li {
-    display: flex;
-    gap: 14px;
-  }
-  .log li.ok {
-    color: var(--ink);
-  }
-  .log li.error {
-    color: var(--cut-ink);
-  }
-  .log li.error::before {
-    content: "";
-    flex: none;
-    width: 8px;
-    height: 8px;
-    margin-top: 5px;
-    background: var(--cut);
-  }
-
   /* ---------- ticket ---------- */
   .ticket {
     position: sticky;
@@ -694,11 +651,10 @@
     font-size: 13px;
   }
   .group {
-    padding: 18px 0;
-    border-top: 1px solid var(--hair);
+    padding: 14px 0;
   }
   .group:first-of-type {
-    margin-top: 16px;
+    margin-top: 12px;
   }
   .group-title {
     font-family: var(--font-display);
@@ -870,7 +826,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
   }
   .invoice-actions {
     display: flex;
@@ -906,8 +863,16 @@
     display: grid;
     justify-items: start;
     gap: 14px;
-    padding-top: 18px;
-    border-top: 1px solid var(--hair);
+    padding-top: 14px;
+  }
+  .status {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+  .status.error {
+    color: var(--cut-ink);
   }
 
   .action {
@@ -916,7 +881,6 @@
     justify-content: space-between;
     gap: 16px;
     padding: 18px 28px 22px;
-    border-top: 1px solid var(--ink);
     background: var(--liner);
   }
   .action-total .data {
@@ -961,7 +925,6 @@
       position: static;
       height: auto;
       border-left: 0;
-      border-top: 1px solid var(--ink);
     }
     .ticket-scroll {
       overflow: visible;
@@ -972,6 +935,7 @@
       bottom: 0;
       z-index: 3;
       padding: 14px var(--gutter) calc(14px + env(safe-area-inset-bottom));
+      box-shadow: 0 -10px 24px -14px rgba(20, 20, 20, 0.3);
     }
   }
 </style>

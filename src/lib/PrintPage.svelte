@@ -3,8 +3,8 @@
   import type { Token } from "@cashu/cashu-ts";
   import { Printer } from "lucide-svelte";
   import NoteArt from "./NoteArt.svelte";
-  import { encodeToken, shortMint } from "./job";
-  import { fmtDate, fmtNum } from "./format";
+  import { encodeToken } from "./job";
+  import { fmtNum } from "./format";
   import { PAPER, chunk, resolveDesign, sheetLayout, type PaperSize, type StyleRef, type TemplateRef } from "./templates";
   import { paperSize, preparedTokens, prints, selectedStyle, selectedTemplate, mint } from "./stores.svelte";
   import { getAmountForTokenSet } from "./utils";
@@ -44,7 +44,6 @@
   const amount = getAmountForTokenSet(tokens[0]?.proofs ?? []);
   const layout = sheetLayout(design.family, paper);
   const sheets = chunk(tokens.map(encodeToken));
-  const printedOn = fmtDate(Date.now());
   const fmt = fmtNum;
 
   // Split the tag so the Svelte preprocessor does not read it as this component's style block
@@ -119,9 +118,6 @@
           {/each}
         </div>
 
-        <p class="sheet-slug" style="left: 3mm; top: {layout.y0}mm; height: {layout.gridH}mm;">
-          Cashu Brrr · Sheet {si + 1} of {sheets.length} · {sheet.length} × {fmt(amount)} sat · {shortMint(mintUrl)} · {printedOn}
-        </p>
       </section>
     {/each}
   </div>
@@ -140,9 +136,7 @@
     justify-content: space-between;
     gap: 32px;
     max-width: 297mm;
-    margin: 0 auto 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--ink);
+    margin: 0 auto 32px;
   }
   .title {
     font-size: 28px;
@@ -187,19 +181,6 @@
   .cell :global(.note-art),
   .cell :global(.note-container) {
     border-radius: 0;
-  }
-  .sheet-slug {
-    position: absolute;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 6pt;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #444;
-    white-space: nowrap;
-    overflow: hidden;
   }
 
   @media print {

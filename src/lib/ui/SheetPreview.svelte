@@ -93,19 +93,6 @@
     min-width: 0;
     overflow: hidden;
   }
-  /* Die line on every cut edge: shown on screen, never printed */
-  .slot::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border: 1px solid rgba(229, 0, 125, 0.75);
-    pointer-events: none;
-  }
-  @media print {
-    .slot::after {
-      display: none;
-    }
-  }
   .slot :global(.note-art),
   .slot :global(.note-container) {
     border-radius: 0;
