@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kiss-Cut Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --liner:#F2F3EF; --ink:#141414; --cut:#E5007D; --repeat:#B9C7CC; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:1440px; height:900px; overflow:hidden; }
+  body {
+    background-color:var(--liner);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='120'%3E%3Ctext x='0' y='70' font-family='Arial Black,Arial' font-weight='900' font-size='22' fill='%23B9C7CC' fill-opacity='.45' transform='rotate(-12 130 60)'%3ECASHU BRRR %C2%B7 CASHU BRRR%3C/text%3E%3C/svg%3E");
+    font-family:"Archivo",sans-serif; color:var(--ink); position:relative;
+  }
+  .crop { position:absolute; width:28px; height:28px; border-color:var(--ink); border-style:solid; border-width:0; }
+  .crop.tl { left:24px; top:24px; border-right-width:1px; border-bottom-width:1px; }
+  .crop.tr { right:24px; top:24px; border-left-width:1px; border-bottom-width:1px; }
+  .crop.bl { left:24px; bottom:24px; border-right-width:1px; border-top-width:1px; }
+  .crop.br { right:24px; bottom:24px; border-left-width:1px; border-top-width:1px; }
+  .reg { position:absolute; top:30px; left:50%; width:22px; height:22px; margin-left:-11px; border:1px solid var(--ink); border-radius:50%; }
+  .reg::before,.reg::after { content:""; position:absolute; background:var(--ink); }
+  .reg::before { left:50%; top:-6px; bottom:-6px; width:1px; }
+  .reg::after { top:50%; left:-6px; right:-6px; height:1px; }
+
+  header { position:absolute; left:64px; right:64px; top:64px; display:flex; justify-content:space-between; align-items:flex-end; }
+  h1 { font-stretch:125%; font-weight:900; font-size:96px; line-height:.88; letter-spacing:-.02em; max-width:880px; }
+  .brand { font-family:"Martian Mono",monospace; font-size:13px; text-align:right; line-height:1.6; }
+  .brand b { display:block; font-family:"Archivo"; font-stretch:125%; font-size:28px; font-weight:900; letter-spacing:-.01em; }
+
+  .sheet { position:absolute; left:64px; top:300px; width:1312px; height:440px; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:1fr 1fr; gap:28px 32px; }
+  .note { position:relative; border-radius:10px; outline:2px solid var(--cut); outline-offset:7px; overflow:hidden; }
+  .note .qr { position:absolute; left:10%; top:18%; width:30%; aspect-ratio:1; background:#fff; border:6px solid #fff;
+    background-image:repeating-linear-gradient(90deg,#141414 0 6px,#fff 6px 11px),repeating-linear-gradient(0deg,#141414 0 6px,transparent 6px 11px); background-blend-mode:screen; }
+  .note .amt { position:absolute; right:8%; bottom:12%; font-stretch:125%; font-weight:900; font-size:34px; color:#141414; background:#fff; padding:2px 12px; border-radius:6px; }
+  .n1 { background:#7D3CC8; } .n2 { background:#F08A1C; } .n3 { background:#3E9A6E; }
+  .n4 { background:#C9B48C; } .n5 { background:#A9C8B8; } .n6 { background:#FFFFFF; border:3px solid #141414; }
+  .n7 { background:#D94F5C; } .n8 { background:#2E6BB0; }
+  .note.lift::after { content:""; position:absolute; right:0; bottom:0; width:74px; height:74px;
+    background:linear-gradient(135deg, rgba(0,0,0,.18) 0 46%, var(--liner) 50%); box-shadow:-4px -4px 10px rgba(0,0,0,.12); }
+
+  .callout { position:absolute; font-family:"Martian Mono",monospace; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; }
+  .callout::before { content:""; position:absolute; background:var(--ink); height:1px; }
+  .c1 { left:120px; top:262px; } .c1::before { left:-8px; top:20px; width:1px; height:56px; }
+  .c2 { left:258px; top:262px; } .c2::before { left:-8px; top:20px; width:1px; height:36px; }
+
+  .slug { position:absolute; left:64px; right:64px; bottom:56px; height:88px; display:flex; align-items:center; gap:22px;
+    border-top:1px solid var(--ink); padding-top:20px; font-family:"Martian Mono",monospace; font-size:14px; }
+  .slug .field { display:flex; align-items:center; gap:10px; }
+  .slug .box { border:1.5px solid var(--ink); background:#fff; padding:12px 16px; min-width:110px; font-weight:600; font-size:20px; }
+  .slug .x { font-size:22px; }
+  .slug .total { margin-left:8px; }
+  .slug .total b { font-family:"Archivo"; font-stretch:125%; font-weight:900; font-size:26px; display:block; }
+  .go { margin-left:auto; position:relative; background:var(--ink); color:#fff; font-family:"Archivo"; font-stretch:125%; font-weight:900;
+    font-size:30px; padding:18px 40px; border-radius:999px; outline:2.5px solid var(--cut); outline-offset:6px; }
+  .meta { position:absolute; left:64px; bottom:26px; font-family:"Martian Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+</style>
+</head>
+<body>
+  <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+  <span class="reg"></span>
+
+  <header>
+    <h1>Print your own ecash notes.</h1>
+    <div class="brand"><b>CASHU BRRR</b>No central banks if<br>everyone is a central bank.</div>
+  </header>
+
+  <span class="callout c1">QR = the money</span>
+  <span class="callout c2">Amount</span>
+
+  <section class="sheet">
+    <div class="note n1"><span class="qr"></span><span class="amt">21</span></div>
+    <div class="note n2 lift"><span class="qr"></span><span class="amt">21</span></div>
+    <div class="note n3"><span class="qr"></span><span class="amt">21</span></div>
+    <div class="note n4"><span class="qr"></span><span class="amt">21</span></div>
+    <div class="note n5"><span class="qr"></span><span class="amt">21</span></div>
+    <div class="note n6"><span class="qr"></span><span class="amt">21</span></div>
+    <div class="note n7"><span class="qr"></span><span class="amt">21</span></div>
+    <div class="note n8"><span class="qr"></span><span class="amt">21</span></div>
+  </section>
+
+  <div class="slug">
+    <div class="field"><span class="box">21</span> sat each</div>
+    <span class="x">&times;</span>
+    <div class="field"><span class="box">8</span> notes</div>
+    <div class="total">= total<b>168 sat</b></div>
+    <span class="go">GO BRRRR &rarr;</span>
+  </div>
+  <div class="meta">Sheet 001 &middot; A4 &middot; 8 up &middot; Mint: mint.minibits.cash/Bitcoin &middot; Die line not printed</div>
+</body>
+</html>

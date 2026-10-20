@@ -1,68 +1,59 @@
 <script lang="ts">
-    import type { Sponsor } from "./sponsors";
+  import type { Sponsor } from "./sponsors";
 
-    interface Props {
-        sponsor: Sponsor
-    }
-    
-    let { sponsor }: Props = $props();
+  interface Props {
+    sponsor: Sponsor;
+  }
 
-    const tierColors = {
-        GOLD: {
-            border: 'border-yellow-400',
-            bg: 'bg-yellow-200',
-            text: 'text-gray-900',
-            badge: 'bg-yellow-300'
-        },
-        SILVER: {
-            border: 'border-yellow-300',
-            bg: 'bg-yellow-100',
-            text: 'text-gray-900',
-            badge: 'bg-yellow-200'
-        },
-        BRONZE: {
-            border: 'border-orange-300',
-            bg: 'bg-orange-100',
-            text: 'text-gray-900',
-            badge: 'bg-orange-200'
-        }
-    };
-
-    const tierConfig = tierColors[sponsor.tier];
+  let { sponsor }: Props = $props();
 </script>
 
-<a 
-    target="_blank" 
-    rel="noopener noreferrer"
-    class="block p-6 rounded-lg border-2 {tierConfig.border} {tierConfig.bg} shadow-lg sponsor-card"
-    href="{sponsor.link}"
->
-    <div class="flex items-center gap-4">
-        <!-- Avatar -->
-        <div class="flex-shrink-0">
-            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-300 shadow-md">
-                <img 
-                    src="{sponsor.imageLink}" 
-                    alt="{sponsor.name}"
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                />
-            </div>
-        </div>
-        
-        <!-- Content -->
-        <div class="flex-1 min-w-0">
-            <h3 class="font-sedgwick font-bold text-xl {tierConfig.text}">
-                {sponsor.name}
-            </h3>
-            <div class="flex items-center gap-2 mt-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {tierConfig.badge} border border-yellow-400 text-gray-900 font-sedgwick">
-                    {sponsor.tier} Sponsor
-                </span>
-                <span class="text-sm font-semibold text-gray-700 font-sedgwick">
-                    {sponsor.amount} sats
-                </span>
-            </div>
-        </div>
-    </div>
+<a class="sponsor" target="_blank" rel="noopener noreferrer" href={sponsor.link}>
+  <img class="avatar" src={sponsor.imageLink} alt="" loading="lazy" width="56" height="56" />
+  <span class="body">
+    <span class="name">{sponsor.name}</span>
+    <span class="tier">{sponsor.tier.charAt(0)}{sponsor.tier.slice(1).toLowerCase()} sponsor, {sponsor.amount} sat</span>
+  </span>
 </a>
+
+<style>
+  .sponsor {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 280px;
+    padding: 14px 24px 14px 14px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 160ms var(--ease-out);
+  }
+  .sponsor:hover {
+    background: var(--liner-deep);
+  }
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--liner-deep);
+    flex: none;
+  }
+  .body {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+  .tier {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .name {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.1;
+  }
+</style>

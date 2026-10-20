@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Uncut Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;800;900&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bond:#DDE3D6; --intaglio:#1F4D3A; --serial:#B3261E; --ink:#151515; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:1440px; height:900px; overflow:hidden; }
+  body { background:#C9D1C1; font-family:"Big Shoulders Display",sans-serif; color:var(--ink); position:relative; }
+  .press { position:absolute; left:110px; top:70px; width:1220px; height:780px; background:var(--bond); transform:rotate(-2.2deg);
+    box-shadow:0 30px 60px rgba(21,21,21,.22); padding:120px 70px 90px; }
+  .press::before { content:""; position:absolute; inset:18px; border:1px solid var(--intaglio); opacity:.5; }
+  .selvedge { position:absolute; left:70px; right:70px; top:34px; display:flex; justify-content:space-between; align-items:baseline; }
+  .selvedge h1 { font-weight:900; font-size:76px; letter-spacing:.01em; text-transform:uppercase; color:var(--intaglio); line-height:1; }
+  .plate { font-family:"Martian Mono",monospace; font-size:12px; letter-spacing:.12em; color:var(--intaglio); text-align:right; }
+  .plate b { display:block; color:var(--serial); font-size:18px; letter-spacing:.2em; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:22px; height:100%; }
+  .note { position:relative; border:2px solid var(--intaglio); background:
+    repeating-radial-gradient(circle at 30% 50%, rgba(31,77,58,.20) 0 1px, transparent 1px 6px), #E8EDE2; }
+  .note .portrait { position:absolute; left:6%; top:12%; width:34%; height:76%; border-radius:50%; border:2px solid var(--intaglio);
+    background:repeating-linear-gradient(45deg, rgba(31,77,58,.35) 0 1px, transparent 1px 4px); }
+  .note .qr { position:absolute; right:6%; top:14%; width:30%; aspect-ratio:1; background:#fff; border:2px solid var(--intaglio);
+    background-image:repeating-linear-gradient(90deg,#151515 0 5px,#fff 5px 9px); }
+  .note .den { position:absolute; left:46%; bottom:10%; font-weight:900; font-size:44px; color:var(--intaglio); }
+  .note .sn { position:absolute; left:46%; top:12%; font-family:"Martian Mono",monospace; font-size:12px; color:var(--serial); letter-spacing:.14em; background:#E8EDE2; padding:2px 6px; }
+  .run { position:absolute; left:70px; right:70px; bottom:26px; display:flex; align-items:center; gap:24px;
+    font-family:"Martian Mono",monospace; font-size:13px; color:var(--intaglio); }
+  .run .btn { margin-left:auto; background:var(--intaglio); color:var(--bond); font-family:"Big Shoulders Display"; font-weight:800;
+    font-size:30px; letter-spacing:.06em; text-transform:uppercase; padding:14px 38px; }
+</style>
+</head>
+<body>
+  <div class="press">
+    <div class="selvedge">
+      <h1>Print your own ecash notes</h1>
+      <div class="plate">PLATE A-01 &middot; SHEET 001<b>BR 000021 C</b></div>
+    </div>
+    <div class="grid">
+      <div class="note"><span class="portrait"></span><span class="sn">BR 000021 C</span><span class="qr"></span><span class="den">21 &#x20BF;</span></div>
+      <div class="note"><span class="portrait"></span><span class="sn">BR 000022 C</span><span class="qr"></span><span class="den">21 &#x20BF;</span></div>
+      <div class="note"><span class="portrait"></span><span class="sn">BR 000023 C</span><span class="qr"></span><span class="den">21 &#x20BF;</span></div>
+      <div class="note"><span class="portrait"></span><span class="sn">BR 000024 C</span><span class="qr"></span><span class="den">21 &#x20BF;</span></div>
+      <div class="note"><span class="portrait"></span><span class="sn">BR 000025 C</span><span class="qr"></span><span class="den">21 &#x20BF;</span></div>
+      <div class="note"><span class="portrait"></span><span class="sn">BR 000026 C</span><span class="qr"></span><span class="den">21 &#x20BF;</span></div>
+    </div>
+    <div class="run">
+      <span>6 notes &times; 21 sat = 126 sat</span>
+      <span>Mint: mint.minibits.cash/Bitcoin</span>
+      <span class="btn">Start a press run</span>
+    </div>
+  </div>
+</body>
+</html>

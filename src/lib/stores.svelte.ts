@@ -93,20 +93,16 @@ export const selectedStyle = writable<{
 
 export const currentQuote = writable<MintQuoteResponse>();
 
+const storedPaper = window.localStorage.getItem("paper");
+export const paperSize = writable<"a4" | "letter">(storedPaper === "letter" ? "letter" : "a4");
+paperSize.subscribe((value) => {
+  window.localStorage.setItem("paper", value);
+});
+
 export type DiscoveredMint = {
   url: string;
   reviews: number;
 };
-
-export type DiscoveredContact = {
-  url: string;
-  reviews: number;
-};
-export type Contact = {
-  npub: string
-  alias: string
-  picture?: string
-}
 
 const createDiscoveredMintsStore = () => {
   const store = writable<DiscoveredMint[]>([]);
@@ -126,19 +122,6 @@ const createDiscoveredMintsStore = () => {
 
   return { ...store, add };
 };
-
-const createDiscoveredContactsStore = () => {
-  const store = writable<Contact[]>([]);
-
-  const add = (npub: string, alias?: string, picture?: string) => {
-      store.update((context) => [...context, { npub, alias: alias?? '', picture }]);
-  }
-
-  return {...store, add}
-}
-
-export const discoveredContacts = createDiscoveredContactsStore()
-
 
 export const discoveredMints = createDiscoveredMintsStore();
 

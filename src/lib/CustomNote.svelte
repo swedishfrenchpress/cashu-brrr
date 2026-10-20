@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { QRCodeImage } from "svelte-qrcode-image";
-  import { secp256k1 } from "@noble/curves/secp256k1";
-  import { bytesToHex } from "@noble/curves/abstract/utils";
   import { formatAmount } from "./utils";
 
   interface Props {
@@ -28,14 +26,18 @@
   let imageURL = $state("");
 
 
-  const randomID = bytesToHex(secp256k1.utils.randomPrivateKey()).slice(0, 12);
+  const randomID = crypto.randomUUID().replaceAll("-", "").slice(0, 12);
 
   onMount(() => {
-    imageURL = document.getElementById("qr-" + randomID).toDataURL();
+    const element = document.getElementById("qr-" + randomID);
+    if (element instanceof HTMLCanvasElement) {
+      imageURL = element.toDataURL();
+    }
   });
 
-  const downloadNote = async (e) => {
-    const svg = e.target.nearestViewportElement;
+  const downloadNote = async (e: MouseEvent) => {
+    const svg = (e.target as Element | null)?.closest("svg");
+    if (!svg) return;
     const xml = new XMLSerializer().serializeToString(svg);
     const svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
     var a = document.createElement("a"); //Create <a>

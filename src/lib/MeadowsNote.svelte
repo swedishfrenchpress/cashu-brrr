@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { QRCodeImage } from "svelte-qrcode-image";
-  import { secp256k1 } from "@noble/curves/secp256k1";
-  import { bytesToHex } from "@noble/curves/abstract/utils";
 
   interface Props {
     denomination: number;
@@ -22,7 +20,7 @@
 
   let imageURL = $state("");
 
-  const randomID = bytesToHex(secp256k1.utils.randomPrivateKey()).slice(0, 12);
+  const randomID = crypto.randomUUID().replaceAll("-", "").slice(0, 12);
 
   onMount(() => {
     const element = document.getElementById("qr-" + randomID);
@@ -41,41 +39,25 @@
   />
 </div>
 
-<div class="note-container w-full relative" style="aspect-ratio: 2/1; max-width: 100%;">
-  <!-- SVG Background -->
-  <img 
-    src="/mr-meadows-note.svg" 
-    alt="Mr. Meadows Note" 
-    class="absolute top-0 left-0 w-full h-full object-contain"
+<!-- Artwork is 595 x 239; the QR sits on the right, clear of the CASHU.SPACE mark -->
+<div class="note-container w-full relative" style="aspect-ratio: 595/239;">
+  <img
+    src={isPrint ? "/mr-meadows-note.svg" : "/previews/mr-meadows-note.webp"}
+    alt="Mr. Meadows Note"
+    class="absolute top-0 left-0 w-full h-full"
   />
-  
-  <!-- QR Code Overlay -->
-  <img 
-    src={imageURL} 
-    alt="QR Code" 
-    class="absolute"
-    style="
-      left: 75%; 
-      top: 15%; 
-      width: 25%; 
-      height: 65%;
-      object-fit: contain;
-    "
-  />
-  
-  <!-- Amount Display -->
+
+  {#if imageURL}
+    <img
+      src={imageURL}
+      alt="QR code"
+      class="absolute"
+      style="left: 77.5%; top: 29%; width: 20%; height: 50%; object-fit: contain;"
+    />
+  {/if}
+
   {#if denomination > 0}
-    <div 
-      class="absolute font-bold meadows-denomination denomination-text {isPrint ? 'print-size' : ''}"
-      style="
-        left: 6%;
-        top: 2%;
-        color: #000000;
-        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-        font-family: 'Dela Gothic One', sans-serif;
-        white-space: nowrap;
-      "
-    >
+    <div class="absolute meadows-denomination" style="left: 6%; top: 3%;">
       {denomination}
     </div>
   {/if}
@@ -83,23 +65,14 @@
 
 <style>
   .note-container {
-    max-width: 100%;
-    height: auto;
+    container-type: inline-size;
   }
-  
-  /* Ensure the note maintains its aspect ratio */
-  .note-container img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Default font size for preview */
-  .denomination-text {
-    font-size: 0.75rem;
-  }
-  
-  /* Print-specific font size for denomination text */
-  .denomination-text.print-size {
-    font-size: 42px;
+
+  .meadows-denomination {
+    font-family: "Dela Gothic One", sans-serif;
+    font-size: 6cqw;
+    line-height: 1;
+    white-space: nowrap;
+    color: #000;
   }
 </style>

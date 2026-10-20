@@ -26,3 +26,12 @@ dist-ssr
 
 # Local Netlify folder
 .netlify
+
+# Impeccable local working files
+.impeccable/review/
+.impeccable/questions/
+.impeccable/hook.cache.json
+.impeccable/config.local.json
+
+# TX-02 (U.S. Graphics, commercial license): never commit the font files
+public/fonts/tx-02/

@@ -1,369 +1,215 @@
 <script lang="ts">
-  import { selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes, mint, prints, preparedTokens } from "./stores.svelte";
-  import { getEncodedTokenV4 } from "@cashu/cashu-ts";
-  import ComicNote from "./ComicNote.svelte";
-  import CustomNote from "./CustomNote.svelte";
-  import SovereignNote from "./SovereignNote.svelte";
-  import ChaumNote from "./ChaumNote.svelte";
-  import MeadowsNote from "./MeadowsNote.svelte";
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
+  import type { Token } from "@cashu/cashu-ts";
+  import { Printer } from "lucide-svelte";
+  import NoteArt from "./NoteArt.svelte";
+  import { encodeToken } from "./job";
+  import { fmtNum } from "./format";
+  import { PAPER, chunk, resolveDesign, sheetLayout, type PaperSize, type StyleRef, type TemplateRef } from "./templates";
+  import { paperSize, preparedTokens, prints, selectedStyle, selectedTemplate, mint } from "./stores.svelte";
   import { getAmountForTokenSet } from "./utils";
 
-  // Get values from stores
-  let numberOfNotes = $derived($selectedNumberOfNotes);
-  let denomination = $derived($selectedDenomination);
-  
-  // Get print data from localStorage (for new tab) or use preparedTokens (for history reprint) or most recent print job
-  let printDataFromStorage = $state<{
-    tokens: any[];
-    denomination: number;
-    numberOfNotes: number;
-    template: any;
-    style: any;
-    mintUrl: string;
+  type PrintData = {
+    tokens: Token[];
+    template?: TemplateRef | null;
+    style?: StyleRef | null;
+    mintUrl?: string;
+    paper?: PaperSize;
     timestamp: number;
-  } | null>(null);
-  
-  // Use localStorage data if available (new tab), otherwise use preparedTokens (history reprint), otherwise use most recent print job
-  let currentTokens = $derived(printDataFromStorage?.tokens || ($preparedTokens.length > 0 ? $preparedTokens : ($prints[$prints.length - 1]?.tokens || [])));
-  let currentPrint = $derived(printDataFromStorage ? null : ($preparedTokens.length > 0 ? null : $prints[$prints.length - 1]));
-  
-  // When using localStorage data (new tab), use that data
-  // When using preparedTokens (from history), use the store values that were set by reprint function
-  // Otherwise, use values from the currentPrint
-  let currentDenomination = $derived(printDataFromStorage?.denomination || ($preparedTokens.length > 0 ? denomination : (currentPrint ? getAmountForTokenSet(currentPrint.tokens[0]?.proofs || []) : denomination)));
-  let currentNumberOfNotes = $derived(printDataFromStorage?.numberOfNotes || ($preparedTokens.length > 0 ? numberOfNotes : (currentPrint?.tokens?.length || numberOfNotes)));
-  let currentMintUrl = $derived(printDataFromStorage?.mintUrl || ($preparedTokens.length > 0 ? ($mint?.url || 'Unknown') : (currentPrint?.mint || ($mint?.url || 'Unknown'))));
-  let currentTemplate = $derived(printDataFromStorage?.template || ($preparedTokens.length > 0 ? $selectedTemplate : (currentPrint?.template || $selectedTemplate)));
-  let currentStyle = $derived(printDataFromStorage?.style || ($preparedTokens.length > 0 ? $selectedStyle : (currentPrint?.style || $selectedStyle)));
+  };
 
-  // Auto-print when component loads
-  onMount(() => {
-    // Try to get print data from localStorage (for new tab scenario)
+  // The job comes from the tab that opened this one; fall back to the latest print in this browser
+  const readPrintData = (): PrintData | null => {
     try {
-      const storedData = localStorage.getItem('currentPrintData');
-      if (storedData) {
-        const parsed = JSON.parse(storedData);
-        // Check if the data is recent (within last 5 minutes)
-        if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
-          printDataFromStorage = parsed;
-          console.log('Using print data from localStorage:', parsed);
-        } else {
-          // Data is too old, remove it
-          localStorage.removeItem('currentPrintData');
-        }
-      }
+      const stored = localStorage.getItem("currentPrintData");
+      if (!stored) return null;
+      const parsed = JSON.parse(stored);
+      if (Date.now() - parsed.timestamp < 5 * 60 * 1000) return parsed;
+      localStorage.removeItem("currentPrintData");
     } catch (error) {
-      console.error('Error reading print data from localStorage:', error);
+      console.error("Error reading print data:", error);
     }
-    
-    console.log('PrintPage loaded with data:', {
-      printDataFromStorage,
-      currentTokens: currentTokens.length,
-      currentTemplate,
-      currentStyle,
-      currentDenomination,
-      currentNumberOfNotes,
-      currentMintUrl
-    });
-    
-    // Debug token data
-    console.log('First token:', currentTokens[0]);
-    console.log('Template type:', currentTemplate?.type);
-    console.log('Style type:', currentStyle?.type);
-    
-    setTimeout(() => {
-      window.print();
-    }, 1000);
+    return null;
+  };
+
+  const data = readPrintData();
+  const latest = $prints[$prints.length - 1];
+  const tokens: Token[] = data?.tokens ?? ($preparedTokens.length > 0 ? $preparedTokens : latest?.tokens ?? []);
+  const design = resolveDesign(
+    data?.template ?? ($preparedTokens.length > 0 ? $selectedTemplate : latest?.template ?? $selectedTemplate),
+    data?.style ?? ($preparedTokens.length > 0 ? $selectedStyle : latest?.style ?? $selectedStyle),
+  );
+  const paper: PaperSize = data?.paper ?? $paperSize;
+  const mintUrl = data?.mintUrl ?? tokens[0]?.mint ?? latest?.mint ?? $mint?.url ?? "";
+  const amount = getAmountForTokenSet(tokens[0]?.proofs ?? []);
+  const layout = sheetLayout(design.family, paper);
+  const sheets = chunk(tokens.map(encodeToken));
+  const fmt = fmtNum;
+
+  // Split the tag so the Svelte preprocessor does not read it as this component's style block
+  const pageRule = `<${"style"}>@page { size: ${PAPER[paper].css}; margin: 0; }</${"style"}>`;
+
+  onMount(async () => {
+    await tick();
+    await document.fonts.ready;
+    // The note components draw their QR codes after mounting; give them a beat, then wait for every image
+    await new Promise((r) => setTimeout(r, 400));
+    const images = Array.from(document.querySelectorAll<HTMLImageElement>(".sheets img"));
+    await Promise.all(
+      images.map((img) => (img.complete ? null : new Promise((r) => img.addEventListener("load", r, { once: true })))),
+    );
+    setTimeout(() => window.print(), 300);
   });
 </script>
 
-<!-- Print-only styles -->
-<style>
-  @media print {
-    body {
-      margin: 0;
-      padding: 0;
-      background: white;
-    }
-    
-    /* Simple flexbox layout for multiple notes per page */
-    .notes-container {
-      display: flex !important;
-      flex-wrap: wrap !important;
-      gap: 20px !important;
-      padding: 20px !important;
-      justify-content: center !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    .note-container {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      page-break-inside: avoid !important;
-      min-height: 200px !important;
-      border: 1px solid #ccc !important; /* Debug border to see containers */
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    .note-container:last-child {
-      page-break-after: avoid !important;
-    }
-    
-    /* Ensure notes are visible and properly sized */
-    .note-container svg {
-      width: 400px !important; /* Slightly smaller than original for better fit */
-      height: auto !important;
-      max-height: 200px !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      display: block !important;
-    }
-    
-    /* For CustomNote which has different dimensions */
-    .note-container svg[viewBox="0 0 534 279"] {
-      width: 500px !important;
-      max-height: 250px !important;
-    }
-    
-    /* For ComicNote - make it the same size as SovereignNote when printing */
-    .note-container svg[viewBox="0 0 420.32997 214.49"] {
-      width: 800px !important;
-      height: auto !important;
-      max-width: none !important;
-      max-height: none !important;
-    }
-    
-    /* For SovereignNote which is HTML-based, not SVG */
-    .note-container .note-container {
-      width: 800px !important;
-      height: 400px !important;
-      max-width: none !important;
-      max-height: none !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      display: block !important;
-    }
-    
-    /* Ensure SovereignNote text elements are properly sized for print */
-    .note-container .note-container div[style*="font-size"] {
-      font-size: 16px !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    /* Force font size for SovereignNote denomination text specifically */
-    .sovereign-denomination {
-      font-size: 24px !important;
-      font-weight: bold !important;
-      color: #8B4513 !important;
-      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
-      font-family: 'Porter Sans Inline Block', sans-serif !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    /* Ensure all SVG elements are visible */
-    .note-container svg * {
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    /* Ensure note components themselves are visible */
-    .note-container > * {
-      visibility: visible !important;
-      opacity: 1 !important;
-      display: block !important;
-    }
-    
-    /* Ensure proper page breaks */
-    .page-break {
-      page-break-before: always !important;
-    }
-    
-    /* Header styling for print */
-    .print-header {
-      text-align: center !important;
-      margin-bottom: 20px !important;
-      color: #4E4318 !important;
-      page-break-after: avoid !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    /* Force font size for SovereignNote denomination text in print */
-    .sovereign-denomination {
-      font-size: 32px !important;
-      font-weight: bold !important;
-      color: #8B4513 !important;
-      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
-      font-family: 'Porter Sans Inline Block', sans-serif !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    /* Additional targeting for the denomination text class in print */
-    .denomination-text {
-      font-size: 32px !important;
-    }
-    
-    /* Force font size specifically for Sovereign Note denomination in print context */
-    .print-page .denomination-text {
-      font-size: 32px !important;
-    }
-    
-    /* Target the specific div that contains the denomination text in print */
-    .print-page div[class*="sovereign-denomination"] {
-      font-size: 32px !important;
-    }
-  }
-  
-  /* Screen styles */
-  body {
-    font-family: 'Cabinet Grotesk', Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: white;
-  }
-  
-  /* Simple flexbox layout for screen preview */
-  .notes-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-    justify-content: center;
-  }
-  
-  .note-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
-    border: 1px solid #ccc; /* Debug border to see containers */
-  }
-  
-  /* Ensure notes are visible and properly sized on screen */
-  .note-container svg {
-    width: 400px; /* Slightly smaller than original for better fit */
-    height: auto;
-    max-height: 200px;
-  }
-  
-  /* For CustomNote which has different dimensions */
-  .note-container svg[viewBox="0 0 534 279"] {
-    width: 500px;
-    max-height: 250px;
-  }
-  
-  /* For ComicNote - allow it to scale properly on screen */
-  .note-container svg[viewBox="0 0 420.32997 214.49"] {
-    width: 400px;
-    height: auto;
-    max-height: 200px;
-  }
-  
-  .print-header {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #4E4318;
-  }
-  
-  .print-header h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .print-header p {
-    font-size: 16px;
-    margin: 10px 0 0 0;
-    opacity: 0.7;
-  }
-  
+<svelte:head>
+  {@html pageRule}
+</svelte:head>
 
-</style>
-
-<!-- Print page content -->
 <div class="print-page">
-  <!-- Header for print page -->
-  <div class="print-header">
-    <h1>Ecash Notes</h1>
-    <p>{currentNumberOfNotes} notes × {currentDenomination} sats = {currentNumberOfNotes * currentDenomination} sats total</p>
-    <p>Mint: {currentMintUrl}</p>
-  </div>
+  <header class="toolbar">
+    <div>
+      <p class="title heading">
+        {fmt(tokens.length)} notes on {sheets.length} {sheets.length === 1 ? "sheet" : "sheets"}
+      </p>
+      <p class="tip">
+        Print on {PAPER[paper].label}, landscape, at 100% scale ("Actual size") with margins set to none, so every note
+        comes out at {Math.round(layout.cell.w)} × {Math.round(layout.cell.h)} mm. Cut along the marks.
+      </p>
+    </div>
+    <button class="btn-go" onclick={() => window.print()}>
+      <Printer size={20} strokeWidth={2.5} aria-hidden="true" /> Print
+    </button>
+  </header>
 
-  <!-- Simple notes layout -->
-  <div style="background: white; padding: 20px;">
-    <!-- Render notes directly -->
+  {#if tokens.length === 0}
+    <p class="tip empty">There's no print job here. Open the print sheet from a finished job or from History.</p>
+  {/if}
 
-    {#each currentTokens as token, index}
-      <div style="margin: 20px 0; text-align: center;">
-        {#if currentTemplate?.type === 'comic' || currentStyle?.type === 'comic'}
-          <div style="display: inline-block;">
-            <ComicNote
-              design={typeof currentStyle?.design === 'number' ? currentStyle.design : 7}
-              denomination={currentDenomination}
-              mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(token)}
-              unit="sat"
-              isPrint={true}
-            />
-          </div>
-        {:else if currentTemplate?.type === 'sovereign' || currentStyle?.type === 'sovereign'}
-          <div style="display: inline-block;">
-            <SovereignNote
-              denomination={currentDenomination}
-              mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(token)}
-              unit="sat"
-              isPrint={true}
-              design={typeof currentStyle?.design === 'string' ? currentStyle.design : 'Soverign_Note.png'}
-            />
-          </div>
-        {:else if currentTemplate?.type === 'chaum' || currentStyle?.type === 'chaum'}
-          <div style="display: inline-block;">
+  <div class="sheets">
+    {#each sheets as sheet, si}
+      <section class="sheet" style="width: {layout.page.w}mm; height: {layout.page.h}mm;" aria-label="Sheet {si + 1}">
+        {#each layout.marks as m}
+          <span
+            class="mark"
+            style="left: {m.x1}mm; top: {m.y1}mm; width: {m.x1 === m.x2 ? '0.25mm' : `${m.x2 - m.x1}mm`}; height: {m.y1 === m.y2
+              ? '0.25mm'
+              : `${m.y2 - m.y1}mm`};"
+          ></span>
+        {/each}
 
-            <ChaumNote
-              denomination={currentDenomination}
-              mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(token)}
-              unit="sat"
-              isPrint={true}
-            />
-          </div>
-        {:else if currentTemplate?.type === 'meadows' || currentStyle?.type === 'meadows'}
-          <div style="display: inline-block;">
-            <MeadowsNote
-              denomination={currentDenomination}
-              mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(token)}
-              unit="sat"
-              isPrint={true}
-            />
-          </div>
-        {:else}
-          <div style="display: inline-block; width: 534px; height: 279px;">
-            <CustomNote
-              denomination={currentDenomination}
-              mintUrl={currentMintUrl}
-              token={getEncodedTokenV4(token)}
-              colorCode={currentStyle?.colorCode || '#E4690A'}
-              cornerBrandLogoURL=""
-              brandLogoURL=""
-              unit="sat"
-            />
-          </div>
-        {/if}
-      </div>
-      
-      <!-- Force page break after every 4th note -->
-      {#if (index + 1) % 4 === 0 && index < currentTokens.length - 1}
-        <div style="page-break-after: always;"></div>
-      {/if}
+        <div
+          class="grid"
+          style="left: {layout.x0}mm; top: {layout.y0}mm; width: {layout.gridW}mm; height: {layout.gridH}mm;
+            grid-template-columns: repeat({layout.cols}, {layout.cell.w}mm); grid-template-rows: repeat({layout.rows}, {layout.cell.h}mm);"
+        >
+          {#each sheet as token}
+            <div class="cell">
+              <NoteArt
+                type={design.family.type}
+                design={design.style.design}
+                colorCode={design.style.colorCode}
+                denomination={amount}
+                {mintUrl}
+                {token}
+                isPrint
+              />
+            </div>
+          {/each}
+        </div>
+
+      </section>
     {/each}
   </div>
 </div>
+
+<style>
+  .print-page {
+    min-height: 100svh;
+    padding: 32px var(--gutter) 64px;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    max-width: 297mm;
+    margin: 0 auto 32px;
+  }
+  .title {
+    font-size: 28px;
+  }
+  .tip {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 68ch;
+  }
+  .empty {
+    max-width: 297mm;
+    margin: 0 auto;
+  }
+
+  .sheets {
+    display: grid;
+    justify-content: center;
+    gap: 28px;
+    overflow-x: auto;
+  }
+  .sheet {
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px rgba(20, 20, 20, 0.08),
+      0 18px 40px -18px rgba(20, 20, 20, 0.28);
+  }
+  .mark {
+    position: absolute;
+    background: #000;
+  }
+  .grid {
+    position: absolute;
+    display: grid;
+  }
+  .cell {
+    overflow: hidden;
+  }
+  .cell :global(.note-art),
+  .cell :global(.note-container) {
+    border-radius: 0;
+  }
+
+  @media print {
+    :global(html),
+    :global(body) {
+      background: #fff !important;
+      margin: 0;
+      padding: 0;
+    }
+    .print-page {
+      padding: 0;
+      min-height: 0;
+    }
+    .toolbar,
+    .empty {
+      display: none;
+    }
+    .sheets {
+      display: block;
+      overflow: visible;
+    }
+    .sheet {
+      box-shadow: none;
+      break-after: page;
+      page-break-after: always;
+    }
+    .sheet:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+  }
+</style>

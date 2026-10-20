@@ -1,129 +1,606 @@
 <script lang="ts">
-
-  import PostItCard from "./PostItCard.svelte";
+  import { ArrowRight } from "lucide-svelte";
+  import { fade } from "svelte/transition";
+  import AppHeader from "./ui/AppHeader.svelte";
   import Sponsor from "./Sponsor.svelte";
   import { SPONSORS } from "./sponsors";
-  import { step, selectedTemplate, selectedStyle, selectedDenomination, selectedNumberOfNotes, donation, preparedTokens } from "./stores.svelte";
+  import NoteArt from "./NoteArt.svelte";
+  import { SUGGESTED_MINTS } from "./job";
+  import { fmtNum } from "./format";
+  import {
+    familyOf,
+    NOTES_PER_SHEET,
+    styleRef,
+    templateRef,
+    SPECIMEN_TOKEN,
+    type NoteFamily,
+    type NoteStyle,
+  } from "./templates";
+  import {
+    selectedTemplate,
+    selectedStyle,
+    selectedDenomination,
+    selectedNumberOfNotes,
+    preparedTokens,
+  } from "./stores.svelte";
 
-  // Array of available note images for random selection
-  const noteImages = [
-    "/Chaum-note.jpg",
-    "/Taj-India-Note.png",
-    "/Soverign_Note.png",
-    "/Leafy-Nature-Note.png",
-    "/Nostr-note-1.png",
-    "/Nostr-note-2.png",
-    "/Nostr-Note-3.png",
-    "/Pizzaday-green.png",
-    "/Satoshi-nirvana.png",
-    "/Your-honor.png",
-    "/Ecash_Note_template.svg"  // Cosmic Note (Bitpopart)
+  type Sample = { family: NoteFamily; style: NoteStyle };
+  const sample = (type: NoteFamily["type"], match?: (s: NoteStyle) => boolean): Sample => {
+    const family = familyOf(type);
+    return { family, style: (match && family.styles.find(match)) || family.styles[0] };
+  };
+
+  // One sheet of specimens across every series
+  const sheet: Sample[] = [
+    sample("chaum"),
+    sample("comic", (s) => s.design === 7),
+    sample("sovereign", (s) => s.design === "Soverign_Note.png"),
+    sample("meadows"),
+    sample("sovereign", (s) => s.design === "Taj-India-Note.png"),
+    sample("custom", (s) => s.id === "orange"),
+    sample("sovereign", (s) => s.design === "Nostr-note-1.png"),
+    sample("sovereign", (s) => s.design === "Pizza-day-orange.png"),
   ];
 
-  // Function to get a random note image
-  const getRandomNoteImage = () => {
-    return noteImages[Math.floor(Math.random() * noteImages.length)];
-  };
+  let picked = $state(0);
+  let amount = $state("21");
+  let count = $state("6");
 
-  // Function to get specific notes for testing - ensures Chaum and Taj India are visible
-  const getSpecificNoteImage = (index: number) => {
-    const specificNotes = [
-      "/Chaum-note.jpg",           // Left top
-      "/Taj-India-Note.png",       // Left second
-      "/Soverign_Note.png",        // Left third
-      "/Leafy-Nature-Note.png",    // Left bottom
-      "/Nostr-note-1.png",         // Right top
-      "/Ecash_Note_template.svg",  // Right second (Cosmic Note)
-      "/Nostr-note-2.png",         // Right third (Cosmic Note variation)
-      "/Satoshi-nirvana.png"       // Right bottom
-    ];
-    return specificNotes[index] || getRandomNoteImage();
-  };
+  const amountValue = $derived(Number.parseInt(amount, 10));
+  const countValue = $derived(Number.parseInt(count, 10));
+  const valid = $derived(
+    amountValue > 0 && countValue > 0 && String(amountValue) === amount.trim() && String(countValue) === count.trim(),
+  );
+  const total = $derived(valid ? amountValue * countValue : 0);
+  const specimenAmount = $derived(amountValue > 0 ? amountValue : 21);
+  const sheetCount = $derived(valid ? Math.ceil(countValue / NOTES_PER_SHEET) : 0);
 
+  const nameOf = ({ family, style }: Sample) =>
+    family.styles.length > 1 ? `${family.name}, ${style.name}` : family.name;
+  const current = $derived(sheet[picked]);
 
+  const fmt = fmtNum;
+
+  function go() {
+    if (!valid) return;
+    const { family, style } = sheet[picked];
+    selectedTemplate.set(templateRef(family));
+    selectedStyle.set(styleRef(family, style));
+    selectedDenomination.set(amountValue);
+    selectedNumberOfNotes.set(countValue);
+    preparedTokens.set([]);
+    window.location.hash = "print";
+  }
 </script>
 
-<div class="min-h-screen w-full px-32">
-  <div class="w-full py-8 mb-6">
-    <p class="text-center font-sedgwick text-green-800 text-3xl mb-2">
-      Brrr is a tool.to.println(“Ecash”)
-    </p>
-    <!-- Headline -->
-    <h1 class="text-center font-ojuju font-bold text-9xl text-gray-900 z-30 relative">
-      Print your own Ecash notes
-    </h1>
+<AppHeader />
 
-    <!-- Add margin-top to push the printer/notes down -->
-    <div class="flex justify-center w-full mt-32">
-      <div class="relative" style="width: 36rem; height: 600px;">
-        <!-- Left notes (move further left with negative left values) -->
-        <img src={getSpecificNoteImage(0)} alt="Note Template" class="absolute left-[-6rem] top-24 w-40 rotate-[-15deg]" />
-        <img src={getSpecificNoteImage(1)} alt="Note Template" class="absolute left-[-8rem] top-48 w-40 rotate-[10deg]" />
-        <img src={getSpecificNoteImage(2)} alt="Note Template" class="absolute left-[-5rem] top-80 w-40 rotate-[-8deg]" />
-        <img src={getSpecificNoteImage(3)} alt="Note Template" class="absolute left-0 top-96 w-40 rotate-[5deg]" />
-
-        <!-- Printer -->
-        <img src="/printer.png" alt="Printer" class="absolute left-1/2 top-1/2 z-20 w-[36rem] -translate-x-1/2 -translate-y-1/2" />
-
-        <!-- Right notes (move further right with negative right values) -->
-        <img src={getSpecificNoteImage(4)} alt="Note Template" class="absolute right-[-6rem] top-24 w-40 rotate-[12deg]" />
-        <img src={getSpecificNoteImage(5)} alt="Note Template" class="absolute right-[-8rem] top-48 w-40 rotate-[-10deg]" />
-        <img src={getSpecificNoteImage(6)} alt="Note Template" class="absolute right-[-5rem] top-80 w-40 rotate-[7deg]" />
-        <img src={getSpecificNoteImage(7)} alt="Note Template" class="absolute right-0 top-96 w-40 rotate-[-6deg]" />
-      </div>
+<main>
+  <!-- First viewport: the note you're printing, and the job beside it -->
+  <section class="hero">
+    <div class="hero-head">
+      <h1 class="display">Print your own ecash notes.</h1>
+      <p class="lede">No central banks if everyone is a central bank.</p>
     </div>
-    
-    <!-- GO BRRRR Button -->
-    <div class="flex justify-center mt-16 mb-8">
-      <button
-        class="px-12 py-4 text-5xl font-bold rounded-lg btn-elegant"
-        style="background-color: #E4690A; color: white; border: 3px solid #A94705; font-family: 'Cabinet Grotesk', sans-serif;"
-        onclick={() => {
-          // Reset all application state to start fresh
-          step.set(1);
-          selectedTemplate.set(null);
-          selectedStyle.set(null);
-          selectedDenomination.set(1);
-          selectedNumberOfNotes.set(1);
-          donation.set(1);
-          preparedTokens.set([]);
-          
-          // Navigate to fullscreen print page using hash routing
-          console.log('GO BRRRR clicked! Resetting state and setting hash to #print');
-          window.location.hash = 'print';
-          console.log('Hash set to:', window.location.hash);
-        }}
-      >
-        GO BRRRR! →
+
+    <div class="showcase">
+      <div class="feature">
+        {#key picked}
+          <div class="feature-note" style="--aspect: {current.family.aspect}" in:fade={{ duration: 180 }}>
+            <NoteArt
+              type={current.family.type}
+              design={current.style.design}
+              colorCode={current.style.colorCode}
+              denomination={specimenAmount}
+              mintUrl={SUGGESTED_MINTS[0]}
+              token={SPECIMEN_TOKEN}
+            />
+          </div>
+        {/key}
+      </div>
+
+      <div class="swatches" role="group" aria-label="Pick a design">
+        {#each sheet as s, i}
+          <button class="swatch" aria-pressed={picked === i} aria-label={nameOf(s)} onclick={() => (picked = i)}>
+            <NoteArt
+              type={s.family.type}
+              design={s.style.design}
+              colorCode={s.style.colorCode}
+              denomination={specimenAmount}
+              mintUrl={SUGGESTED_MINTS[0]}
+              token={SPECIMEN_TOKEN}
+            />
+          </button>
+        {/each}
+      </div>
+      <p class="caption">{nameOf(current)}</p>
+    </div>
+
+    <form class="buy" onsubmit={(e) => { e.preventDefault(); go(); }}>
+      <div class="fields">
+        <label>
+          <span class="field-label">Amount per note</span>
+          <span class="field">
+            <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" bind:value={amount} aria-describedby="hero-total" aria-invalid={!(amountValue > 0)} />
+            <span class="unit">sat</span>
+          </span>
+        </label>
+        <span class="times" aria-hidden="true">&times;</span>
+        <label>
+          <span class="field-label">Notes</span>
+          <span class="field">
+            <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" bind:value={count} aria-describedby="hero-total" aria-invalid={!(countValue > 0)} />
+            <span class="unit">notes</span>
+          </span>
+        </label>
+      </div>
+      {#if valid}
+        <p class="hint">{fmt(countValue)} {countValue === 1 ? "note fills" : "notes fill"} {sheetCount} {sheetCount === 1 ? "sheet" : "sheets"}.</p>
+      {:else}
+        <p class="hint error">Enter whole numbers, 1 or more.</p>
+      {/if}
+
+      <div class="checkout">
+        <p class="total" id="hero-total" aria-live="polite">
+          <span class="field-label">Total</span>
+          <span class="total-value">{valid ? `${fmt(total)} sat` : "–"}</span>
+        </p>
+        <button class="btn-go go" type="submit" disabled={!valid}>
+          GO BRRRR <ArrowRight size={22} strokeWidth={2.5} aria-hidden="true" />
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- What a note is -->
+  <section class="anatomy">
+    <h2 class="heading section-title">What you're handing out</h2>
+    <dl class="notes-on-notes">
+      <div>
+        <dt>The QR is the money.</dt>
+        <dd>A Cashu wallet scans it and claims the sats. Whoever scans first gets them; after that the note is spent and can't be reused.</dd>
+      </div>
+      <div>
+        <dt>The amount is fixed at print.</dt>
+        <dd>Every note on a sheet carries the same amount, paid for up front with one Lightning invoice.</dd>
+      </div>
+      <div>
+        <dt>Lose it and it's gone.</dt>
+        <dd>Like cash. Nobody can recover a note that was never scanned, and only the person holding it can claim it.</dd>
+      </div>
+      <div>
+        <dt>The mint holds the sats.</dt>
+        <dd>Each note is issued by the Cashu mint you pick, which keeps the sats until the note is claimed.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- How a sheet gets made -->
+  <section class="howto">
+    <h2 class="heading section-title howto-title">From invoice to scissors</h2>
+    <ol class="steps" role="list">
+      <li>
+        <span class="step-n" aria-hidden="true">1</span>
+        <div>
+          <h3 class="step-title">Pick a design.</h3>
+          <p class="step-note">Five series, from the Chaum Note to Bitpopart, Sovereign, and Mr. Meadows.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-n" aria-hidden="true">2</span>
+        <div>
+          <h3 class="step-title">Set amount &times; count.</h3>
+          <p class="step-note">Any amount in sats. Six notes fit on one A4 or Letter sheet, each about the size of a €10 note.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-n" aria-hidden="true">3</span>
+        <div>
+          <h3 class="step-title">Pay one invoice.</h3>
+          <p class="step-note">Scan the Lightning invoice with your phone. No account, no sign-up.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-n" aria-hidden="true">4</span>
+        <div>
+          <h3 class="step-title">Print, cut, hand out.</h3>
+          <p class="step-note">Cut along the marks. Keep the QR backup until every note is in someone's hand.</p>
+        </div>
+      </li>
+    </ol>
+    <div class="again">
+      <p class="again-line">Your sheet's waiting.</p>
+      <button class="btn-go" onclick={go} disabled={!valid}>
+        GO BRRRR <ArrowRight size={22} strokeWidth={2.5} aria-hidden="true" />
       </button>
     </div>
-    
-    <h2 class="text-center font-ojuju font-bold text-4xl text-gray-900 mt-12 mb-4">
-      FAQs
-    </h2>
-    <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-8">
-      <PostItCard title="What is an ecash note?" body="A bitcoin ecash note is a printable slip with a QR code that holds a claimable amount of bitcoin-backed ecash. You can hand it to someone like cash, and they can scan it to redeem the funds. Once claimed, the note is no longer valid and can't be reused." rotation="rotate-[15deg]" />
-      <PostItCard title="What happens if I lose it?" body="If the QR code on the note is never scanned and claimed, the ecash stays unredeemed. Only the person holding the physical note can access the funds, so treat it like real cash — if it's lost, it can't be recovered.." rotation="-rotate-[15deg]" />
-      <PostItCard title="How do I print?" body="Just choose a design, select how many notes you want to print and for what amounts, then pay using lightning or ecash. The app will generate a printable sheet you can cut and hand out." rotation="rotate-[15deg]" />
-    </div>
-    
-    <!-- Sponsors Section -->
-    {#if SPONSORS.length > 0}
-      <div class="mt-16 mb-8">
-        <h2 class="text-center font-ojuju font-bold text-4xl text-gray-900 mb-8">
-          Our Sponsors
-        </h2>
-        <div class="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
-          {#each SPONSORS as sponsor}
-            <Sponsor {sponsor} />
-          {/each}
-        </div>
-      </div>
-    {/if}
-  </div>
+  </section>
 
+  {#if SPONSORS.length > 0}
+    <section class="sponsors">
+      <h2 class="heading section-title">Sponsors</h2>
+      <ul class="sponsor-row">
+        {#each SPONSORS as sponsor}
+          <li><Sponsor {sponsor} /></li>
+        {/each}
+      </ul>
+    </section>
+  {/if}
 
-  
-  <!-- Bottom spacing -->
-  <div class="h-16"></div>
-</div>
+  <footer class="foot">
+    <p class="foot-mark">CASHU BRRR</p>
+    <p class="foot-links">
+      <a href="https://cashu.space" target="_blank" rel="noopener noreferrer">Cashu</a>
+      <a href="https://github.com/gandlafbtc/cashu-brrr" target="_blank" rel="noopener noreferrer">Source</a>
+    </p>
+  </footer>
+</main>
+
+<style>
+  main {
+    position: relative;
+  }
+
+  /* ---------------- first viewport ---------------- */
+  /* Product-page split: the note on the left, everything about the job on the right */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(320px, 5fr);
+    grid-template-areas:
+      "show head"
+      "show buy";
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(40px, 5vw, 88px);
+    padding: clamp(40px, 7vh, 80px) var(--gutter) 0;
+  }
+  .hero-head {
+    grid-area: head;
+  }
+  h1 {
+    font-size: clamp(2.25rem, 3.4vw, 3rem);
+  }
+  .lede {
+    margin-top: 16px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 30ch;
+    text-wrap: pretty;
+  }
+
+  .showcase {
+    grid-area: show;
+    min-width: 0;
+    container-type: inline-size;
+  }
+  /* A fixed stage at the narrowest note's shape: every note spans its full width and switching never moves the page */
+  .feature {
+    aspect-ratio: 534 / 279;
+    container-type: size;
+    display: grid;
+    /* Top-aligned, so the note's top edge always meets the headline's */
+    place-items: start center;
+  }
+  .feature > * {
+    grid-area: 1 / 1;
+  }
+  .feature-note {
+    width: min(100cqw, 100cqh * var(--aspect));
+    border-radius: var(--radius-note);
+    overflow: hidden;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 12px;
+    align-items: center;
+    margin-top: 28px;
+  }
+  @container (max-width: 600px) {
+    .swatches {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px 12px;
+    }
+  }
+  .swatch {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: 3px;
+    transition: outline-color 160ms var(--ease-out);
+  }
+  .swatch:hover {
+    outline-color: var(--hair);
+  }
+  .swatch[aria-pressed="true"] {
+    outline-color: var(--cut);
+  }
+  .swatch:focus-visible {
+    outline-color: var(--ink);
+  }
+  .caption {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .buy {
+    grid-area: buy;
+    align-self: start;
+    margin-top: clamp(32px, 5vh, 48px);
+  }
+  .fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: end;
+    column-gap: 14px;
+  }
+  .buy .field {
+    padding: 12px 16px;
+  }
+  .buy .field input {
+    font-size: 28px;
+  }
+  .buy .field .unit {
+    font-size: 14px;
+  }
+  .times {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 17px;
+  }
+  .hint {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+  .hint.error {
+    color: var(--cut-ink);
+  }
+  .checkout {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px 24px;
+    margin-top: 36px;
+  }
+  .total .field-label {
+    margin-bottom: 4px;
+  }
+  .total-value {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    line-height: 1.05;
+  }
+  .go {
+    font-size: clamp(18px, 1.6vw, 22px);
+    padding: 18px 32px;
+  }
+
+  /* ---------------- below the fold ---------------- */
+  .anatomy,
+  .howto,
+  .sponsors {
+    position: relative;
+    padding: clamp(72px, 10vw, 128px) var(--gutter) 0;
+  }
+  .section-title {
+    font-size: clamp(2rem, 3.4vw, 3rem);
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+
+  .notes-on-notes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px clamp(32px, 6vw, 112px);
+  }
+  .notes-on-notes dt {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .notes-on-notes dd {
+    margin-top: 8px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 52ch;
+    text-wrap: pretty;
+  }
+
+  /* Heading and the closing action anchor the left; the numbered steps read down the right */
+  .howto {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas:
+      "title steps"
+      "again steps";
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(32px, 6vw, 112px);
+  }
+  .howto-title {
+    grid-area: title;
+    line-height: 1.05;
+    max-width: 9em;
+  }
+  .steps {
+    grid-area: steps;
+    list-style: none;
+    display: grid;
+    gap: 40px;
+    padding-top: 6px;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 2.5ch minmax(0, 1fr);
+    column-gap: 20px;
+    align-items: baseline;
+  }
+  .step-n {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.25;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .step-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  .step-note {
+    margin-top: 6px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 42ch;
+    text-wrap: pretty;
+  }
+  .again {
+    grid-area: again;
+    align-self: start;
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+  }
+  .again-line {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .sponsor-row {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: clamp(96px, 12vw, 160px) var(--gutter) 0;
+    padding: 0 0 40px;
+  }
+  .foot-mark {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .foot-links {
+    display: flex;
+    gap: 20px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .foot-links a {
+    color: var(--ink);
+  }
+
+  /* ---------------- narrow screens ---------------- */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "head"
+        "show"
+        "buy";
+      grid-template-rows: auto;
+    }
+    .showcase {
+      margin-top: 32px;
+    }
+    .buy {
+      max-width: 560px;
+      margin-top: 36px;
+    }
+  }
+  @media (max-width: 760px) {
+    .hero {
+      padding-top: 28px;
+    }
+    .lede {
+      display: none;
+    }
+    .showcase {
+      margin-top: 24px;
+    }
+    /* One full-bleed strip that scrolls sideways; the padding keeps the picked outline unclipped */
+    .swatches {
+      display: flex;
+      gap: 12px;
+      margin: 14px calc(-1 * var(--gutter)) 0;
+      padding: 6px var(--gutter);
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scroll-padding-inline: var(--gutter);
+      scrollbar-width: none;
+    }
+    .swatches::-webkit-scrollbar {
+      display: none;
+    }
+    .swatch {
+      flex: 0 0 84px;
+      scroll-snap-align: start;
+    }
+    .caption {
+      margin-top: 8px;
+    }
+    .buy .field input {
+      font-size: 22px;
+    }
+    .checkout {
+      margin-top: 24px;
+      align-items: center;
+      gap: 16px;
+    }
+    .total-value {
+      font-size: 34px;
+    }
+    .go {
+      padding: 16px 22px;
+    }
+    .notes-on-notes {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+    .howto {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "title"
+        "steps"
+        "again";
+      grid-template-rows: auto;
+    }
+    .steps {
+      gap: 32px;
+    }
+    .steps li {
+      column-gap: 14px;
+    }
+    .step-n,
+    .step-title {
+      font-size: 20px;
+    }
+    .again {
+      margin-top: 48px;
+      justify-items: stretch;
+    }
+
+  }
+</style>
