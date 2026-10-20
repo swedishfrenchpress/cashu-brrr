@@ -51,7 +51,7 @@
     color: var(--ink-soft);
   }
   .name {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 20px;
     line-height: 1.1;

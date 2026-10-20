@@ -77,7 +77,7 @@
               {/if}
             </div>
             <div class="what">
-              <p class="count heading">{fmt(p.tokens.length)} × {fmt(amount)} sat</p>
+              <p class="count">{fmt(p.tokens.length)} × {fmt(amount)} sat</p>
               <p class="design">{d.family.name}{d.family.styles.length > 1 ? `, ${d.style.name}` : ""}</p>
             </div>
             <div class="printed">
@@ -155,8 +155,10 @@
     grid-area: printed;
   }
   .count {
+    font-weight: 700;
     font-size: 24px;
     line-height: 1.15;
+    letter-spacing: -0.01em;
   }
   .design {
     font-size: 14px;

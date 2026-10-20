@@ -51,6 +51,12 @@
         ],
         "createdAt": "2026-10-19T19:26:57.011Z",
         "reason": "model decision: historical decision-round sketch from before the user switched to TX-02; never shipped"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#f7efc0",
+        "createdAt": "2026-10-20T13:05:39.488Z",
+        "reason": "Chaum note artwork's own cream amount colour; note colours belong to the artwork, not the two-ink chrome"
       }
     ]
   }

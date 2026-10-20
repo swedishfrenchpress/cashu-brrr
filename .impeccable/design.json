@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T12:00:00Z",
+  "generatedAt": "2026-10-20T18:00:00Z",
   "title": "Design System: Cashu Brrr",
   "extensions": {
     "colorMeta": {
@@ -160,35 +160,35 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Landing headline only, top of the hero's right column; TX-02 Bold, max 9em."
+        "purpose": "Landing headline only, top of the hero's right column; Ultra 400."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Section titles below the fold at -0.035em; History title uses the Figure sizes, clamp(2.25rem, 3.4vw, 3rem), at -0.015em."
+        "purpose": "Section titles below the fold in Ultra 400; History title uses the Display sizes, clamp(2.25rem, 3.4vw, 3rem)."
       },
       "headline-sm": {
         "displayName": "Headline Small",
-        "purpose": "The single-note amount in the note view."
+        "purpose": "The single-note amount in the note view; Ultra 400."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Ticket titles and the empty History state; the print toolbar title is 28px."
+        "purpose": "Ticket titles and the empty History state in Ultra 400; the print toolbar title is 28px."
       },
       "figure": {
         "displayName": "Figure",
-        "purpose": "The landing total in the checkout row; 34px under 760px."
+        "purpose": "The landing total in the checkout row, Ultra 400; 34px under 760px."
       },
       "figure-sm": {
         "displayName": "Figure Small",
-        "purpose": "Action-bar total and sheet count."
+        "purpose": "Action-bar total and sheet count, Ultra 400."
       },
       "step": {
         "displayName": "Step",
-        "purpose": "Landing step titles; step numbers are 700 at 24px in Faint Ink; both 20px under 760px."
+        "purpose": "Landing step titles in Franklin 700; step numbers are 700 at 24px in Faint Ink; both 20px under 760px. History row counts are Franklin 700 at 24px, 1.15, -0.01em."
       },
       "wordmark": {
         "displayName": "Wordmark",
-        "purpose": "CASHU BRRR: 22px in the header on every screen and in the footer; 15px liner repeat at +0.02em."
+        "purpose": "CASHU BRRR in Ultra 400: 22px in the header on every screen and in the footer. The liner repeat is Franklin 700, 15px, +0.02em."
       },
       "term": {
         "displayName": "Term",
@@ -204,7 +204,7 @@
       },
       "go-label": {
         "displayName": "Go Label",
-        "purpose": "GO pill label; clamp(18px, 1.6vw, 22px) in the landing checkout row, 17px in the action bar."
+        "purpose": "GO pill label in Ultra 400 at +0.01em; clamp(18px, 1.6vw, 22px) in the landing checkout row, 17px in the action bar."
       },
       "body": {
         "displayName": "Body",
@@ -224,7 +224,7 @@
       },
       "data": {
         "displayName": "Data",
-        "purpose": "Numbers typed into fields; mint URL input at 400, 14px."
+        "purpose": "Numbers typed into fields and the History row total, Franklin 700; mint URL input at 400, 14px. Figures are proportional (no tnum in the subset)."
       },
       "data-lg": {
         "displayName": "Data Large",
@@ -322,7 +322,7 @@
       "refersTo": "button-go",
       "description": "The primary action: ink pill with a 2px magenta outline offset 5px.",
       "html": "<button class=\"ds-btn ds-btn-go\">GO BRRRR <svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button> <button class=\"ds-btn ds-btn-go\" disabled>Pay</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-display);white-space:nowrap;cursor:pointer;border:0;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);}.ds-btn-go{background:var(--ink,#141414);color:#fff;font-weight:700;font-size:18px;padding:16px 32px;border-radius:999px;outline:2px solid var(--cut,#e5007d);outline-offset:5px;margin:8px;}.ds-btn-go:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(20,20,20,.45);}.ds-btn-go:active:not(:disabled){transform:translateY(0);box-shadow:none;}.ds-btn-go:focus-visible{outline-width:3px;outline-offset:5px;}.ds-btn-go:disabled{background:var(--hair,#c8ccc2);color:var(--ink-soft,#464943);outline-color:var(--hair,#c8ccc2);cursor:not-allowed;}"
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-ui);white-space:nowrap;cursor:pointer;border:0;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);}.ds-btn-go{background:var(--ink,#141414);color:#fff;font-family:var(--font-display);font-weight:400;letter-spacing:.01em;font-size:18px;padding:16px 32px;border-radius:999px;outline:2px solid var(--cut,#e5007d);outline-offset:5px;margin:8px;}.ds-btn-go:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(20,20,20,.45);}.ds-btn-go:active:not(:disabled){transform:translateY(0);box-shadow:none;}.ds-btn-go:focus-visible{outline-width:3px;outline-offset:5px;}.ds-btn-go:disabled{background:var(--hair,#c8ccc2);color:var(--ink-soft,#464943);outline-color:var(--hair,#c8ccc2);cursor:not-allowed;}"
     },
     {
       "name": "Line Button",
@@ -330,7 +330,7 @@
       "refersTo": "button-line",
       "description": "Secondary actions: 1.5px ink stroke pill that fills ink on hover.",
       "html": "<button class=\"ds-btn ds-btn-line\">Reprint</button> <button class=\"ds-btn ds-btn-line\" disabled>Connect</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-display);white-space:nowrap;cursor:pointer;border:0;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);}.ds-btn-line{background:transparent;color:var(--ink,#141414);font-weight:700;font-size:15px;padding:11px 20px;border:1.5px solid var(--ink,#141414);border-radius:999px;}.ds-btn-line:hover:not(:disabled){background:var(--ink,#141414);color:#fff;}.ds-btn-line:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}.ds-btn-line:disabled{color:var(--ink-faint,#6a6e66);border-color:var(--hair,#c8ccc2);cursor:not-allowed;}"
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-ui);white-space:nowrap;cursor:pointer;border:0;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);}.ds-btn-line{background:transparent;color:var(--ink,#141414);font-weight:700;font-size:15px;padding:11px 20px;border:1.5px solid var(--ink,#141414);border-radius:999px;}.ds-btn-line:hover:not(:disabled){background:var(--ink,#141414);color:#fff;}.ds-btn-line:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}.ds-btn-line:disabled{color:var(--ink-faint,#6a6e66);border-color:var(--hair,#c8ccc2);cursor:not-allowed;}"
     },
     {
       "name": "Quiet Button",
@@ -338,15 +338,15 @@
       "refersTo": "button-quiet",
       "description": "Tertiary underlined text action; hover turns Die Ink.",
       "html": "<button class=\"ds-btn ds-btn-quiet\">Change the job</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-display);white-space:nowrap;cursor:pointer;border:0;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);}.ds-btn-quiet{background:none;color:var(--ink,#141414);font-weight:700;font-size:14px;padding:4px 2px;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em;}.ds-btn-quiet:hover:not(:disabled){color:var(--cut-ink,#b4005f);}.ds-btn-quiet:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--font-ui);white-space:nowrap;cursor:pointer;border:0;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),outline-color 160ms var(--ease-out);}.ds-btn-quiet{background:none;color:var(--ink,#141414);font-weight:700;font-size:14px;padding:4px 2px;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em;}.ds-btn-quiet:hover:not(:disabled){color:var(--cut-ink,#b4005f);}.ds-btn-quiet:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
     },
     {
       "name": "Amount Field",
       "kind": "input",
       "refersTo": "field",
-      "description": "Paper field with a mono tabular value and a unit; ink outline on focus.",
+      "description": "Paper field with a Franklin 700 value and a unit; ink outline on focus.",
       "html": "<label class=\"ds-wrap\"><span class=\"ds-field-label\">Amount per note</span><span class=\"ds-field\"><input value=\"21\" inputmode=\"numeric\"><span class=\"ds-unit\">sat</span></span></label>",
-      "css": ".ds-wrap{display:block;width:180px;}.ds-field-label{display:block;font-family:var(--font-ui);font-weight:700;font-size:13px;color:var(--ink-soft,#464943);margin-bottom:6px;}.ds-field{display:flex;align-items:baseline;gap:8px;background:var(--paper,#fff);border:1.5px solid var(--ink,#141414);border-radius:8px;padding:10px 14px;outline:2px solid transparent;outline-offset:2px;transition:outline-color 160ms var(--ease-out);}.ds-field:focus-within{outline-color:var(--ink,#141414);}.ds-field input{width:100%;min-width:0;background:transparent;border:0;outline:0;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:700;font-size:20px;color:var(--ink,#141414);caret-color:var(--cut,#e5007d);}.ds-unit{font-family:var(--font-mono);font-size:12px;color:var(--ink-soft,#464943);}"
+      "css": ".ds-wrap{display:block;width:180px;}.ds-field-label{display:block;font-family:var(--font-ui);font-weight:700;font-size:13px;color:var(--ink-soft,#464943);margin-bottom:6px;}.ds-field{display:flex;align-items:baseline;gap:8px;background:var(--paper,#fff);border:1.5px solid var(--ink,#141414);border-radius:8px;padding:10px 14px;outline:2px solid transparent;outline-offset:2px;transition:outline-color 160ms var(--ease-out);}.ds-field:focus-within{outline-color:var(--ink,#141414);}.ds-field input{width:100%;min-width:0;background:transparent;border:0;outline:0;font-family:var(--font-ui);font-weight:700;font-size:20px;color:var(--ink,#141414);caret-color:var(--cut,#e5007d);}.ds-unit{font-family:var(--font-ui);font-size:12px;color:var(--ink-soft,#464943);}"
     },
     {
       "name": "Label Chip",
@@ -354,7 +354,7 @@
       "refersTo": "label-chip",
       "description": "Selectable mint or series chip; pressed fills ink; keyboard focus draws a magenta outline.",
       "html": "<button class=\"ds-chip\" aria-pressed=\"true\"><span>mint.minibits.cash</span></button> <button class=\"ds-chip\" aria-pressed=\"false\"><span>mint.lnvoltz.com</span></button>",
-      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper,#fff);border:1px solid var(--ink,#141414);border-radius:999px;padding:6px 12px;font-family:var(--font-mono);font-size:12px;color:var(--ink,#141414);cursor:pointer;outline:2px solid transparent;outline-offset:3px;transition:outline-color 160ms var(--ease-out),background-color 160ms var(--ease-out);}.ds-chip:focus-visible{outline-color:var(--cut,#e5007d);}.ds-chip:hover{background:var(--liner-deep,#e6e8e1);}.ds-chip[aria-pressed=\"true\"]{background:var(--ink,#141414);color:#fff;}"
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper,#fff);border:1px solid var(--ink,#141414);border-radius:999px;padding:6px 12px;font-family:var(--font-ui);font-size:12px;color:var(--ink,#141414);cursor:pointer;outline:2px solid transparent;outline-offset:3px;transition:outline-color 160ms var(--ease-out),background-color 160ms var(--ease-out);}.ds-chip:focus-visible{outline-color:var(--cut,#e5007d);}.ds-chip:hover{background:var(--liner-deep,#e6e8e1);}.ds-chip[aria-pressed=\"true\"]{background:var(--ink,#141414);color:#fff;}"
     },
     {
       "name": "Segmented Control",
@@ -362,14 +362,14 @@
       "refersTo": "segmented-option-on",
       "description": "Paper size picker: paper pill with an ink-filled checked option.",
       "html": "<div class=\"ds-seg\" role=\"radiogroup\"><button role=\"radio\" aria-checked=\"true\">A4</button><button role=\"radio\" aria-checked=\"false\">Letter</button></div>",
-      "css": ".ds-seg{display:inline-flex;border:1.5px solid var(--ink,#141414);border-radius:999px;padding:3px;gap:3px;background:var(--paper,#fff);}.ds-seg button{font-family:var(--font-display);font-weight:700;font-size:14px;padding:7px 18px;border:0;border-radius:999px;background:transparent;color:var(--ink,#141414);cursor:pointer;transition:background-color 160ms var(--ease-out),color 160ms var(--ease-out);}.ds-seg button[aria-checked=\"true\"]{background:var(--ink,#141414);color:#fff;}.ds-seg button:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
+      "css": ".ds-seg{display:inline-flex;border:1.5px solid var(--ink,#141414);border-radius:999px;padding:3px;gap:3px;background:var(--paper,#fff);}.ds-seg button{font-family:var(--font-ui);font-weight:700;font-size:14px;padding:7px 18px;border:0;border-radius:999px;background:transparent;color:var(--ink,#141414);cursor:pointer;transition:background-color 160ms var(--ease-out),color 160ms var(--ease-out);}.ds-seg button[aria-checked=\"true\"]{background:var(--ink,#141414);color:#fff;}.ds-seg button:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
     },
     {
       "name": "Header Bar",
       "kind": "nav",
-      "description": "Liner bar with an ink bottom edge and TX-02 Bold wordmark; current page underlined in magenta.",
+      "description": "Liner bar with an ink bottom edge and an Ultra wordmark; Franklin 700 links; current page underlined in magenta.",
       "html": "<header class=\"ds-bar\"><a class=\"ds-wordmark\" href=\"#\">CASHU BRRR</a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Print</a><a href=\"#\">History</a></nav></header>",
-      "css": ".ds-bar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 32px;border-bottom:1px solid var(--ink,#141414);background:var(--liner,#f2f3ef);}.ds-wordmark{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--ink,#141414);text-decoration:none;}.ds-nav{display:flex;gap:28px;}.ds-nav a{font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--ink,#141414);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:border-color 160ms var(--ease-out);}.ds-nav a:hover{border-bottom-color:var(--ink,#141414);}.ds-nav a[aria-current=\"page\"]{border-bottom-color:var(--cut,#e5007d);}.ds-nav a:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
+      "css": ".ds-bar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 32px;border-bottom:1px solid var(--ink,#141414);background:var(--liner,#f2f3ef);}.ds-wordmark{font-family:var(--font-display);font-weight:400;font-size:22px;letter-spacing:-.01em;color:var(--ink,#141414);text-decoration:none;}.ds-nav{display:flex;gap:28px;}.ds-nav a{font-family:var(--font-ui);font-weight:700;font-size:15px;color:var(--ink,#141414);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:border-color 160ms var(--ease-out);}.ds-nav a:hover{border-bottom-color:var(--ink,#141414);}.ds-nav a[aria-current=\"page\"]{border-bottom-color:var(--cut,#e5007d);}.ds-nav a:focus-visible{outline:2px solid var(--cut,#e5007d);outline-offset:3px;}"
     },
     {
       "name": "Custody Note",
@@ -377,7 +377,7 @@
       "refersTo": "custody-note",
       "description": "Plain statement of where the notes live; paper with an ink stroke.",
       "html": "<div class=\"ds-custody\"><p class=\"ds-custody-title\">These notes are real money.</p><p>They're stored only in this browser. Print them now and download the QR backup.</p></div>",
-      "css": ".ds-custody{font-family:var(--font-ui);font-size:15px;line-height:1.5;color:var(--ink-soft,#464943);max-width:380px;}.ds-custody p{margin:0;}.ds-custody .ds-custody-title{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--ink,#141414);margin:0 0 6px;}"
+      "css": ".ds-custody{font-family:var(--font-ui);font-size:15px;line-height:1.5;color:var(--ink-soft,#464943);max-width:380px;}.ds-custody p{margin:0;}.ds-custody .ds-custody-title{font-family:var(--font-ui);font-weight:700;font-size:17px;color:var(--ink,#141414);margin:0 0 6px;}"
     },
     {
       "name": "Note Pick",
@@ -398,14 +398,14 @@
   ],
   "narrative": {
     "northStar": "The Kiss-Cut Sheet",
-    "overview": "Every screen is a sheet of stickers on a backing liner. The real note designs are the stickers; the app is the liner they sit on and the sheet you are about to print. The organizer sees the job as the page itself: on the landing, like a product page, the note you are about to print shown large, the eight designs to pick from beneath it, and the amount, count, total, and GO pill beside it; on the print job a live, paper-true preview of the sheet that re-tiles as the job changes.\n\nThe chrome is two inks on a pale gloss liner: registration black and CutContour magenta. Full color belongs only to the note artwork, which is fixed and framed by the app, never restyled. Magenta is the signal for what you act on and what you picked: the GO pill's outline, the picked design's outline, the unpaid invoice's QR label. Every word is set in one monospaced face, TX-02, at two weights: Bold for headlines, the wordmark, controls, and money; Regular for copy. The owner pinned the face for the whole app; it reads like the job ticket a print shop's machine types out, not like a terminal costume.\n\nThe world is quiet around the notes. There are no slug lines, hairline dividers, crop marks, or die lines on screen; structure comes from space, the header's bottom edge, and the ticket's left edge. Prepress marks appear only where a knife will actually go: on the print sheet and its live preview. Density is loose on the landing and tighter on the print job and history. Motion has one job: the sheet re-tiles when count, series, or paper changes. On the landing the only motion is the stage note fading in when a new design is picked.",
+    "overview": "Every screen is a sheet of stickers on a backing liner. The real note designs are the stickers; the app is the liner they sit on and the sheet you are about to print. The organizer sees the job as the page itself: on the landing, like a product page, the note you are about to print shown large, the eight designs to pick from beneath it, and the amount, count, total, and GO pill beside it; on the print job a live, paper-true preview of the sheet that re-tiles as the job changes.\n\nThe chrome is two inks on a pale gloss liner: registration black and CutContour magenta. Full color belongs only to the note artwork, which is fixed and framed by the app, never restyled. Magenta is the signal for what you act on and what you picked: the GO pill's outline, the picked design's outline, the unpaid invoice's QR label. The type is printed-poster type in two faces: a fat wood-type slab, Ultra, for headlines, the wordmark, the GO label, and money; and a 1902-lineage American gothic, Libre Franklin, for everything you read, label, or press. Ultra is the big printed moment on the bill; Franklin is the small print beneath it.\n\nThe world is quiet around the notes. There are no slug lines, hairline dividers, crop marks, or die lines on screen; structure comes from space, the header's bottom edge, and the ticket's left edge. Prepress marks appear only where a knife will actually go: on the print sheet and its live preview. Density is loose on the landing and tighter on the print job and history. Motion has one job: the sheet re-tiles when count, series, or paper changes. On the landing the only motion is the stage note fading in when a new design is picked.",
     "keyCharacteristics": [
       "Gloss liner ground with a faint, rotated CASHU BRRR repeat printed on it.",
       "Two-ink chrome (registration black and CutContour magenta); the notes carry all the color.",
       "Magenta is always a line, never a surface: the GO outline, the picked-design outline, the QR label, focus rings, the current-page underline.",
-      "Metadata is plain sentence-case copy; no uppercase mono slug lines and no hairline rules.",
+      "Metadata is plain sentence-case copy; no uppercase tracked slug lines and no hairline rules.",
       "Cut marks only on the print sheet and its preview, because that is where the cuts are.",
-      "One monospaced face, TX-02, at 400 and 700 only, for every word in the app; hierarchy comes from size and weight.",
+      "Two faces: Ultra (400 only) for the big printed moments, Libre Franklin (400 and 700) for everything else; hierarchy comes from face, size, and weight.",
       "Signature interaction: the live sheet re-tiles on count, series, or paper change."
     ],
     "rules": [
@@ -425,13 +425,13 @@
         "section": "colors"
       },
       {
-        "name": "The One Face Rule",
-        "body": "Every word of chrome is TX-02 at 400 or 700. There are no other weights, no width axis, and no second app face; hierarchy is size, weight, and tracking. Note-art faces stay inside their artwork.",
+        "name": "The Two-Face Rule",
+        "body": "Ultra, at its one 400 weight, is only for the big printed moments: the landing headline, section and ticket titles, the wordmark, the GO label, and money totals. Libre Franklin at 400 or 700 sets everything else. There is no third app face, no faux bold or italic, and no other Franklin weight. Note-art faces (Dela Gothic One for Mr. Meadows, Porter Sans Inline Block for Sovereign) stay inside their artwork.",
         "section": "typography"
       },
       {
         "name": "The Licensed File Rule",
-        "body": "TX-02 is commercially licensed (LT-04 Startup). The files in `public/fonts/tx-02/` are gitignored and are never committed, never subset (the font's fsType forbids it), and never replaced with a hosted copy. A build without them falls back to the system monospace and must still read correctly.",
+        "body": "TX-02 was tried and dropped. Its commercially licensed files must never be committed, and `public/fonts/tx-02/` stays gitignored. The current faces, Ultra and Libre Franklin, are SIL OFL and are committed normally through Fontsource.",
         "section": "typography"
       },
       {
@@ -457,8 +457,8 @@
     ],
     "dos": [
       "Do reserve magenta outlines for the GO pill (2px, offset 5px), the picked landing thumbnail (2px, offset 3px), and the unpaid invoice QR label (2.5px, offset 6px).",
-      "Do set every word in TX-02: 700 for headlines, the wordmark, controls, labels, and money; 400 for copy and mint URLs.",
-      "Do keep the TX-02 files out of git, unsubset, and self-hosted; check that a build without them still reads in the system monospace.",
+      "Do set headlines, titles, the wordmark, the GO label, and money totals in Ultra 400; set everything else in Libre Franklin, 700 for labels, controls, and field values, 400 for copy and mint URLs.",
+      "Do keep `font-synthesis: none` on the root, load the app faces through Fontsource, and keep `public/fonts/tx-02/` gitignored.",
       "Do write sheet counts, note sizes, payment state, and status as plain sentence-case copy.",
       "Do separate groups, rows, and sections with space; keep the header's bottom edge and the ticket's left edge as the only rules.",
       "Do draw cut marks on the print sheet and its live preview, at the printed positions.",
@@ -468,8 +468,8 @@
     "donts": [
       "Don't fill buttons, panels, or backgrounds with magenta; magenta is a line, with text selection as the only fill.",
       "Don't add color to chrome; the notes are the only full color on any screen.",
-      "Don't set small uppercase tracked slug lines, use weights other than 400 and 700, or bring in a second app face.",
-      "Don't commit, subset, or swap in a hosted copy of TX-02.",
+      "Don't set small uppercase tracked slug lines, use Franklin weights other than 400 and 700, bold or italicize Ultra, or bring in a third app face.",
+      "Don't commit TX-02's licensed files, and don't type \"₿\" in Ultra or Franklin text; neither face has the glyph, so draw it as the Chaum note does.",
       "Don't draw hairline dividers between sections, rows, groups, or the action bar.",
       "Don't put copy in bordered or filled boxes; warnings and notes are plain text that earns attention through placement and wording.",
       "Don't put crop marks, registration targets, die lines, or annotation callouts on screens or around notes; marks belong to the print sheet.",

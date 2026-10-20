@@ -46,7 +46,7 @@ Success: an organizer goes from landing page to a printed, cuttable stack of val
 - Name: Cashu Brrr ("Brrr" for short). Tagline in use: "Print your own ecash notes."
 - Voice: the money-printer meme stays as the brand ("GO BRRRR!", "brrr"), tightened. Humor lives at the edges (landing, primary CTA, success moments); copy is plain and trustworthy wherever money moves (mint, amounts, payment, custody warnings, history).
 - Sponsors section is binding: cards with name, avatar, tier, amount, and link, sourced from `src/lib/sponsors.ts`.
-- Typeface: TX-02 by U.S. Graphics (the Berkeley Mono family), chosen by the owner for the whole app. It is licensed commercially (LT-04 Startup), so the font files live in `public/fonts/tx-02/`, which is gitignored and never committed to the public repo; builds without them fall back to the system monospace.
+- Typeface: a wood-type poster pairing chosen by the owner to feel like paper print. Ultra (a fat slab) sets the big printed moments: the headline, section and page titles, totals, the GO pill, and the wordmark. Libre Franklin (from the 1902 American Franklin Gothic) sets everything else. Both are SIL Open Font License faces, self-hosted through Fontsource. TX-02 was tried and dropped; its licensed files must never be committed (`public/fonts/tx-02/` stays gitignored).
 - Ornament is out: no corner peel, crop or registration marks on screens, callouts, die lines around notes, uppercase mono slug lines, or hairline rules. The print sheet keeps its functional cut marks.
 - Not binding, replaceable in the redesign: the printer hero image, the FAQ wording (its facts stay true), the green CASHU BRRR wordmark, the current palette and typefaces.
 

@@ -27,7 +27,7 @@
   }
   .wordmark {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 400;
     font-size: 22px;
     letter-spacing: -0.01em;
     color: var(--ink);
@@ -38,7 +38,7 @@
     gap: 28px;
   }
   nav a {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 15px;
     color: var(--ink);

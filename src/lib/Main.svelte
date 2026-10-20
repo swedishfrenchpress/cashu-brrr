@@ -257,9 +257,7 @@
     grid-area: head;
   }
   h1 {
-    font-size: clamp(2.5rem, 4vw, 3.5rem);
-    line-height: 0.95;
-    max-width: 9em;
+    font-size: clamp(2.25rem, 3.4vw, 3rem);
   }
   .lede {
     margin-top: 16px;
@@ -378,11 +376,10 @@
   }
   .total-value {
     display: block;
-    font-weight: 700;
-    font-size: clamp(2.25rem, 3.4vw, 3rem);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 3vw, 2.75rem);
     line-height: 1.05;
-    letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
   }
   .go {
     font-size: clamp(18px, 1.6vw, 22px);
@@ -397,8 +394,7 @@
     padding: clamp(72px, 10vw, 128px) var(--gutter) 0;
   }
   .section-title {
-    font-size: clamp(2.25rem, 4.4vw, 4rem);
-    letter-spacing: -0.035em;
+    font-size: clamp(2rem, 3.4vw, 3rem);
     margin-bottom: clamp(32px, 4vw, 56px);
   }
 
@@ -408,7 +404,7 @@
     gap: 48px clamp(32px, 6vw, 112px);
   }
   .notes-on-notes dt {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 22px;
     line-height: 1.2;
@@ -502,7 +498,7 @@
   }
   .foot-mark {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 400;
     font-size: 22px;
     letter-spacing: -0.01em;
   }

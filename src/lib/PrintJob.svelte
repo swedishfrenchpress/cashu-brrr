@@ -659,7 +659,7 @@
     margin-top: 12px;
   }
   .group-title {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 15px;
     margin-bottom: 12px;
@@ -740,7 +740,7 @@
     background: var(--paper);
   }
   .segmented button {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 14px;
     padding: 7px 18px;
@@ -851,7 +851,7 @@
     text-wrap: pretty;
   }
   .custody-title {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 17px;
     color: var(--ink);
@@ -884,7 +884,7 @@
   .action-total .data {
     display: block;
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 400;
     font-size: 24px;
     line-height: 1.15;
   }

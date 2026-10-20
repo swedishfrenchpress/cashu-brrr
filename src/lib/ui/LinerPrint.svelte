@@ -30,7 +30,7 @@
     transform-origin: center;
   }
   p {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 15px;
     line-height: 52px;

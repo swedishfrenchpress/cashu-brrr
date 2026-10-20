@@ -58,7 +58,7 @@
 
   {#if denomination > 0}
     <div class="absolute chaum-denomination" style="left: 5%; bottom: 20%;">
-      {denomination}₿
+      {denomination}<span class="btc">B</span>
     </div>
   {/if}
 </div>
@@ -69,16 +69,37 @@
   }
 
   .chaum-denomination {
-    font-family: "TX-02", ui-monospace, monospace;
-    font-weight: 700;
-    font-size: 6.5cqw;
+    font-family: "Ultra", Georgia, serif;
+    font-weight: 400;
+    font-size: 6cqw;
     line-height: 1;
     white-space: nowrap;
     color: #f7efc0;
-    text-shadow:
-      -1px -1px 0 #1e4c50,
-      1px -1px 0 #1e4c50,
-      -1px 1px 0 #1e4c50,
-      1px 1px 0 #1e4c50;
+    /* One outline for the figures and the drawn bitcoin strokes alike */
+    filter: drop-shadow(1px 0 0 #1e4c50) drop-shadow(-1px 0 0 #1e4c50) drop-shadow(0 1px 0 #1e4c50)
+      drop-shadow(0 -1px 0 #1e4c50);
+  }
+  /* Ultra has no ₿, so the sign is its own B with the two strokes drawn through the top and bottom */
+  .btc {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.04em;
+  }
+  .btc::before,
+  .btc::after {
+    content: "";
+    position: absolute;
+    left: 0.17em;
+    width: 0.3em;
+    height: 0.2em;
+    box-sizing: border-box;
+    border-left: 0.07em solid currentColor;
+    border-right: 0.07em solid currentColor;
+  }
+  .btc::before {
+    top: 0.02em;
+  }
+  .btc::after {
+    bottom: 0;
   }
 </style>

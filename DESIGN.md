@@ -14,105 +14,103 @@ colors:
   cut-ink: "#b4005f"
 typography:
   display:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
-    fontSize: "clamp(2.5rem, 4vw, 3.5rem)"
-    fontWeight: 700
-    lineHeight: 0.95
-    letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
-    fontSize: "clamp(2.25rem, 4.4vw, 4rem)"
-    fontWeight: 700
-    lineHeight: 1
-    letterSpacing: "-0.035em"
-  headline-sm:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
-    fontSize: "clamp(2rem, 5vw, 3.5rem)"
-    fontWeight: 700
-    lineHeight: 1
-    letterSpacing: "-0.015em"
-  title:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
-    fontSize: "34px"
-    fontWeight: 700
-    lineHeight: 1
-    letterSpacing: "-0.015em"
-  figure:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
     fontSize: "clamp(2.25rem, 3.4vw, 3rem)"
-    fontWeight: 700
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.01em"
+  headline:
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
+    fontSize: "clamp(2rem, 3.4vw, 3rem)"
+    fontWeight: 400
     lineHeight: 1.05
-    letterSpacing: "-0.02em"
-    fontFeature: "'tnum' 1"
+    letterSpacing: "-0.01em"
+  headline-sm:
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
+    fontSize: "clamp(2rem, 5vw, 3.5rem)"
+    fontWeight: 400
+    lineHeight: 1.05
+    letterSpacing: "-0.01em"
+  title:
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
+    fontSize: "34px"
+    fontWeight: 400
+    lineHeight: 1.05
+    letterSpacing: "-0.01em"
+  figure:
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
+    fontSize: "clamp(2rem, 3vw, 2.75rem)"
+    fontWeight: 400
+    lineHeight: 1.05
+    letterSpacing: "normal"
   figure-sm:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
     fontSize: "24px"
-    fontWeight: 700
+    fontWeight: 400
     lineHeight: 1.15
-    fontFeature: "'tnum' 1"
+    letterSpacing: "normal"
   step:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "24px"
     fontWeight: 700
     lineHeight: 1.25
     letterSpacing: "-0.02em"
   wordmark:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
     fontSize: "22px"
-    fontWeight: 700
+    fontWeight: 400
     letterSpacing: "-0.01em"
   term:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "22px"
     fontWeight: 700
     lineHeight: 1.2
   group-title:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "15px"
     fontWeight: 700
   control:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "15px"
     fontWeight: 700
   go-label:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Ultra, Rockwell Extra Bold, Rockwell, Georgia, serif"
     fontSize: "18px"
-    fontWeight: 700
+    fontWeight: 400
+    letterSpacing: "0.01em"
   body:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "17px"
     fontWeight: 400
     lineHeight: 1.55
   body-ui:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "15px"
     fontWeight: 400
     lineHeight: 1.5
   small:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "14px"
     fontWeight: 400
     lineHeight: 1.45
   label:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "13px"
     fontWeight: 700
   data:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "20px"
     fontWeight: 700
-    fontFeature: "'tnum' 1"
   data-lg:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "28px"
     fontWeight: 700
-    fontFeature: "'tnum' 1"
   data-sm:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "13px"
     fontWeight: 400
   micro:
-    fontFamily: "TX-02, ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontFamily: "Libre Franklin, Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif"
     fontSize: "12px"
     fontWeight: 400
 rounded:
@@ -202,7 +200,7 @@ components:
 
 Every screen is a sheet of stickers on a backing liner. The real note designs are the stickers; the app is the liner they sit on and the sheet you are about to print. The organizer sees the job as the page itself: on the landing, like a product page, the note you are about to print shown large, the eight designs to pick from beneath it, and the amount, count, total, and GO pill beside it; on the print job a live, paper-true preview of the sheet that re-tiles as the job changes.
 
-The chrome is two inks on a pale gloss liner: registration black and CutContour magenta. Full color belongs only to the note artwork, which is fixed and framed by the app, never restyled. Magenta is the signal for what you act on and what you picked: the GO pill's outline, the picked design's outline, the unpaid invoice's QR label. Every word is set in one monospaced face, TX-02, at two weights: Bold for headlines, the wordmark, controls, and money; Regular for copy. The owner pinned the face for the whole app; it reads like the job ticket a print shop's machine types out, not like a terminal costume.
+The chrome is two inks on a pale gloss liner: registration black and CutContour magenta. Full color belongs only to the note artwork, which is fixed and framed by the app, never restyled. Magenta is the signal for what you act on and what you picked: the GO pill's outline, the picked design's outline, the unpaid invoice's QR label. The type is printed-poster type in two faces: a fat wood-type slab, Ultra, for headlines, the wordmark, the GO label, and money; and a 1902-lineage American gothic, Libre Franklin, for everything you read, label, or press. Ultra is the big printed moment on the bill; Franklin is the small print beneath it.
 
 The world is quiet around the notes. There are no slug lines, hairline dividers, crop marks, or die lines on screen; structure comes from space, the header's bottom edge, and the ticket's left edge. Prepress marks appear only where a knife will actually go: on the print sheet and its live preview. Density is loose on the landing and tighter on the print job and history. Motion has one job: the sheet re-tiles when count, series, or paper changes. On the landing the only motion is the stage note fading in when a new design is picked.
 
@@ -210,9 +208,9 @@ The world is quiet around the notes. There are no slug lines, hairline dividers,
 - Gloss liner ground with a faint, rotated CASHU BRRR repeat printed on it.
 - Two-ink chrome (registration black and CutContour magenta); the notes carry all the color.
 - Magenta is always a line, never a surface: the GO outline, the picked-design outline, the QR label, focus rings, the current-page underline.
-- Metadata is plain sentence-case copy; no uppercase mono slug lines and no hairline rules.
+- Metadata is plain sentence-case copy; no uppercase tracked slug lines and no hairline rules.
 - Cut marks only on the print sheet and its preview, because that is where the cuts are.
-- One monospaced face, TX-02, at 400 and 700 only, for every word in the app; hierarchy comes from size and weight.
+- Two faces: Ultra (400 only) for the big printed moments, Libre Franklin (400 and 700) for everything else; hierarchy comes from face, size, and weight.
 - Signature interaction: the live sheet re-tiles on count, series, or paper change.
 
 ## Colors
@@ -242,37 +240,37 @@ A near-neutral liner and paper, a registration-black ink family, and one CutCont
 
 ## Typography
 
-**Display Font:** TX-02 Bold (with ui-monospace, SF Mono, Menlo, Consolas, monospace)
-**Body Font:** TX-02 Regular (same stack)
-**Label/Mono Font:** TX-02; the app has no second face. Display, UI, and mono tokens all resolve to the same stack.
+**Display Font:** Ultra (with Rockwell Extra Bold, Rockwell, Georgia, serif)
+**Body Font:** Libre Franklin (with Franklin Gothic Medium, Helvetica Neue, Arial, sans-serif)
+**Label/Mono Font:** none. Labels, field values, and mint URLs are Libre Franklin; the app has no monospace.
 
-TX-02 is by U.S. Graphics, from the Berkeley Mono family, self-hosted as four OpenType files (regular, italic, bold, bold italic; weights 400 and 700 only) from `/fonts/tx-02/`. The italics are loaded but no chrome uses them. Dela Gothic One (the Mr. Meadows amount) and Porter Sans Inline Block (the Sovereign amount) load only for that note artwork and sit outside the app type system; the Chaum and Bitpopart amounts are TX-02 700.
+Both faces are SIL OFL and self-hosted through Fontsource, imported in the app entry: Ultra in its single 400 weight (latin), Libre Franklin at 400 and 700 (latin and latin-ext). The root sets `font-synthesis: none`, so the browser never fakes a bold or italic of Ultra. Dela Gothic One (the Mr. Meadows amount, also Fontsource) and Porter Sans Inline Block (the Sovereign amount, a self-hosted woff) load only for that note artwork and sit outside the app type system; the Chaum amount is Ultra and the Bitpopart amount Libre Franklin 700, both set inside their artwork.
 
-**Character:** A monospace UI is the owner's deliberate choice, not costume. TX-02 Bold at large sizes with slight negative tracking is the stamp on the job; Regular at reading sizes carries the copy plainly. Because every glyph is the same width, numbers already line up; the `data` role adds tabular figures for fields and totals.
+**Character:** Wood-type poster. Ultra's fat slab at 400 with slight negative tracking is the headline and the price on the bill; Franklin carries the reading plainly, at 700 for labels, controls, and figures in fields and 400 for copy. Figures are proportional: the Franklin subset has no tabular figures, so nothing relies on digits lining up by width. Neither face has a "₿" glyph.
 
 ### Hierarchy
-- **Display** (700, clamp(2.5rem, 4vw, 3.5rem), 0.95, -0.02em): The landing headline only, at the top of the hero's right column. Balanced wrapping, max width 9em.
-- **Headline** (700, clamp(2.25rem, 4.4vw, 4rem), 1, -0.035em): Section titles below the fold, "From invoice to scissors" included (line height 1.05, max width 9em). The History page title uses the Figure sizes (clamp(2.25rem, 3.4vw, 3rem)) at the base -0.015em. Balanced wrapping.
-- **Headline Small** (700, clamp(2rem, 5vw, 3.5rem), 1, -0.015em): The single-note amount in the note view.
-- **Title** (700, 34px, 1, -0.015em): Ticket titles ("Print job", "Pay N sat", "N notes ready."). The empty History state uses it too. The print-sheet toolbar title is 28px; History rows set their "N × amount" at Step size (24px, 20px on phones).
-- **Figure** (700, clamp(2.25rem, 3.4vw, 3rem), 1.05, -0.02em, tabular): The landing total in the checkout row; 34px under 760px. **Figure Small** (700, 24px, 1.15, tabular) is the action-bar total and sheet count. The "×" between the landing fields is 700 at 24px.
-- **Step** (700, 24px, 1.25, -0.02em): The landing's step titles. The step number beside each is 700 at 24px in Faint Ink, tabular. Both drop to 20px under 760px.
-- **Wordmark** (700, 22px, -0.01em): CASHU BRRR in the header on every screen, the landing included, and in the footer. The liner repeat is the same face at 700, 15px, +0.02em tracking on a 52px line.
-- **Term** (700, 22px, 1.2): Definition terms on the landing; sponsor names use the same voice at 20px and 1.1. The custody note's title is 700 at 17px in Registration Black.
-- **Group Title** (700, 15px): Ticket group headings (Design, Amount, Paper, Mint).
-- **Control** (700, 15px): Nav links and line buttons; the segmented control uses 14px. GO pill labels are **Go Label** (700, 18px) by default, clamp(18px, 1.6vw, 22px) in the landing checkout row, 17px in the action bar. Quiet buttons are 700 at 14px.
-- **Body** (400, 17px, 1.55): Explanatory prose, 46-56ch. The landing lede is 17px at 1.5, max 30ch, and hides under 760px; step notes run 1.6 at 42ch; the "Your sheet's waiting." closer is plain Body in Soft Ink at 1.6.
-- **Body UI** (400, 15px, 1.5): Ticket summaries, the print job's custody note, the print-sheet instructions (68ch max); the payment-waiting line is 700.
-- **Small** (400, 14px, 1.45): The design name in History rows, sponsor tiers, the issuer line, error copy, the status line, the mint status; footer links and the pager label are 700. The landing sheet hint is 14px at 1.45. The showcase caption is the picked design's name alone, 700 at 14px in Registration Black.
-- **Label** (700, 13px): Field labels above inputs and totals, and the series chips. Hints under ticket groups use 13px at 400.
-- **Data** (700, 20px, tabular): Numbers inside fields. **Data Large** (700, 28px, tabular) is the value in the landing fields, 22px under 760px. The mint URL input runs 400 at 14px.
-- **Data Small** (400, 13px): Mint URLs in summaries, the mint row, and the issuer line.
-- **Micro** (400, 12px): Mint chips and field units. Style-thumbnail names in the print job are 700 at 12px.
+- **Display** (Ultra 400, clamp(2.25rem, 3.4vw, 3rem), 1, -0.01em): The landing headline only, at the top of the hero's right column. Balanced wrapping.
+- **Headline** (Ultra 400, clamp(2rem, 3.4vw, 3rem), 1.05, -0.01em): Section titles below the fold; "From invoice to scissors" holds to max width 9em. The History page title uses the Display sizes (clamp(2.25rem, 3.4vw, 3rem)) at the Headline line height. Balanced wrapping.
+- **Headline Small** (Ultra 400, clamp(2rem, 5vw, 3.5rem), 1.05, -0.01em): The single-note amount in the note view.
+- **Title** (Ultra 400, 34px, 1.05, -0.01em): Ticket titles ("Print job", "Pay N sat", "N notes ready."). The empty History state uses it too. The print-sheet toolbar title is 28px.
+- **Figure** (Ultra 400, clamp(2rem, 3vw, 2.75rem), 1.05): The landing total in the checkout row; 34px under 760px. **Figure Small** (Ultra 400, 24px, 1.15) is the action-bar total and sheet count. The "×" between the landing fields is Franklin 700 at 24px.
+- **Step** (Franklin 700, 24px, 1.25, -0.02em): The landing's step titles. The step number beside each is Franklin 700 at 24px in Faint Ink. Both drop to 20px under 760px. History rows set their "N × amount" count in Franklin 700 at 24px, 1.15, -0.01em (20px on phones), not in Ultra.
+- **Wordmark** (Ultra 400, 22px, -0.01em): CASHU BRRR in the header on every screen, the landing included, and in the footer. The liner repeat is Franklin 700 at 15px, +0.02em tracking on a 52px line.
+- **Term** (Franklin 700, 22px, 1.2): Definition terms on the landing; sponsor names use the same voice at 20px and 1.1. The custody note's title is Franklin 700 at 17px in Registration Black.
+- **Group Title** (Franklin 700, 15px): Ticket group headings (Design, Amount, Paper, Mint).
+- **Control** (Franklin 700, 15px): Nav links and line buttons; the segmented control uses 14px. GO pill labels are **Go Label** (Ultra 400, 18px, +0.01em) by default, clamp(18px, 1.6vw, 22px) in the landing checkout row, 17px in the action bar. Quiet buttons are Franklin 700 at 14px.
+- **Body** (Franklin 400, 17px, 1.55): Explanatory prose, 46-56ch. The landing lede is 17px at 1.5, max 30ch, and hides under 760px; step notes run 1.6 at 42ch; the "Your sheet's waiting." closer is plain Body in Soft Ink at 1.6.
+- **Body UI** (Franklin 400, 15px, 1.5): Ticket summaries, the print job's custody note, the print-sheet instructions (68ch max); the payment-waiting line is 700.
+- **Small** (Franklin 400, 14px, 1.45): The design name in History rows, sponsor tiers, the issuer line, error copy, the status line, the mint status; footer links and the pager label are 700. The landing sheet hint is 14px at 1.45. The showcase caption is the picked design's name alone, 700 at 14px in Registration Black.
+- **Label** (Franklin 700, 13px): Field labels above inputs and totals, and the series chips. Hints under ticket groups use 13px at 400.
+- **Data** (Franklin 700, 20px): Numbers inside fields, and the right-aligned History row total. **Data Large** (Franklin 700, 28px) is the value in the landing fields, 22px under 760px. The mint URL input runs 400 at 14px.
+- **Data Small** (Franklin 400, 13px): Mint URLs in summaries, the mint row, and the issuer line.
+- **Micro** (Franklin 400, 12px): Mint chips and field units. Style-thumbnail names in the print job are 700 at 12px.
 
 ### Named Rules
-**The One Face Rule.** Every word of chrome is TX-02 at 400 or 700. There are no other weights, no width axis, and no second app face; hierarchy is size, weight, and tracking. Note-art faces stay inside their artwork.
+**The Two-Face Rule.** Ultra, at its one 400 weight, is only for the big printed moments: the landing headline, section and ticket titles, the wordmark, the GO label, and money totals. Libre Franklin at 400 or 700 sets everything else. There is no third app face, no faux bold or italic, and no other Franklin weight. Note-art faces (Dela Gothic One for Mr. Meadows, Porter Sans Inline Block for Sovereign) stay inside their artwork.
 
-**The Licensed File Rule.** TX-02 is commercially licensed (LT-04 Startup). The files in `public/fonts/tx-02/` are gitignored and are never committed, never subset (the font's fsType forbids it), and never replaced with a hosted copy. A build without them falls back to the system monospace and must still read correctly.
+**The Licensed File Rule.** TX-02 was tried and dropped. Its commercially licensed files must never be committed, and `public/fonts/tx-02/` stays gitignored. The current faces, Ultra and Libre Franklin, are SIL OFL and are committed normally through Fontsource.
 
 **The Plain Copy Rule.** Sheet counts, note sizes, payment state, and job status are written as normal sentence-case copy. Nothing is set as small uppercase tracked slug lines.
 
@@ -283,7 +281,7 @@ Full-bleed liner with a fluid side gutter (`gutter`, 16-64px) on every surface. 
 - **Landing:** the shared header bar, then a product-page split (columns 7fr and minmax(320px, 5fr), areas "show head" / "show buy", column gap clamp(40px, 5vw, 88px), top padding clamp(40px, 7vh, 80px)). The first viewport is not held to the screen height and has no bottom-pinned bar. The left column is the showcase: a fixed stage at the narrowest note's shape (534 / 279) holding the picked note at full width, top-aligned so its top edge meets the headline's, so switching designs never moves the page; below it (28px) a row of 8 design thumbnails, 12px apart; then a caption naming the picked design, nothing more. The right column stacks the Display headline, the lede (16px below), the amount × notes fields (clamp(32px, 5vh, 48px) below), a one-line hint ("N notes fill X sheets.", or the error in Die Ink), and the checkout row (36px below): the total beside the GO pill, wrapping when tight. The thumbnails drop to 4 columns when the showcase is narrower than 600px (a container query). Under 900px the split stacks to one column: headline, showcase, then the form at max 560px. Under 760px the lede hides, the thumbnails become one full-bleed strip of 84px thumbnails that scrolls sideways, the field values drop to 22px, and the total to 34px.
 - **Below the fold:** "What you're handing out" is a 2-column grid of definitions (gaps 48px × clamp(32px, 6vw, 112px)), one column under 760px. "From invoice to scissors" sets the title with the closing line and GO pill on the left (5fr) and the numbered steps down the right (7fr), 40px apart; under 760px it stacks title, steps, closer, and the closing GO pill goes full width. The footer sits clamp(96px, 12vw, 160px) below the last section.
 - **Print job:** two columns, the stage (live sheet preview, max 1040px, with a sheet pager when there is more than one sheet) and a sticky ticket on the right (clamp(360px, 30vw, 440px) wide, a 1px ink left edge, `panel` padding). Ticket groups run Design, Paper, Mint, Amount, so the fields sit directly above the action bar; they have `group` vertical padding and no dividers. The ticket body takes only the height it needs, so the action bar (total and Pay) follows the last group and pins to the ticket's bottom only when the ticket has to scroll. Under 900px it stacks, sheet on top, and the action bar sticks to the viewport bottom with the safe-area inset.
-- **History:** the page title, then the custody note as a plain lede under it (Body, 17px at 1.55 in Soft Ink, max 62ch), then a full-width ledger of jobs. The list is a grid (176px, minmax(0, 1.3fr), minmax(0, 1fr), auto, auto; 32px column gap, 28px between rows) and every row is a subgrid of it, so columns align down the page: the note in a fixed 534/279 well, the job ("N × amount sat" in 700 at 24px over the design name), when and where (the date at 15px over the mint in Data Small), the right-aligned total (700, 20px, tabular), and the actions (Reprint line button, QR backup quiet button) at the right edge. No dividers. Under 1180px the date and mint fold under the job (160px well). Under 760px a row is a 112px well beside the job and total, with date, mint, and actions below.
+- **History:** the page title, then the custody note as a plain lede under it (Body, 17px at 1.55 in Soft Ink, max 62ch), then a full-width ledger of jobs. The list is a grid (176px, minmax(0, 1.3fr), minmax(0, 1fr), auto, auto; 32px column gap, 28px between rows) and every row is a subgrid of it, so columns align down the page: the note in a fixed 534/279 well, the job ("N × amount sat" in Franklin 700 at 24px over the design name), when and where (the date at 15px over the mint in Data Small), the right-aligned total (Data: Franklin 700, 20px), and the actions (Reprint line button, QR backup quiet button) at the right edge. No dividers. Under 1180px the date and mint fold under the job (160px well). Under 760px a row is a 112px well beside the job and total, with date, mint, and actions below.
 - **Note view:** a single note (max 860px) centered on the liner, with the amount, one line of instruction, the issuer, and one quiet link. No marks.
 - **Print sheet:** mm-true. Notes are at most 130 × 65 mm, keep the artwork's proportions, and butt together 2 × 3 on an A4 (297 × 210 mm) or Letter (279.4 × 215.9 mm) landscape page, centered, so one cut separates two notes. Cut marks are 0.25 mm black lines, 1.5 mm off the grid on every cut line and 2-5 mm long. There is no margin slug. The live preview draws the same marks at the same positions in 1px ink.
 
@@ -316,32 +314,32 @@ Strokes are 1.5px ink on fields, line buttons, and the segmented control; 1px in
 ### Buttons
 Ink and pill-shaped, with the one magenta outline reserved for the action that moves money or paper.
 - **Shape:** full pill (999px).
-- **GO pill:** Registration Black fill, white text, Go Label (TX-02 700, 18px), 16px × 32px padding, and a 2px magenta outline offset 5px. The landing checkout row sizes it to clamp(18px, 1.6vw, 22px) with 18px × 32px padding (16px × 22px under 760px); the closing GO pill below the fold keeps the default; the action bar uses 17px with 15px × 26px. Labels say what happens: "GO BRRRR", "Pay 126 sat", "Print 2 sheets".
+- **GO pill:** Registration Black fill, white text, Go Label (Ultra 400, 18px, +0.01em), 16px × 32px padding, and a 2px magenta outline offset 5px. The landing checkout row sizes it to clamp(18px, 1.6vw, 22px) with 18px × 32px padding (16px × 22px under 760px); the closing GO pill below the fold keeps the default; the action bar uses 17px with 15px × 26px. Labels say what happens: "GO BRRRR", "Pay 126 sat", "Print 2 sheets".
 - **Hover / Focus:** lifts 2px with the GO lift shadow over 220ms; on press it settles back. Focus thickens the outline to 3px. Disabled turns Spent Grey with Soft Ink text and a Spent Grey outline.
 - **Line button:** transparent with a 1.5px ink stroke, Control type, 11px × 20px. Hover fills ink with white text; focus is the global magenta ring. Disabled goes Faint Ink with a Spent Grey stroke. Used for secondary actions (Connect, Copy invoice, Open in wallet, Reprint, Download QR backup).
-- **Quiet button:** underlined text, TX-02 700 at 14px; hover turns Die Ink; focus is the global magenta ring. Used for tertiary actions and pager arrows.
+- **Quiet button:** underlined text, Franklin 700 at 14px; hover turns Die Ink; focus is the global magenta ring. Used for tertiary actions and pager arrows.
 
 ### Chips
-- **Style:** Sticker Stock with a 1px ink stroke, pill shape, TX-02 400 at 12px, 6px × 12px, for mint URLs. The series chips switch to 700 at 13px.
+- **Style:** Sticker Stock with a 1px ink stroke, pill shape, Franklin 400 at 12px, 6px × 12px, for mint URLs. The series chips switch to 700 at 13px.
 - **State:** hover shows Liner Shadow; pressed (`aria-pressed="true"`) fills ink with white text.
 - **Focus:** keyboard focus draws a 2px magenta outline offset 3px, fading in over 160ms. It shows on pressed chips too.
 
 ### Segmented Control
-- **Style:** a Sticker Stock pill with a 1.5px ink stroke and 3px inner padding; options are TX-02 700 at 14px, 7px × 18px. The checked option fills ink with white text. Focus is the global magenta ring.
+- **Style:** a Sticker Stock pill with a 1.5px ink stroke and 3px inner padding; options are Franklin 700 at 14px, 7px × 18px. The checked option fills ink with white text. Focus is the global magenta ring.
 
 ### Cards / Containers
-- **Custody note:** plain copy, never a box: no stroke, fill, or radius. In the print job it is a 17px 700 ink title ("These notes are real money.") over Body UI text in Soft Ink; in History it is the page's lede under the title. It states plainly where the notes live and how to back them up, and carries its weight through placement and words, not a container.
+- **Custody note:** plain copy, never a box: no stroke, fill, or radius. In the print job it is a Franklin 700 17px ink title ("These notes are real money.") over Body UI text in Soft Ink; in History it is the page's lede under the title. It states plainly where the notes live and how to back them up, and carries its weight through placement and words, not a container.
 - **Mint panel:** Liner Shadow well, 8px radius, 16px padding, fading in over 140ms.
 - **Ticket and action bar:** Gloss Liner; the ticket has a 1px ink left edge; no dividers inside.
 - **Sponsor card:** a Sticker Stock pill with a 1px ink stroke, a 56px round avatar, the sponsor name in Term voice at 20px and the tier in Small. Hover shows Liner Shadow.
 
 ### Inputs / Fields
-- **Style:** Sticker Stock, 1.5px ink stroke, 8px radius, 10px × 14px padding; the value is Data (TX-02 700, 20px, tabular), followed by a 12px unit ("sat", "notes"). The label sits above in the Label style. The landing fields run 12px × 16px with Data Large values and a 14px unit.
+- **Style:** Sticker Stock, 1.5px ink stroke, 8px radius, 10px × 14px padding; the value is Data (Franklin 700, 20px), followed by a 12px unit ("sat", "notes"). The label sits above in the Label style. The landing fields run 12px × 16px with Data Large values and a 14px unit.
 - **Focus:** a 2px ink outline offset 2px appears around the field. The caret is magenta.
 - **Error:** a 14px message in Die Ink below the fields (on the landing it replaces the sheet hint); the GO pill disables.
 
 ### Navigation
-- **Style:** the header bar is Gloss Liner with a 1px ink bottom edge, 18px vertical padding, and the gutter at the sides. The wordmark is in Wordmark type. Links are Control type, 28px apart. Footer links are 700 at 14px, 20px apart, beside the footer wordmark.
+- **Style:** the header bar is Gloss Liner with a 1px ink bottom edge, 18px vertical padding, and the gutter at the sides. The wordmark is in Wordmark type (Ultra). Links are Control type, 28px apart. Footer links are 700 at 14px, 20px apart, beside the footer wordmark.
 - **States:** hover draws a 2px ink underline; the current page draws it in magenta. The same bar heads every screen, the landing included; on the landing no link is current.
 
 ### Note Pick (signature)
@@ -359,12 +357,14 @@ The Lightning invoice, printed on a 288px max Sticker Stock square with 14px pad
 ### Note Artwork
 The five note series (Chaum Note, Bitpopart, Sovereign, Mr. Meadows, Custom Note) are fixed artwork rendered through a single inert wrapper. The app frames them (the showcase stage, pick thumbnails, sheet cells, thumbnail wells) and decides all interaction; the artwork is never restyled, recolored, or re-typeset.
 
+The two amounts the app sets into artwork follow the app faces. The Chaum amount is Ultra 400 at 6cqw (line height 1) in the note's cream (#f7efc0). Ultra and Franklin have no "₿", so the bitcoin sign is drawn: Ultra's own "B" with two short vertical CSS strokes through its top and bottom (0.07em wide, in the text color). One four-way 1px drop-shadow outline in the note's dark teal (#1e4c50) is applied to the whole amount, so the figures and the drawn strokes share a single outline. The Bitpopart amount is Libre Franklin 700 in the artwork's ink. These colors belong to the artwork, not the chrome palette.
+
 ## Do's and Don'ts
 
 ### Do:
 - **Do** reserve magenta outlines for the GO pill (2px, offset 5px), the picked landing thumbnail (2px, offset 3px), and the unpaid invoice QR label (2.5px, offset 6px).
-- **Do** set every word in TX-02: 700 for headlines, the wordmark, controls, labels, and money; 400 for copy and mint URLs.
-- **Do** keep the TX-02 files out of git, unsubset, and self-hosted; check that a build without them still reads in the system monospace.
+- **Do** set headlines, titles, the wordmark, the GO label, and money totals in Ultra 400; set everything else in Libre Franklin, 700 for labels, controls, and field values, 400 for copy and mint URLs.
+- **Do** keep `font-synthesis: none` on the root, load the app faces through Fontsource, and keep `public/fonts/tx-02/` gitignored.
 - **Do** write sheet counts, note sizes, payment state, and status as plain sentence-case copy.
 - **Do** separate groups, rows, and sections with space; keep the header's bottom edge and the ticket's left edge as the only rules.
 - **Do** draw cut marks on the print sheet and its live preview, at the printed positions.
@@ -374,8 +374,8 @@ The five note series (Chaum Note, Bitpopart, Sovereign, Mr. Meadows, Custom Note
 ### Don't:
 - **Don't** fill buttons, panels, or backgrounds with magenta; magenta is a line, with text selection as the only fill.
 - **Don't** add color to chrome; the notes are the only full color on any screen.
-- **Don't** set small uppercase tracked slug lines, use weights other than 400 and 700, or bring in a second app face.
-- **Don't** commit, subset, or swap in a hosted copy of TX-02.
+- **Don't** set small uppercase tracked slug lines, use Franklin weights other than 400 and 700, bold or italicize Ultra, or bring in a third app face.
+- **Don't** commit TX-02's licensed files, and don't type "₿" in Ultra or Franklin text; neither face has the glyph, so draw it as the Chaum note does.
 - **Don't** draw hairline dividers between sections, rows, groups, or the action bar.
 - **Don't** put copy in bordered or filled boxes; warnings and notes are plain text that earns attention through placement and wording.
 - **Don't** put crop marks, registration targets, die lines, or annotation callouts on screens or around notes; marks belong to the print sheet.
