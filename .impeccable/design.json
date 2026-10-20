@@ -164,7 +164,7 @@
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Section titles below the fold at -0.035em; History title runs at clamp(2.5rem, 5vw, 4.5rem) at -0.015em."
+        "purpose": "Section titles below the fold at -0.035em; History title uses the Figure sizes, clamp(2.25rem, 3.4vw, 3rem), at -0.015em."
       },
       "headline-sm": {
         "displayName": "Headline Small",
@@ -172,7 +172,7 @@
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Ticket titles; 32/28/26px fixed titles exist for empty state, print toolbar, History rows."
+        "purpose": "Ticket titles and the empty History state; the print toolbar title is 28px."
       },
       "figure": {
         "displayName": "Figure",
@@ -236,7 +236,7 @@
       },
       "micro": {
         "displayName": "Micro",
-        "purpose": "Mint chips, field units, History details; print-job style-thumbnail names at 700."
+        "purpose": "Mint chips and field units; print-job style-thumbnail names at 700."
       }
     },
     "shadows": [
@@ -377,7 +377,7 @@
       "refersTo": "custody-note",
       "description": "Plain statement of where the notes live; paper with an ink stroke.",
       "html": "<div class=\"ds-custody\"><p class=\"ds-custody-title\">These notes are real money.</p><p>They're stored only in this browser. Print them now and download the QR backup.</p></div>",
-      "css": ".ds-custody{border:1.5px solid var(--ink,#141414);border-radius:8px;padding:16px 18px;background:var(--paper,#fff);font-family:var(--font-ui);font-size:15px;line-height:1.5;color:var(--ink,#141414);max-width:380px;}.ds-custody p{margin:0;}.ds-custody .ds-custody-title{font-family:var(--font-display);font-weight:700;font-size:17px;margin:0 0 6px;}"
+      "css": ".ds-custody{font-family:var(--font-ui);font-size:15px;line-height:1.5;color:var(--ink-soft,#464943);max-width:380px;}.ds-custody p{margin:0;}.ds-custody .ds-custody-title{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--ink,#141414);margin:0 0 6px;}"
     },
     {
       "name": "Note Pick",
@@ -471,6 +471,7 @@
       "Don't set small uppercase tracked slug lines, use weights other than 400 and 700, or bring in a second app face.",
       "Don't commit, subset, or swap in a hosted copy of TX-02.",
       "Don't draw hairline dividers between sections, rows, groups, or the action bar.",
+      "Don't put copy in bordered or filled boxes; warnings and notes are plain text that earns attention through placement and wording.",
       "Don't put crop marks, registration targets, die lines, or annotation callouts on screens or around notes; marks belong to the print sheet.",
       "Don't lift, peel, or animate notes on hover; a picked design is marked by its thumbnail's outline alone.",
       "Don't use hard offset shadows or shadows on flat chrome.",

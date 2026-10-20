@@ -62,26 +62,29 @@
           {@const d = resolveDesign(p.template, p.style)}
           {@const amount = perNote(p)}
           <li class="job">
-            <div class="thumb" style="aspect-ratio: {d.family.aspect}" use:lazy={() => (shown[p.ts] = true)}>
+            <div class="thumb" use:lazy={() => (shown[p.ts] = true)}>
               {#if shown[p.ts]}
-                <NoteArt
-                  type={d.family.type}
-                  design={d.style.design}
-                  colorCode={d.style.colorCode}
-                  denomination={amount}
-                  mintUrl={p.mint}
-                  token={SPECIMEN_TOKEN}
-                />
+                <div class="thumb-note">
+                  <NoteArt
+                    type={d.family.type}
+                    design={d.style.design}
+                    colorCode={d.style.colorCode}
+                    denomination={amount}
+                    mintUrl={p.mint}
+                    token={SPECIMEN_TOKEN}
+                  />
+                </div>
               {/if}
             </div>
-            <div class="facts">
-              <p class="when">{fmtDateTime(p.ts)}</p>
-              <p class="what heading">{fmt(p.tokens.length)} × {fmt(amount)} sat</p>
-              <p class="detail">
-                {fmt(p.tokens.length * amount)} sat, {d.family.name}{d.family.styles.length > 1 ? `, ${d.style.name}` : ""}
-              </p>
-              <p class="detail data">{shortMint(p.mint)}</p>
+            <div class="what">
+              <p class="count heading">{fmt(p.tokens.length)} × {fmt(amount)} sat</p>
+              <p class="design">{d.family.name}{d.family.styles.length > 1 ? `, ${d.style.name}` : ""}</p>
             </div>
+            <div class="printed">
+              <p class="when">{fmtDateTime(p.ts)}</p>
+              <p class="mint data">{shortMint(p.mint)}</p>
+            </div>
+            <p class="total">{fmt(p.tokens.length * amount)} sat</p>
             <div class="actions">
               <button class="btn-line" onclick={() => reprint(p)}><Printer size={16} aria-hidden="true" /> Reprint</button>
               <button class="btn-quiet" onclick={() => backup(p)}><Download size={15} aria-hidden="true" /> QR backup</button>
@@ -95,70 +98,94 @@
 
 <style>
   .history {
-    padding: 40px var(--gutter) 96px;
-    max-width: 1280px;
+    padding: clamp(32px, 5vw, 56px) var(--gutter) 96px;
   }
   .head {
     display: grid;
-    grid-template-columns: auto minmax(0, 560px);
-    justify-content: space-between;
-    align-items: end;
-    gap: 24px 48px;
-    padding-bottom: 32px;
+    gap: 14px;
+    margin-bottom: clamp(32px, 4vw, 48px);
   }
   h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(2.25rem, 3.4vw, 3rem);
   }
   .custody {
-    font-size: 15px;
+    max-width: 62ch;
+    font-size: 17px;
     line-height: 1.55;
-    padding: 14px 16px;
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    background: var(--paper);
+    color: var(--ink-soft);
+    text-wrap: pretty;
   }
 
+  /* A ledger: rows share the list's columns (subgrid), so jobs scan down and actions sit at the right edge */
   .jobs {
     list-style: none;
     display: grid;
-    gap: 12px;
+    grid-template-columns: 176px minmax(0, 1.3fr) minmax(0, 1fr) auto auto;
+    column-gap: 32px;
+    row-gap: 28px;
   }
   .job {
+    grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: 220px minmax(0, 1fr) auto;
-    gap: 28px;
+    grid-template-columns: subgrid;
+    grid-template-areas: "thumb what printed total actions";
     align-items: center;
-    padding: 12px 0;
   }
+  /* A fixed well at the narrowest note's shape, so every row is the same height */
   .thumb {
-    width: 100%;
-    background: var(--liner-deep);
+    grid-area: thumb;
+    aspect-ratio: 534 / 279;
+    display: grid;
+    align-items: center;
+  }
+  .thumb-note {
     border-radius: 6px;
     overflow: hidden;
   }
-  .facts {
+  .what,
+  .printed {
     display: grid;
-    gap: 4px;
+    gap: 6px;
     min-width: 0;
   }
-  .when {
-    font-size: 14px;
-    color: var(--ink-soft);
-  }
   .what {
-    font-size: 26px;
+    grid-area: what;
   }
-  .detail {
+  .printed {
+    grid-area: printed;
+  }
+  .count {
+    font-size: 24px;
+    line-height: 1.15;
+  }
+  .design {
     font-size: 14px;
     color: var(--ink-soft);
+  }
+  .when {
+    font-size: 15px;
+  }
+  .mint {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .design,
+  .when,
+  .mint {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .detail.data {
-    font-size: 12px;
+  .total {
+    grid-area: total;
+    justify-self: end;
+    font-weight: 700;
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
   .actions {
+    grid-area: actions;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -168,14 +195,14 @@
     display: grid;
     justify-items: start;
     gap: 14px;
-    padding: 64px 0;
+    padding: 32px 0 64px;
     max-width: 52ch;
     font-size: 17px;
     line-height: 1.55;
     color: var(--ink-soft);
   }
   .empty-title {
-    font-size: 32px;
+    font-size: 34px;
     color: var(--ink);
   }
   .empty .btn-go {
@@ -183,16 +210,55 @@
     text-decoration: none;
   }
 
-  @media (max-width: 760px) {
-    .head {
-      grid-template-columns: 1fr;
+  /* Mid widths: when and where fold under the job */
+  @media (max-width: 1180px) {
+    .jobs {
+      grid-template-columns: 160px minmax(0, 1fr) auto auto;
     }
     .job {
-      grid-template-columns: 120px minmax(0, 1fr);
-      gap: 16px;
+      grid-template-areas:
+        "thumb what total actions"
+        "thumb printed total actions";
+      row-gap: 10px;
+    }
+    .what {
+      align-self: end;
+    }
+    .printed {
+      align-self: start;
+      gap: 2px;
+    }
+  }
+  @media (max-width: 760px) {
+    .jobs {
+      grid-template-columns: 112px minmax(0, 1fr);
+      column-gap: 16px;
+      row-gap: 36px;
+    }
+    .job {
+      grid-template-areas:
+        "thumb what"
+        "thumb total"
+        "printed printed"
+        "actions actions";
+      row-gap: 6px;
+    }
+    .thumb {
+      align-self: start;
+    }
+    .count {
+      font-size: 20px;
+    }
+    .total {
+      justify-self: start;
+      align-self: start;
+      font-size: 15px;
+    }
+    .printed {
+      margin-top: 8px;
     }
     .actions {
-      grid-column: 1 / -1;
+      margin-top: 8px;
     }
   }
 </style>

@@ -844,18 +844,17 @@
   }
 
   .custody {
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    padding: 16px 18px;
-    background: var(--paper);
     font-size: 15px;
     line-height: 1.5;
+    color: var(--ink-soft);
     margin-bottom: 8px;
+    text-wrap: pretty;
   }
   .custody-title {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 17px;
+    color: var(--ink);
     margin-bottom: 6px;
   }
   .ready-actions {
