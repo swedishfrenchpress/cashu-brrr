@@ -27,8 +27,7 @@
   }
   .wordmark {
     font-family: var(--font-display);
-    font-stretch: 125%;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 22px;
     letter-spacing: -0.01em;
     color: var(--ink);
@@ -40,8 +39,7 @@
   }
   nav a {
     font-family: var(--font-display);
-    font-stretch: 112%;
-    font-weight: 750;
+    font-weight: 700;
     font-size: 15px;
     color: var(--ink);
     text-decoration: none;

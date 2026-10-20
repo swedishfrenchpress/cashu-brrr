@@ -70,7 +70,7 @@
   <header class="toolbar">
     <div>
       <p class="title heading">
-        {fmt(tokens.length)} notes · {sheets.length} {sheets.length === 1 ? "sheet" : "sheets"}
+        {fmt(tokens.length)} notes on {sheets.length} {sheets.length === 1 ? "sheet" : "sheets"}
       </p>
       <p class="tip">
         Print on {PAPER[paper].label}, landscape, at 100% scale ("Actual size") with margins set to none, so every note

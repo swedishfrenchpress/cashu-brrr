@@ -11,9 +11,7 @@
   },
   "devDependencies": {
     "@cashu/cashu-ts": "^2.9.0",
-    "@fontsource-variable/archivo": "^5.3.0",
     "@fontsource/dela-gothic-one": "^5.3.0",
-    "@fontsource/martian-mono": "^5.3.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tsconfig/svelte": "^5.0.0",
     "@types/qrcode": "^1.5.5",

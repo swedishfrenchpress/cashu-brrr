@@ -12,7 +12,7 @@
   <img class="avatar" src={sponsor.imageLink} alt="" loading="lazy" width="56" height="56" />
   <span class="body">
     <span class="name">{sponsor.name}</span>
-    <span class="tier">{sponsor.tier.charAt(0)}{sponsor.tier.slice(1).toLowerCase()} sponsor · {sponsor.amount} sat</span>
+    <span class="tier">{sponsor.tier.charAt(0)}{sponsor.tier.slice(1).toLowerCase()} sponsor, {sponsor.amount} sat</span>
   </span>
 </a>
 
@@ -52,8 +52,7 @@
   }
   .name {
     font-family: var(--font-display);
-    font-stretch: 112%;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 20px;
     line-height: 1.1;
   }

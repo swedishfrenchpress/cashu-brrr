@@ -69,8 +69,8 @@
   }
 
   .chaum-denomination {
-    font-family: "Martian Mono", monospace;
-    font-weight: 600;
+    font-family: "TX-02", ui-monospace, monospace;
+    font-weight: 700;
     font-size: 6.5cqw;
     line-height: 1;
     white-space: nowrap;

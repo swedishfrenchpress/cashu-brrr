@@ -785,8 +785,8 @@
 
       .st407 {
         fill: #141414;
-        font-family: 'Martian Mono', monospace;
-        font-weight: 600;
+        font-family: 'TX-02', ui-monospace, monospace;
+        font-weight: 700;
         font-size: 10px;
       }
 

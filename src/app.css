@@ -1,3 +1,33 @@
+/* TX-02 by U.S. Graphics (commercial license). The files are kept out of git; without them the system mono takes over. */
+@font-face {
+  font-family: "TX-02";
+  src: url("/fonts/tx-02/tx-02-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TX-02";
+  src: url("/fonts/tx-02/tx-02-italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TX-02";
+  src: url("/fonts/tx-02/tx-02-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TX-02";
+  src: url("/fonts/tx-02/tx-02-bold-italic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Used by the Sovereign note artwork */
 @font-face {
   font-family: "Porter Sans Inline Block";
@@ -27,9 +57,9 @@
   --cut: #e5007d;
   --cut-ink: #b4005f;
 
-  --font-display: "Archivo Variable", "Archivo", system-ui, sans-serif;
-  --font-ui: "Archivo Variable", "Archivo", system-ui, sans-serif;
-  --font-mono: "Martian Mono", ui-monospace, monospace;
+  --font-mono: "TX-02", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: var(--font-mono);
+  --font-ui: var(--font-mono);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --radius-note: 10px;
@@ -75,8 +105,7 @@ a {
 
 .display {
   font-family: var(--font-display);
-  font-stretch: 125%;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 0.9;
   text-wrap: balance;
@@ -84,8 +113,7 @@ a {
 
 .heading {
   font-family: var(--font-display);
-  font-stretch: 118%;
-  font-weight: 850;
+  font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1;
   text-wrap: balance;
@@ -122,8 +150,7 @@ a {
 .btn-go {
   background: var(--ink);
   color: #fff;
-  font-stretch: 125%;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 18px;
   padding: 16px 32px;
   border-radius: 999px;
@@ -152,8 +179,7 @@ a {
 .btn-line {
   background: transparent;
   color: var(--ink);
-  font-stretch: 112%;
-  font-weight: 750;
+  font-weight: 700;
   font-size: 15px;
   padding: 11px 20px;
   border: 1.5px solid var(--ink);
@@ -172,8 +198,7 @@ a {
 .btn-quiet {
   background: none;
   color: var(--ink);
-  font-stretch: 105%;
-  font-weight: 650;
+  font-weight: 700;
   font-size: 14px;
   padding: 4px 2px;
   text-decoration: underline;
@@ -191,7 +216,7 @@ a {
 .field-label {
   display: block;
   font-family: var(--font-ui);
-  font-weight: 650;
+  font-weight: 700;
   font-size: 13px;
   color: var(--ink-soft);
   margin-bottom: 6px;
@@ -220,7 +245,7 @@ a {
   outline: 0;
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 20px;
   color: var(--ink);
 }
@@ -265,6 +290,9 @@ a {
 }
 .label-chip:hover {
   background: var(--liner-deep);
+}
+.label-chip:focus-visible {
+  outline-color: var(--cut);
 }
 .label-chip[aria-pressed="true"] {
   background: var(--ink);

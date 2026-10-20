@@ -378,34 +378,6 @@
           </section>
 
           <section class="group">
-            <h2 class="group-title">Amount</h2>
-            <div class="amounts">
-              <label>
-                <span class="field-label">Per note</span>
-                <span class="field">
-                  <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" bind:value={amount} aria-invalid={!amountOk} />
-                  <span class="unit">sat</span>
-                </span>
-              </label>
-              <label>
-                <span class="field-label">Notes</span>
-                <span class="field">
-                  <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" bind:value={count} aria-invalid={!countOk} />
-                  <span class="unit">notes</span>
-                </span>
-              </label>
-            </div>
-            {#if !amountOk || !countOk}
-              <p class="error-text">Enter whole numbers, 1 or more.</p>
-            {:else}
-              <p class="hint">
-                {fmt(countValue)} {countValue === 1 ? "note" : "notes"} fill {sheetCount}
-                {sheetCount === 1 ? "sheet" : "sheets"}. Real QR codes are printed after you pay.
-              </p>
-            {/if}
-          </section>
-
-          <section class="group">
             <h2 class="group-title">Paper</h2>
             <div class="segmented" role="radiogroup" aria-label="Paper size">
               {#each Object.entries(PAPER) as [key, p]}
@@ -471,10 +443,38 @@
               </div>
             {/if}
           </section>
+
+          <section class="group">
+            <h2 class="group-title">Amount</h2>
+            <div class="amounts">
+              <label>
+                <span class="field-label">Per note</span>
+                <span class="field">
+                  <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" bind:value={amount} aria-invalid={!amountOk} />
+                  <span class="unit">sat</span>
+                </span>
+              </label>
+              <label>
+                <span class="field-label">Notes</span>
+                <span class="field">
+                  <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" bind:value={count} aria-invalid={!countOk} />
+                  <span class="unit">notes</span>
+                </span>
+              </label>
+            </div>
+            {#if !amountOk || !countOk}
+              <p class="error-text">Enter whole numbers, 1 or more.</p>
+            {:else}
+              <p class="hint">
+                {fmt(countValue)} {countValue === 1 ? "note" : "notes"} fill {sheetCount}
+                {sheetCount === 1 ? "sheet" : "sheets"}. Real QR codes are printed after you pay.
+              </p>
+            {/if}
+          </section>
         {:else if phase === "invoice" || phase === "minting"}
           <h1 class="heading ticket-title">Pay {fmt(total)} sat</h1>
           <p class="summary">
-            {family.name}{family.styles.length > 1 ? ` · ${style.name}` : ""} · {fmt(countValue)} × {fmt(amountValue)} sat ·
+            {family.name}{family.styles.length > 1 ? `, ${style.name}` : ""}. {fmt(countValue)} × {fmt(amountValue)} sat from
             <span class="data">{shortMint($mint?.url)}</span>
           </p>
 
@@ -515,8 +515,8 @@
             {fmt(noteCount)} notes ready.
           </h1>
           <p class="summary">
-            {family.name}{family.styles.length > 1 ? ` · ${style.name}` : ""} · {fmt(noteCount)} × {fmt(noteAmount)} sat =
-            {fmt(noteCount * noteAmount)} sat · <span class="data">{shortMint(jobMintUrl)}</span>
+            {family.name}{family.styles.length > 1 ? `, ${style.name}` : ""}. {fmt(noteCount)} × {fmt(noteAmount)} sat =
+            {fmt(noteCount * noteAmount)} sat from <span class="data">{shortMint(jobMintUrl)}</span>
             {#if reprintOf}<br />Printed first on {fmtDateTime(reprintOf.ts)}.{/if}
           </p>
 
@@ -609,7 +609,7 @@
   }
   .pager-label {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
   }
   .pager {
     display: flex;
@@ -631,8 +631,10 @@
     border-left: 1px solid var(--ink);
     background: var(--liner);
   }
+  /* The action follows the last group; it only pins to the bottom once the ticket has to scroll */
   .ticket-scroll {
-    flex: 1;
+    flex: 0 1 auto;
+    min-height: 0;
     overflow-y: auto;
     padding: 28px 28px 24px;
     scrollbar-width: thin;
@@ -658,8 +660,7 @@
   }
   .group-title {
     font-family: var(--font-display);
-    font-stretch: 112%;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 15px;
     margin-bottom: 12px;
   }
@@ -671,7 +672,7 @@
   }
   .families .label-chip {
     font-family: var(--font-ui);
-    font-weight: 650;
+    font-weight: 700;
     font-size: 13px;
   }
   .styles {
@@ -706,7 +707,7 @@
   }
   .thumb-name {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink-soft);
   }
   .thumb[aria-pressed="true"] .thumb-name {
@@ -740,8 +741,7 @@
   }
   .segmented button {
     font-family: var(--font-display);
-    font-stretch: 112%;
-    font-weight: 750;
+    font-weight: 700;
     font-size: 14px;
     padding: 7px 18px;
     border-radius: 999px;
@@ -827,7 +827,7 @@
     align-items: center;
     gap: 8px;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
   }
   .invoice-actions {
     display: flex;
@@ -854,8 +854,7 @@
   }
   .custody-title {
     font-family: var(--font-display);
-    font-stretch: 112%;
-    font-weight: 850;
+    font-weight: 700;
     font-size: 17px;
     margin-bottom: 6px;
   }
@@ -886,8 +885,7 @@
   .action-total .data {
     display: block;
     font-family: var(--font-display);
-    font-stretch: 125%;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 24px;
     line-height: 1.15;
   }

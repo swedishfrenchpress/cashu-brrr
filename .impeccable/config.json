@@ -42,6 +42,15 @@
         "value": "porter sans inline block",
         "createdAt": "2026-10-19T17:36:55.260Z",
         "reason": "model decision: face belongs to the fixed Sovereign note artwork (its amount overlay), not the app type system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-19T19:26:57.011Z",
+        "reason": "model decision: historical decision-round sketch from before the user switched to TX-02; never shipped"
       }
     ]
   }

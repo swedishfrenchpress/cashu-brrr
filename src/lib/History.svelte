@@ -78,7 +78,7 @@
               <p class="when">{fmtDateTime(p.ts)}</p>
               <p class="what heading">{fmt(p.tokens.length)} × {fmt(amount)} sat</p>
               <p class="detail">
-                {fmt(p.tokens.length * amount)} sat · {d.family.name}{d.family.styles.length > 1 ? ` · ${d.style.name}` : ""}
+                {fmt(p.tokens.length * amount)} sat, {d.family.name}{d.family.styles.length > 1 ? `, ${d.style.name}` : ""}
               </p>
               <p class="detail data">{shortMint(p.mint)}</p>
             </div>
